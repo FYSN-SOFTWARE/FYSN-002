@@ -14,17 +14,19 @@ const SAVE_PATH := "user://savegame.tres"
 @export var last_room: Room
 @export var floors_climbed: int
 @export var was_on_map: bool
-
+@export var is_flipped: bool = false
 
 func save_data() -> void:
 	var err := ResourceSaver.save(self, SAVE_PATH)
 	assert(err == OK, "Couldn't save the game!")
-
+	var save_dict := {
+	"is_flipped": is_flipped
+	}
 
 static func load_data() -> SaveGame:
 	if FileAccess.file_exists(SAVE_PATH):
 		return ResourceLoader.load(SAVE_PATH) as SaveGame
-	
+		
 	return null
 
 
