@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cuwuwco4sf0y6"]
 
-[ext_resource type="Script" path="res://scenes/map/map.gd" id="1_l06hy"]
-[ext_resource type="Script" path="res://scenes/map/map_generator.gd" id="2_0qmb6"]
+[ext_resource type="Script" uid="uid://li0j8ji1dwap" path="res://scenes/map/map.gd" id="1_l06hy"]
+[ext_resource type="Script" uid="uid://n2cunmascv08" path="res://scenes/map/map_generator.gd" id="2_0qmb6"]
 [ext_resource type="Resource" uid="uid://by8ka073e8sah" path="res://battles/battle_stats_pool.tres" id="3_cadnm"]
 [ext_resource type="Resource" uid="uid://bncylsfojpqyu" path="res://scenes/event_rooms/event_room_pool.tres" id="4_0q2ee"]
 
@@ -24,6 +24,7 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(832, 467)
 offset = Vector2(128, 72)
 
 [node name="MapGenerator" type="Node" parent="."]

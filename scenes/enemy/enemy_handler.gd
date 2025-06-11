@@ -8,7 +8,25 @@ func _ready() -> void:
 	Events.enemy_died.connect(_on_enemy_died)
 	Events.enemy_action_completed.connect(_on_enemy_action_completed)
 	Events.player_hand_drawn.connect(_on_player_hand_drawn)
+	# 连接世界翻转信号
+	Events.world_flipped.connect(_on_world_flipped)
 
+# 处理世界翻转事件
+func _on_world_flipped(flipped: bool) -> void:
+	# 更新所有敌人的翻转状态
+	for enemy in get_children():
+		enemy.is_flipped = flipped
+		enemy.update_appearance()
+		enemy.update_behavior()
+		enemy.update_stats_display()
+	
+	# 重置敌人意图
+	reset_enemy_intents()
+
+# 重置所有敌人的意图
+func reset_enemy_intents() -> void:
+	for enemy in get_children():
+		enemy.update_intent()
 
 func setup_enemies(battle_stats: BattleStats) -> void:
 	if not battle_stats:
