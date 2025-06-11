@@ -1,26 +1,24 @@
 [gd_scene load_steps=11 format=3 uid="uid://b60egpxyditoc"]
 
 [ext_resource type="Theme" uid="uid://c8cqncsqlplyu" path="res://main_theme.tres" id="1_yv4pj"]
-[ext_resource type="Script" path="res://scenes/card_ui/card_ui.gd" id="2_uam7p"]
+[ext_resource type="Script" uid="uid://ds5qcsewwh7x" path="res://scenes/card_ui/card_ui.gd" id="2_uam7p"]
 [ext_resource type="PackedScene" uid="uid://b362c35jf6fmy" path="res://scenes/ui/card_visuals.tscn" id="3_4urr7"]
-[ext_resource type="Script" path="res://scenes/card_ui/card_state_machine.gd" id="3_tqtyy"]
-[ext_resource type="Script" path="res://scenes/card_ui/card_states/card_base_state.gd" id="4_snb4g"]
-[ext_resource type="Script" path="res://scenes/card_ui/card_states/card_clicked_state.gd" id="5_2ks3p"]
-[ext_resource type="Script" path="res://scenes/card_ui/card_states/card_dragging_state.gd" id="6_jk8rm"]
-[ext_resource type="Script" path="res://scenes/card_ui/card_states/card_released_state.gd" id="7_k7cbr"]
-[ext_resource type="Script" path="res://scenes/card_ui/card_states/card_aiming_state.gd" id="8_ew01p"]
+[ext_resource type="Script" uid="uid://ciq0uv4q0kcw5" path="res://scenes/card_ui/card_state_machine.gd" id="3_tqtyy"]
+[ext_resource type="Script" uid="uid://cbh77ct5t0m8l" path="res://scenes/card_ui/card_states/card_base_state.gd" id="4_snb4g"]
+[ext_resource type="Script" uid="uid://caaqiprf6hrhr" path="res://scenes/card_ui/card_states/card_clicked_state.gd" id="5_2ks3p"]
+[ext_resource type="Script" uid="uid://c3mhieirfvhuq" path="res://scenes/card_ui/card_states/card_dragging_state.gd" id="6_jk8rm"]
+[ext_resource type="Script" uid="uid://uphldcg24oph" path="res://scenes/card_ui/card_states/card_released_state.gd" id="7_k7cbr"]
+[ext_resource type="Script" uid="uid://bspq7gvfia61h" path="res://scenes/card_ui/card_states/card_aiming_state.gd" id="8_ew01p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ly5x7"]
-size = Vector2(25, 30)
+size = Vector2(148.5, 223.5)
 
 [node name="CardUI" type="Control"]
-custom_minimum_size = Vector2(25, 30)
+custom_minimum_size = Vector2(150, 225)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -231.0
-offset_bottom = -114.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_yv4pj")
@@ -36,7 +34,7 @@ collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropPointDetector"]
-position = Vector2(12.5, 15)
+position = Vector2(74.75, 112.25)
 shape = SubResource("RectangleShape2D_ly5x7")
 
 [node name="CardStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
