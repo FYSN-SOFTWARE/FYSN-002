@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://dfrdaou640irp"]
 
-[ext_resource type="Script" path="res://scenes/campfire/campfire.gd" id="1_i8fph"]
+[ext_resource type="Script" uid="uid://bfriiv2s7jala" path="res://scenes/campfire/campfire.gd" id="1_i8fph"]
 [ext_resource type="Resource" uid="uid://sbkc4o401k4l" path="res://characters/warrior/warrior.tres" id="2_0gfpy"]
 [ext_resource type="Texture2D" uid="uid://djbldcvfo4swr" path="res://art/line.png" id="2_ykw02"]
 
@@ -120,8 +120,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ikhwv"]
 _data = {
-"RESET": SubResource("Animation_em2db"),
-"fade_out": SubResource("Animation_wekwb")
+&"RESET": SubResource("Animation_em2db"),
+&"fade_out": SubResource("Animation_wekwb")
 }
 
 [node name="Campfire" type="Control"]
@@ -147,13 +147,15 @@ grow_vertical = 2
 texture = SubResource("GradientTexture2D_6orn2")
 
 [node name="ParticlesLayer" type="CanvasLayer" parent="."]
+scale = Vector2(7.5, 7.5)
+transform = Transform2D(7.5, 0, 0, 7.5, 0, 0)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="ParticlesLayer"]
 position = Vector2(90, 100)
 amount = 128
-process_material = SubResource("ParticleProcessMaterial_1jtqt")
 texture = ExtResource("2_ykw02")
 lifetime = 1.5
+process_material = SubResource("ParticleProcessMaterial_1jtqt")
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
@@ -164,11 +166,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 8.0
-offset_top = -22.0
+offset_top = -166.0
 offset_right = 72.0
-offset_bottom = 22.0
+offset_bottom = -122.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(7.5, 7.5)
 
 [node name="Title" type="Label" parent="UILayer/UI"]
 layout_mode = 2
@@ -193,7 +196,7 @@ horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ikhwv")
+&"": SubResource("AnimationLibrary_ikhwv")
 }
 
 [connection signal="pressed" from="UILayer/UI/RestButton" to="." method="_on_rest_button_pressed"]
