@@ -1,11 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2jq2r5hb1ajk"]
+[gd_scene load_steps=4 format=3 uid="uid://d2jq2r5hb1ajk"]
 
-[ext_resource type="Script" path="res://scenes/ui/card_pile_view.gd" id="1_b4itw"]
+[ext_resource type="Script" uid="uid://bgviycrbs70w4" path="res://scenes/ui/card_pile_view.gd" id="1_b4itw"]
 [ext_resource type="PackedScene" uid="uid://trmdo65td4t7" path="res://scenes/ui/card_menu_ui.tscn" id="1_yhny2"]
 [ext_resource type="PackedScene" uid="uid://c743ur8hoxsn5" path="res://scenes/ui/card_tooltip_popup.tscn" id="3_0v1cn"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_tpixj"]
-font_size = 12
 
 [node name="CardPileView" type="Control"]
 process_mode = 3
@@ -40,14 +37,16 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 50
 
 [node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
-text = "Discard Pile"
-label_settings = SubResource("LabelSettings_tpixj")
+theme_override_font_sizes/font_size = 50
+text = "弃牌堆"
 horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
@@ -144,12 +143,11 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -50.0
-offset_top = 7.0
-offset_right = -10.0
-offset_bottom = 21.0
+offset_left = -150.0
+offset_bottom = 70.0
 grow_horizontal = 0
-text = "Back"
+theme_override_font_sizes/font_size = 50
+text = "返回"
 
 [node name="CardTooltipPopup" parent="." instance=ExtResource("3_0v1cn")]
 unique_name_in_owner = true

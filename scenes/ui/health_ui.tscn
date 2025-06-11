@@ -1,9 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://b3dkx1dqlo0eo"]
 
 [ext_resource type="Texture2D" uid="uid://d0edy7thj8ce6" path="res://art/heart.png" id="1_7kxtg"]
-[ext_resource type="Script" path="res://scenes/ui/health_ui.gd" id="1_j2epd"]
+[ext_resource type="Script" uid="uid://c6x24ykplvr2s" path="res://scenes/ui/health_ui.gd" id="1_j2epd"]
 
 [node name="HealthUI" type="HBoxContainer"]
+offset_right = 30.0
+offset_bottom = 8.0
+scale = Vector2(7, 7)
 theme_override_constants/separation = 2
 script = ExtResource("1_j2epd")
 

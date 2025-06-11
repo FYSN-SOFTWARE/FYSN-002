@@ -8,6 +8,7 @@ const SHOP_SCENE := preload("res://scenes/shop/shop.tscn")
 const TREASURE_SCENE = preload("res://scenes/treasure/treasure.tscn")
 const WIN_SCREEN_SCENE := preload("res://scenes/win_screen/win_screen.tscn")
 const MAIN_MENU_PATH := "res://scenes/ui/main_menu.tscn"
+const FLIPPED_BATTLE_SCENE := preload("res://scenes/battle/flipped_battle.tscn")
 
 @export var run_startup: RunStartup
 
@@ -27,11 +28,14 @@ const MAIN_MENU_PATH := "res://scenes/ui/main_menu.tscn"
 @onready var rewards_button: Button = %RewardsButton
 @onready var shop_button: Button = %ShopButton
 @onready var treasure_button: Button = %TreasureButton
+# 添加翻转按钮引用
+@onready var flip_button: Button = %FlipButton
 
 var stats: RunStats
 var character: CharacterStats
 var save_data: SaveGame
-
+# 添加翻转状态变量
+var is_flipped: bool = false
 
 func _ready() -> void:
 	if not run_startup:
@@ -48,6 +52,12 @@ func _ready() -> void:
 			_start_run()
 		RunStartup.Type.CONTINUED_RUN:
 			_load_run()
+			
+		# 连接翻转按钮信号
+	flip_button.pressed.connect(_on_flip_button_pressed)
+	
+	# 连接世界翻转事件
+	Events.world_flipped.connect(_on_world_flipped)
 
 
 func _start_run() -> void:
@@ -95,13 +105,40 @@ func _load_run() -> void:
 	if save_data.last_room and not save_data.was_on_map:
 		_on_map_exited(save_data.last_room)
 
+# 新增翻转按钮处理函数
+func _on_flip_button_pressed() -> void:
+	is_flipped = !is_flipped
+	flip_button.text = "里侧" if is_flipped else "表侧"
+	
+	# 保存翻转状态
+	if save_data:
+		save_data.is_flipped = is_flipped
+		_save_run(true)
+
+# 处理从战斗场景传来的翻转事件
+func _on_world_flipped(flipped: bool) -> void:
+	# 更新全局翻转状态
+	is_flipped = flipped
+	flip_button.text = "里侧" if is_flipped else "表侧"
+	
+	# 保存翻转状态
+	if save_data:
+		save_data.is_flipped = is_flipped
+		_save_run(false)  # 不在地图上
 
 func _change_view(scene: PackedScene) -> Node:
 	if current_view.get_child_count() > 0:
 		current_view.get_child(0).queue_free()
 	
 	get_tree().paused = false
-	var new_view := scene.instantiate()
+	
+	# 确定要使用的场景
+	var actual_scene: PackedScene = scene
+	if scene == BATTLE_SCENE && is_flipped:
+		actual_scene = FLIPPED_BATTLE_SCENE
+	
+	# 只创建一个场景实例
+	var new_view := actual_scene.instantiate()
 	current_view.add_child(new_view)
 	map.hide_map()
 	
@@ -126,6 +163,7 @@ func _setup_event_connections() -> void:
 	Events.shop_exited.connect(_show_map)
 	Events.treasure_room_exited.connect(_on_treasure_room_exited)
 	Events.event_room_exited.connect(_show_map)
+	Events.world_flipped.connect(_on_world_flipped)
 	
 	battle_button.pressed.connect(_change_view.bind(BATTLE_SCENE))
 	campfire_button.pressed.connect(_change_view.bind(CAMPFIRE_SCENE))
@@ -158,7 +196,19 @@ func _show_regular_battle_rewards() -> void:
 
 
 func _on_battle_room_entered(room: Room) -> void:
+	# 重置为表世界
+	is_flipped = false
+	if flip_button:
+		flip_button.text = "表侧"
+	
+	# 保存状态
+	if save_data:
+		save_data.is_flipped = is_flipped
+		_save_run(false)  # 不在地图上
+	
+	# 使用 _change_view 创建场景
 	var battle_scene: Battle = _change_view(BATTLE_SCENE) as Battle
+	
 	battle_scene.char_stats = character
 	battle_scene.battle_stats = room.battle_stats
 	battle_scene.relics = relic_handler

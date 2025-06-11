@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://nqvpogmvfn3t"]
 
-[ext_resource type="Script" path="res://scenes/relic_handler/relic_ui.gd" id="1_12s3y"]
+[ext_resource type="Script" uid="uid://ddh4wejtf47k8" path="res://scenes/relic_handler/relic_ui.gd" id="1_12s3y"]
 [ext_resource type="Texture2D" uid="uid://dytq0eumwvky6" path="res://art/tile_0074.png" id="1_3654h"]
 [ext_resource type="Resource" uid="uid://dgsppvwlatlhw" path="res://relics/healing_potion.tres" id="2_ed5mv"]
 [ext_resource type="Material" uid="uid://d30aqi80c1nrc" path="res://art/white_sprite_material.tres" id="2_t20sa"]
@@ -63,8 +63,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mnii6"]
 _data = {
-"RESET": SubResource("Animation_ymr5g"),
-"flash": SubResource("Animation_ed1dg")
+&"RESET": SubResource("Animation_ymr5g"),
+&"flash": SubResource("Animation_ed1dg")
 }
 
 [node name="RelicUI" type="Control"]
@@ -75,10 +75,9 @@ script = ExtResource("1_12s3y")
 relic = ExtResource("2_ed5mv")
 
 [node name="Icon" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_right = 80.0
+offset_bottom = 80.0
 pivot_offset = Vector2(8, 8)
 texture = ExtResource("1_3654h")
 expand_mode = 1
@@ -86,7 +85,7 @@ stretch_mode = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_mnii6")
+&"": SubResource("AnimationLibrary_mnii6")
 }
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
