@@ -2,13 +2,14 @@ class_name Card
 extends Resource
 
 enum Type {ATTACK, SKILL, POWER}
-enum Rarity {COMMON, UNCOMMON, RARE}
+enum Rarity {COMMON, UNCOMMON, RARE, LEGEND}
 enum Target {SELF, SINGLE_ENEMY, ALL_ENEMIES, EVERYONE}
 
 const RARITY_COLORS := {
 	Card.Rarity.COMMON: Color.GRAY,
 	Card.Rarity.UNCOMMON: Color.CORNFLOWER_BLUE,
 	Card.Rarity.RARE: Color.GOLD,
+	Card.Rarity.LEGEND: Color.RED
 }
 
 @export_group("Card Attributes")
@@ -22,8 +23,14 @@ const RARITY_COLORS := {
 @export_group("Card Visuals")
 @export var icon: Texture
 @export_multiline var tooltip_text: String
+@export var outcard: CardSide
+@export var backcard: CardSide
 @export var sound: AudioStream
 
+var run_effect: Array[Effect]
+
+func initiative() -> void:
+	run_effect = outcard.effects.duplicate()
 
 func is_single_targeted() -> bool:
 	return target == Target.SINGLE_ENEMY
