@@ -18,10 +18,13 @@ func _on_visuals_gui_input(event: InputEvent) -> void:
 
 func _on_visuals_mouse_entered() -> void:
 	visuals.panel.set("theme_override_styles/panel", HOVER_STYLEBOX)
-
+	# 显示关键词提示
+	visuals._on_mouse_entered()
 
 func _on_visuals_mouse_exited() -> void:
 	visuals.panel.set("theme_override_styles/panel", BASE_STYLEBOX)
+	# 隐藏关键词提示
+	visuals._on_mouse_exited()
 
 
 func set_card(value: Card) -> void:

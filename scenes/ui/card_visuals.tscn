@@ -8,9 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://du7r7v1iaahuo" path="res://art/rarity.png" id="4_w0uhs"]
 
 [node name="CardVisuals" type="Control"]
-custom_minimum_size = Vector2(150, 225)
+custom_minimum_size = Vector2(200, 300)
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 2
 theme = ExtResource("1_hiimn")
 script = ExtResource("2_uk7ay")
 card = ExtResource("3_t04tx")
@@ -44,9 +45,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -22.5
-offset_top = -87.5
+offset_top = -110.5
 offset_right = 22.5
-offset_bottom = -42.5
+offset_bottom = -65.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -68,3 +69,29 @@ grow_horizontal = 0
 texture = ExtResource("4_w0uhs")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="DescriptionContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_top = 93.0
+offset_right = 200.0
+offset_bottom = 300.0
+mouse_filter = 2
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="DescriptionContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 20
+
+[node name="KeywordTooltip" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 202.0
+offset_right = 402.0
+offset_bottom = 200.0
+
+[node name="TooltipBackground" type="Panel" parent="KeywordTooltip"]
+layout_mode = 2
+
+[node name="KeywordList" type="VBoxContainer" parent="KeywordTooltip"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 200.0

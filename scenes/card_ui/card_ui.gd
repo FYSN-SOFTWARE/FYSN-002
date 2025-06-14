@@ -29,7 +29,8 @@ func _ready() -> void:
 	Events.card_drag_ended.connect(_on_card_drag_or_aim_ended)
 	Events.card_aim_ended.connect(_on_card_drag_or_aim_ended)
 	card_state_machine.init(self)
-
+	# 确保整个卡牌区域接收鼠标事件
+	mouse_filter = Control.MOUSE_FILTER_STOP
 
 func _input(event: InputEvent) -> void:
 	card_state_machine.on_input(event)
@@ -72,10 +73,13 @@ func _on_gui_input(event: InputEvent) -> void:
 
 func _on_mouse_entered() -> void:
 	card_state_machine.on_mouse_entered()
-
+	
+	card_visuals.show_keyword_tooltip()
 
 func _on_mouse_exited() -> void:
 	card_state_machine.on_mouse_exited()
+	
+	card_visuals.hide_keyword_tooltip()
 
 
 func _set_card(value: Card) -> void:
