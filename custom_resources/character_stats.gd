@@ -21,6 +21,11 @@ var discard: CardPile
 var draw_pile: CardPile
 var ex_pile: CardPile
 
+func init() -> void:
+	draw_pile.init(1)
+	discard.init(3)
+	ex_pile.init(4)
+	
 
 func set_mana(value: int) -> void:
 	mana = value

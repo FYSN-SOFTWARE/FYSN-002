@@ -1,5 +1,5 @@
 class_name Card
-extends Resource
+extends EffectOwner
 
 enum Type {ATTACK, SKILL, POWER}
 enum Rarity {COMMON, UNCOMMON, RARE, LEGEND}
@@ -27,10 +27,10 @@ const RARITY_COLORS := {
 @export var backcard: CardSide
 @export var sound: AudioStream
 
-var run_effect: Array[Effect]
+var cardarea: Effect.CardArea = 0
 
 func initiative() -> void:
-	run_effect = outcard.effects.duplicate()
+	effects = outcard.effects.duplicate()
 
 func is_single_targeted() -> bool:
 	return target == Target.SINGLE_ENEMY

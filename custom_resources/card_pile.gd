@@ -6,6 +6,13 @@ signal card_pile_size_changed(cards_amount)
 @export var cards: Array[Card] = []
 
 
+var deckarea: Effect.CardArea = 0
+
+func init(area: Effect.CardArea) -> void:
+	deckarea = area
+	for card in cards:
+		card.cardarea = deckarea
+
 func empty() -> bool:
 	return cards.is_empty()
 
@@ -13,11 +20,13 @@ func empty() -> bool:
 func draw_card() -> Card:
 	var card = cards.pop_front()
 	card_pile_size_changed.emit(cards.size())
+	card.cardarea = 2
 	return card
 
 
 func add_card(card: Card) -> void:
 	cards.append(card)
+	card.cardarea = deckarea
 	card_pile_size_changed.emit(cards.size())
 
 
