@@ -22,6 +22,12 @@ var tween: Tween
 var playable := true : set = _set_playable
 var disabled := true
 
+# 添加切换卡牌资源的方法
+func switch_card(new_card_resource: Card) -> void:
+	if new_card_resource:
+		card = new_card_resource
+		emit_signal("card_switched", card)
+
 
 func _ready() -> void:
 	Events.card_aim_started.connect(_on_card_drag_or_aiming_started)
@@ -31,9 +37,30 @@ func _ready() -> void:
 	card_state_machine.init(self)
 	# 确保整个卡牌区域接收鼠标事件
 	mouse_filter = Control.MOUSE_FILTER_STOP
-
+		# 添加右键点击检测
+	gui_input.connect(_handle_right_click)
+	
 func _input(event: InputEvent) -> void:
 	card_state_machine.on_input(event)
+
+func _handle_right_click(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mouse_event := event as InputEventMouseButton
+		if mouse_event.button_index == MOUSE_BUTTON_RIGHT and mouse_event.pressed:
+			# 触发切换卡牌逻辑
+			_on_right_clicked()
+
+func _on_right_clicked() -> void:
+	# 这里可以添加自定义切换逻辑
+	# 示例：在预设列表中切换
+	if alternative_cards.size() > 0:
+		current_alternative_index = (current_alternative_index + 1) % alternative_cards.size()
+		switch_card(alternative_cards[current_alternative_index])
+	
+	# 或者调用外部管理器
+	# CardManager.switch_card(self
+@export var alternative_cards: Array[Card] = []
+var current_alternative_index := 0
 
 
 func animate_to_position(new_position: Vector2, duration: float) -> void:
