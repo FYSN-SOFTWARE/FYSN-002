@@ -26,6 +26,20 @@ func _ready() -> void:
 		# 设置关键词提示框在最上层显示
 		keyword_tooltip.z_index = 1000  # 高值确保在最上层
 
+# 添加 GUI 输入处理
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			# 发出点击信号
+			get_parent().emit_signal("pressed", card)
+
+# 添加鼠标进入和离开处理
+func _on_mouse_entered() -> void:
+	show_keyword_tooltip()
+
+func _on_mouse_exited() -> void:
+	hide_keyword_tooltip()
+
 # 添加公共方法供父节点调用
 func show_keyword_tooltip():
 	if keyword_tooltip != null and keyword_list.get_child_count() > 0:

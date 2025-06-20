@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://d2b07tgf1uiox" path="res://scenes/enemy/enemy_handler.gd" id="4_41vpn"]
 [ext_resource type="Resource" uid="uid://sbkc4o401k4l" path="res://characters/warrior/warrior.tres" id="4_fwb8a"]
 [ext_resource type="Resource" uid="uid://bnmpwl3k8qb8n" path="res://enemies/crab/crab_enemy.tres" id="5_5flmk"]
-[ext_resource type="Script" uid="uid://b8rvymxihcmof" path="res://scenes/ui/battle_ui.gd" id="7_18vit"]
+[ext_resource type="Script" uid="uid://bmcbefadpsadb" path="res://scenes/ui/battle_ui.gd" id="7_18vit"]
 [ext_resource type="Script" uid="uid://bisce32pxmw6p" path="res://scenes/player/player_handler.gd" id="8_3di7i"]
 [ext_resource type="Resource" uid="uid://bbo24od4aavfj" path="res://enemies/bat/bat_enemy.tres" id="8_d4c2d"]
 [ext_resource type="PackedScene" uid="uid://bnbwu7pkbrwox" path="res://scenes/ui/mana_ui.tscn" id="11_2vu01"]
@@ -83,9 +83,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -597.0
-offset_top = -301.0
+offset_top = -302.0
 offset_right = 603.0
-offset_bottom = -1.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 100
@@ -172,6 +172,33 @@ theme_override_font_sizes/font_size = 20
 text = "99"
 horizontal_alignment = 1
 
+[node name="ExcardPileButton" parent="BattleUI" node_paths=PackedStringArray("counter") instance=ExtResource("17_djv03")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 120)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -85.0
+offset_top = -84.0
+offset_right = -5.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("18_g47ei")
+counter = NodePath("Counter")
+
+[node name="Counter" type="Label" parent="BattleUI/ExcardPileButton"]
+layout_mode = 0
+offset_left = -25.0
+offset_top = 99.0
+offset_right = 8.0
+offset_bottom = 120.0
+theme_override_font_sizes/font_size = 20
+text = "99"
+horizontal_alignment = 1
+
 [node name="RedFlash" type="CanvasLayer" parent="."]
 layer = 2
 visible = false
@@ -204,6 +231,10 @@ unique_name_in_owner = true
 visible = false
 
 [node name="DiscardPileView" parent="CardPileViews" instance=ExtResource("21_rnul2")]
+unique_name_in_owner = true
+visible = false
+
+[node name="ExcardPileView" parent="CardPileViews" instance=ExtResource("21_rnul2")]
 unique_name_in_owner = true
 visible = false
 

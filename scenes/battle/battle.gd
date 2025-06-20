@@ -5,6 +5,7 @@ extends Node2D
 @export var char_stats: CharacterStats
 @export var music: AudioStream
 @export var relics: RelicHandler
+@export var run_stats: RunStats
 
 @onready var battle_ui: BattleUI = $BattleUI
 @onready var player_handler: PlayerHandler = $PlayerHandler
@@ -26,6 +27,7 @@ func _ready() -> void:
 	Events.player_turn_ended.connect(player_handler.end_turn)
 	Events.player_hand_discarded.connect(enemy_handler.start_turn)
 	Events.player_died.connect(_on_player_died)
+	
 	# 连接翻转按钮信号
 	if flip_button:  # 确保按钮存在
 		flip_button.pressed.connect(_on_flip_button_pressed)
@@ -34,6 +36,7 @@ func _ready() -> void:
 	update_background()
 	# 确保按钮文本正确
 	update_flip_button_text()
+
 
 func start_battle() -> void:
 	get_tree().paused = false
