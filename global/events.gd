@@ -27,6 +27,9 @@ signal battle_over_screen_requested(text: String, type: BattleOverPanel.Type)
 signal battle_won
 signal status_tooltip_requested(statuses: Array[Status])
 
+# 新增工具提示信号
+signal tooltip_show_requested(icon: Texture, text: String)  # 用于显示工具提示
+signal keyword_tooltip_requested(text: String)  # 用于显示关键词解释
 # Map-related events
 signal map_exited(room: Room)
 

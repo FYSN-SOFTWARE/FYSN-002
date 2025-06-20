@@ -5,9 +5,12 @@ extends Node
 
 var current_state: CardState
 var states := {}
+var card_ui: CardUI  # 存储 CardUI 引用
+
 
 
 func init(card: CardUI) -> void:
+	card_ui = card  # 初始化引用
 	for child: CardState in get_children():
 		if child:
 			states[child.state] = child
@@ -25,8 +28,14 @@ func on_input(event: InputEvent) -> void:
 
 
 func on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mouse_event: InputEventMouseButton = event
+		if mouse_event.button_index == MOUSE_BUTTON_RIGHT and mouse_event.pressed:
+			card_ui._handle_right_click(event)
+			return
+	
 	if current_state:
-		current_state.on_gui_input(event)
+		current_state.on_gui_input(event)  # 
 
 
 func on_mouse_entered() -> void:

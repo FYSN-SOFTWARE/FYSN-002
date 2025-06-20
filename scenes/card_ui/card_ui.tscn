@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://b60egpxyditoc"]
+[gd_scene load_steps=13 format=3 uid="uid://b60egpxyditoc"]
 
 [ext_resource type="Theme" uid="uid://c8cqncsqlplyu" path="res://main_theme.tres" id="1_yv4pj"]
 [ext_resource type="Script" uid="uid://ds5qcsewwh7x" path="res://scenes/card_ui/card_ui.gd" id="2_uam7p"]
 [ext_resource type="PackedScene" uid="uid://b362c35jf6fmy" path="res://scenes/ui/card_visuals.tscn" id="3_4urr7"]
+[ext_resource type="Script" uid="uid://ccsidvfkkramu" path="res://custom_resources/card.gd" id="3_qeblu"]
 [ext_resource type="Script" uid="uid://ciq0uv4q0kcw5" path="res://scenes/card_ui/card_state_machine.gd" id="3_tqtyy"]
+[ext_resource type="Resource" uid="uid://c35gww3b8b5od" path="res://characters/warrior/cards/test1.tres" id="4_opj8w"]
 [ext_resource type="Script" uid="uid://cbh77ct5t0m8l" path="res://scenes/card_ui/card_states/card_base_state.gd" id="4_snb4g"]
 [ext_resource type="Script" uid="uid://caaqiprf6hrhr" path="res://scenes/card_ui/card_states/card_clicked_state.gd" id="5_2ks3p"]
 [ext_resource type="Script" uid="uid://c3mhieirfvhuq" path="res://scenes/card_ui/card_states/card_dragging_state.gd" id="6_jk8rm"]
@@ -23,6 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_yv4pj")
 script = ExtResource("2_uam7p")
+alternative_cards = Array[ExtResource("3_qeblu")]([ExtResource("4_opj8w")])
 
 [node name="CardVisuals" parent="." instance=ExtResource("3_4urr7")]
 offset_right = 25.0
