@@ -9,13 +9,10 @@ signal card_played(card: Card)
 signal card_tooltip_requested(card: Card)
 signal tooltip_hide_requested
 
-# 新增工具提示信号
-signal tooltip_show_requested(icon: Texture, text: String)  # 用于显示工具提示
-signal keyword_tooltip_requested(text: String)  # 用于显示关键词解释
-
 # Player-related events
 signal player_hand_drawn
 signal player_hand_discarded
+signal player_turn_start
 signal player_turn_ended
 signal player_hit
 signal player_died
@@ -54,10 +51,11 @@ signal relic_tooltip_requested(relic: Relic)
 # Random Event room-related events
 signal event_room_exited
 
-signal world_flipped(flipped: bool)
 # 世界转换
-signal intobackword
-signal outbackword
+signal world_flipped(flipped: bool)
 
 signal cardaction(card:CardUI)
 signal transcard(areafrom: Effect.CardArea, areato: Effect.CardArea)
+
+signal battle_starte()
+signal turnend(isplayer: bool)
