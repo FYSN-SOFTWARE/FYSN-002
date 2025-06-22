@@ -3,6 +3,8 @@ extends CenterContainer
 
 signal tooltip_requested(card: Card)
 signal pressed # 修改为无参数信号
+# 添加点击信号
+signal card_clicked
 
 const BASE_STYLEBOX := preload("res://scenes/card_ui/card_base_stylebox.tres")
 const HOVER_STYLEBOX := preload("res://scenes/card_ui/card_hover_stylebox.tres")

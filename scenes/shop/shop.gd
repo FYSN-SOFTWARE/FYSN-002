@@ -24,6 +24,9 @@ signal shop_upgrade_requested(cost: int)
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
 @onready var upgrades: HBoxContainer = %Services
 
+# 新增升级服务使用标记
+var remove_service_used: bool = false
+var upgrade_service_used: bool = false  
 
 func _ready() -> void:
 	for shop_card: ShopCard in cards.get_children():
@@ -110,13 +113,22 @@ func _generate_shop_services() -> void:
 	upgrades.add_child(shop_remove)
 	shop_remove.gold_cost = _get_updated_shop_cost(shop_remove.base_gold_cost)
 	shop_remove.update(run_stats)
-	
+
+	# 如果删牌服务已使用，禁用按钮并显示"已使用"
+	if remove_service_used:
+		shop_remove.disable_button()
+		shop_remove.set_used_text("已使用")
+
 	# 添加强化选项
 	var shop_upgrade := SHOP_UPGRADE.instantiate() as ShopUpgradeCard
 	upgrades.add_child(shop_upgrade)
 	shop_upgrade.gold_cost = _get_updated_shop_cost(shop_upgrade.base_gold_cost)
 	shop_upgrade.update(run_stats)
 
+	# 如果强化服务已使用，禁用按钮并显示"已使用"
+	if upgrade_service_used:
+		shop_upgrade.disable_button()
+		shop_upgrade.set_used_text("已使用")
 
 # 新增服务事件处理
 func _on_shop_remove_requested(cost: int) -> void:
@@ -150,8 +162,11 @@ func _show_card_selection_for_removal(cost: int) -> void:
 	card_pile_view.is_in_shop = true
 	card_pile_view.canvas_layer = canvas_layer  # 存储canvas_layer引用
 
+	# 确保设置 run_stats
+	card_pile_view.run_stats = run_stats
+
 	# 显示删牌选择界面
-	card_pile_view.show_shop_action_view("选择要删除的卡牌", cost,true)
+	card_pile_view.show_shop_action_view("选择要删除的卡牌", cost, "remove", true)
 
 func _show_card_selection_for_upgrade(cost: int) -> void:
 	# 确保char_stats已被正确设置
@@ -178,21 +193,33 @@ func _show_card_selection_for_upgrade(cost: int) -> void:
 	card_pile_view.canvas_layer = canvas_layer  # 存储canvas_layer引用
 
 	# 显示强化选择界面
-	card_pile_view.show_current_view("upgrade", cost,true)
+	card_pile_view.show_shop_action_view("选择要升级的卡牌", cost, "upgrade", true)
 
 func _on_card_removed(cost: int) -> void:
-	run_stats.gold -= cost
+	# 标记删牌服务已使用
+	remove_service_used = true
 	# 更新商店物品显示
 	_update_items()
 	# 更新服务选项的费用
 	_update_item_costs()
+	# 禁用删牌按钮
+	for child in upgrades.get_children():
+		if child is ShopRemoveCard:
+			child.disable_button()
+			child.set_used_text("已使用")
 
 func _on_card_upgraded(cost: int) -> void:
-	run_stats.gold -= cost
+	# 标记强化服务已使用
+	upgrade_service_used = true
 	# 更新商店物品显示
 	_update_items()
 	# 更新服务选项的费用
 	_update_item_costs()
+	# 禁用强化按钮
+	for child in upgrades.get_children():
+		if child is ShopUpgradeCard:
+			child.disable_button()
+			child.set_used_text("已使用")
 
 func _update_items() -> void:
 	for shop_card: ShopCard in cards.get_children():

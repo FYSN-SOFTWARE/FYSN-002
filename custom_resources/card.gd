@@ -27,6 +27,13 @@ const RARITY_COLORS := {
 @export var backcard: CardSide
 @export var sound: AudioStream
 
+# 添加升级属性
+@export var upgraded: bool = false
+@export var upgrade_damage: int = 2
+@export var upgrade_block: int = 2
+@export var upgrade_cost: int = 0
+@export_multiline var upgraded_tooltip_text: String
+
 var cardarea: Effect.CardArea = 0
 
 func initiative() -> void:
@@ -62,15 +69,78 @@ func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierH
 	else:
 		apply_effects(_get_targets(targets), modifiers)
 
+# 升级卡牌
+func upgrade() -> void:
+	upgraded = true
+	
+	# 应用升级效果 - 允许同时升级多个属性
+	var upgrade_log = []
+	
+	# 1. 处理伤害升级
+	if upgrade_damage != 0:
+		var damage_upgraded = false
+		if outcard:
+			for effect in outcard.effects:
+				if effect is DamageEffect:
+					effect.amount += upgrade_damage
+					damage_upgraded = true
+		if damage_upgraded:
+			upgrade_log.append("伤害 +%d" % upgrade_damage)
+	
+	# 2. 处理格挡升级
+	if upgrade_block != 0:
+		var block_upgraded = false
+		if outcard:
+			for effect in outcard.effects:
+				if effect is BlockEffect:
+					effect.amount += upgrade_block
+					block_upgraded = true
+		if block_upgraded:
+			upgrade_log.append("格挡 +%d" % upgrade_block)
+	
+	# 3. 处理消耗升级
+	if upgrade_cost != 0:
+		var cost_change = upgrade_cost
+		cost = max(0, cost + cost_change)
+		var sign = "+" if cost_change > 0 else ""
+		upgrade_log.append("消耗 %s%d" % [sign, cost_change])
+	
+	# 更新工具提示文本
+	if upgrade_log.size() > 0:
+		var upgrade_text = "[升级: %s]" % ", ".join(upgrade_log)
+		if upgraded_tooltip_text.is_empty():
+			tooltip_text += "\n\n" + upgrade_text
+		else:
+			upgraded_tooltip_text += "\n\n" + upgrade_text
+	else:
+		# 如果没有特定效果升级，添加通用升级文本
+		var upgrade_text = "[已升级]"
+		if upgraded_tooltip_text.is_empty():
+			tooltip_text += "\n\n" + upgrade_text
+		else:
+			upgraded_tooltip_text += "\n\n" + upgrade_text
+	
+	# 调用子类特定的升级逻辑
+	post_upgrade()
+	
+	# 发出卡牌升级事件
+	Events.card_upgraded.emit(self)
+
+# 添加这个方法允许子类自定义升级逻辑
+func post_upgrade() -> void:
+	# 默认实现为空，子类可以覆盖
+	pass
 
 func apply_effects(_targets: Array[Node], _modifiers: ModifierHandler) -> void:
 	pass
 
 
 func get_default_tooltip() -> String:
+	if upgraded && !upgraded_tooltip_text.is_empty():
+		return upgraded_tooltip_text
 	return tooltip_text
 
 
 func get_updated_tooltip(_player_modifiers: ModifierHandler, _enemy_modifiers: ModifierHandler) -> String:
-	return tooltip_text
+	return get_default_tooltip()
 	
