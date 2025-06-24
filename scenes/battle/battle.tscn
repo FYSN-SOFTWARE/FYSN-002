@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d0efyathkfg74" path="res://scenes/enemy/enemy.tscn" id="2_02s5s"]
 [ext_resource type="Script" uid="uid://ypfceqw8upfm" path="res://scenes/ui/hand.gd" id="2_uaw60"]
 [ext_resource type="PackedScene" uid="uid://2n4lap6w3pde" path="res://scenes/player/player.tscn" id="3_dpj45"]
-[ext_resource type="AudioStream" uid="uid://dbhus41de72ha" path="res://art/恋爱循环.mp3" id="3_sgdsx"]
+[ext_resource type="AudioStream" uid="uid://crlpvw8d52kvw" path="res://art/八方.mp3" id="3_sgdsx"]
 [ext_resource type="PackedScene" uid="uid://dwt63vvppukag" path="res://scenes/card_target_selector/card_target_selector.tscn" id="3_vyv1n"]
 [ext_resource type="Script" uid="uid://d2b07tgf1uiox" path="res://scenes/enemy/enemy_handler.gd" id="4_41vpn"]
 [ext_resource type="Resource" uid="uid://sbkc4o401k4l" path="res://characters/warrior/warrior.tres" id="4_fwb8a"]
