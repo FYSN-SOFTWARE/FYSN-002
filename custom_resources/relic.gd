@@ -1,5 +1,5 @@
 class_name Relic
-extends Resource
+extends EffectOwner
 
 enum Type {START_OF_TURN, START_OF_COMBAT, END_OF_TURN, END_OF_COMBAT, EVENT_BASED}
 enum CharacterType {ALL, ASSASSIN, WARRIOR, WIZARD}

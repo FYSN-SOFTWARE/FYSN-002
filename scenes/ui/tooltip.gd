@@ -14,7 +14,11 @@ var follow_target: Control = null  # 新增：跟随的目标控件
 func _ready() -> void:
 	Events.tooltip_hide_requested.connect(hide_tooltip)
 	Events.tooltip_show_requested.connect(show_tooltip)
-	
+	# 确保工具提示不拦截鼠标事件
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	process_mode = Node.PROCESS_MODE_DISABLED
+	# 确保启用BBCode解析
+	tooltip_text_label.bbcode_enabled = true
 	# 初始化为透明但可见，这样动画才能工作
 	modulate = Color.TRANSPARENT
 	show()

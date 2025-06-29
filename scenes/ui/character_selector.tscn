@@ -51,16 +51,18 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -502.0
-offset_right = 502.0
-offset_bottom = 272.0
+offset_left = -676.0
+offset_top = 18.0
+offset_right = -404.0
+offset_bottom = 92.0
 grow_horizontal = 2
+scale = Vector2(5, 5)
 
 [node name="Title" type="Label" parent="CharacterText"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 15
-text = "战士"
+theme_override_font_sizes/font_size = 50
+text = "战 士"
 label_settings = SubResource("LabelSettings_rnxpd")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -68,7 +70,8 @@ vertical_alignment = 1
 [node name="Description" type="Label" parent="CharacterText"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "巴拉巴拉巴拉（人物背景/其他描述等等）"
+text = "巴拉巴拉巴拉
+（人物背景/其他描述/等等）"
 label_settings = SubResource("LabelSettings_aveil")
 horizontal_alignment = 1
 vertical_alignment = 1

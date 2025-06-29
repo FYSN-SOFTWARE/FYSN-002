@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://cedsow628sq3y"]
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://cedsow628sq3y"]
 
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="1_8l3hv"]
 [ext_resource type="Texture2D" uid="uid://bxgrktox5it82" path="res://art/tile_0105.png" id="1_p0xvk"]
-[ext_resource type="Script" path="res://characters/warrior/cards/warrior_sharp_knife.gd" id="2_rjcfh"]
+[ext_resource type="Script" uid="uid://clb7s38ikhx38" path="res://characters/warrior/cards/warrior_sharp_knife.gd" id="2_rjcfh"]
 [ext_resource type="AudioStream" uid="uid://dixklg6g4jnsq" path="res://art/slash.ogg" id="3_uxg0o"]
 
 [resource]
@@ -15,3 +16,9 @@ exhausts = false
 icon = ExtResource("1_p0xvk")
 tooltip_text = "[center]Deal [color=\"ff0000\"]%s[/color] damage. +%s damage this combat.[/center]"
 sound = ExtResource("3_uxg0o")
+upgraded = false
+upgrade_damage = 2
+upgrade_block = 2
+upgrade_cost = 0
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("1_8l3hv")]([])

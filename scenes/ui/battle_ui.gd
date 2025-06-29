@@ -8,8 +8,10 @@ extends CanvasLayer
 @onready var end_turn_button: Button = %EndTurnButton
 @onready var draw_pile_button: CardPileOpener = %DrawPileButton
 @onready var discard_pile_button: CardPileOpener = %DiscardPileButton
+@onready var excard_pile_button: CardPileOpener = %ExcardPileButton
 @onready var draw_pile_view: CardPileView = %DrawPileView
 @onready var discard_pile_view: CardPileView = %DiscardPileView
+@onready var excard_pile_view: CardPileView = %ExcardPileView
 
 
 func _ready() -> void:
@@ -17,6 +19,7 @@ func _ready() -> void:
 	end_turn_button.pressed.connect(_on_end_turn_button_pressed)
 	draw_pile_button.pressed.connect(draw_pile_view.show_current_view.bind("Draw Pile", true))
 	discard_pile_button.pressed.connect(discard_pile_view.show_current_view.bind("Discard Pile"))
+	excard_pile_button.pressed.connect(excard_pile_view.show_current_view.bind("Excard Pile"))
 
 
 func initialize_card_pile_ui() -> void:

@@ -1,0 +1,15 @@
+[gd_resource type="ParticlesMaterial" load_steps=2 format=3]
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 0
+flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+color = Color(0.8, 0.2, 0.8, 0.8)
+color_ramp = null
+trail_size_modifier = 1.0
+trail_color_modifier = null
+
+[resource]
+resource_local_to_scene = false
+resource_name = "flipped_particles_material"
+material = SubResource(1)

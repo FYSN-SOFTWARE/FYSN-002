@@ -20,9 +20,11 @@ var card_rarity_weights := {
 	Card.Rarity.UNCOMMON: 0.0,
 	Card.Rarity.RARE: 0.0
 }
-
+var run_data: Run
 
 func _ready() -> void:
+	run_data = get_tree().root.get_node("Run")
+	
 	for node: Node in rewards.get_children():
 		node.queue_free()
 
@@ -125,4 +127,10 @@ func _on_relic_reward_taken(relic: Relic) -> void:
 
 
 func _on_back_button_pressed() -> void: 
-	Events.battle_reward_exited.emit()
+	# 检查是否是序章Boss战胜利后的奖励场景
+	if run_data and run_data.is_prologue and run_data.map.floors_climbed >= 3:
+		Events.prologue_boss_defeated.emit()
+	else:
+		Events.battle_reward_exited.emit()
+	
+	queue_free()

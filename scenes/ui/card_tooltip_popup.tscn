@@ -45,6 +45,7 @@ layout_mode = 2
 
 [node name="CardDescription" type="RichTextLabel" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 offset_left = 661.0
 offset_top = 668.0

@@ -12,12 +12,20 @@ extends Stats
 @export var cards_per_turn: int
 @export var max_mana: int
 @export var starting_relic: Relic
+@export var startesoals: int = 0
 
 var mana: int : set = set_mana
+var soals: int
 var deck: CardPile
 var discard: CardPile
 var draw_pile: CardPile
+var ex_pile: CardPile
 
+func init() -> void:
+	draw_pile.init(1)
+	discard.init(3)
+	ex_pile.init(4)
+	
 
 func set_mana(value: int) -> void:
 	mana = value
@@ -47,4 +55,5 @@ func create_instance() -> Resource:
 	instance.deck = instance.starting_deck.duplicate()
 	instance.draw_pile = CardPile.new()
 	instance.discard = CardPile.new()
+	instance.ex_pile = CardPile.new()
 	return instance
