@@ -31,6 +31,9 @@ signal battle_over_screen_requested(text: String, type: BattleOverPanel.Type)
 signal battle_won
 signal status_tooltip_requested(statuses: Array[Status])
 
+# 添加战斗开始信号
+signal battle_started()
+
 # Map-related events
 signal map_exited(room: Room)
 
@@ -54,6 +57,8 @@ signal campfire_exited
 
 # Battle Reward-related events
 signal battle_reward_exited
+
+signal prologue_boss_defeated  # 序章Boss被击败信号
 
 # Treasure Room-related events
 signal treasure_room_exited(found_relic: Relic)

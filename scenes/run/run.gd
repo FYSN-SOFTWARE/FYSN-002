@@ -9,6 +9,8 @@ const TREASURE_SCENE = preload("res://scenes/treasure/treasure.tscn")
 const WIN_SCREEN_SCENE := preload("res://scenes/win_screen/win_screen.tscn")
 const MAIN_MENU_PATH := "res://scenes/ui/main_menu.tscn"
 const FLIPPED_BATTLE_SCENE := preload("res://scenes/battle/flipped_battle.tscn")
+const PROLOGUE_CG_SCENE := preload("res://scenes/map/prologue/cg_scene.tscn")
+const PROLOGUE_MAP_GENERATOR = preload("res://scenes/map/prologue/prologue_map_generator.gd")
 
 @export var run_startup: RunStartup
 
@@ -36,6 +38,9 @@ var character: CharacterStats
 var save_data: SaveGame
 # 添加翻转状态变量
 var is_flipped: bool = false
+# 在类变量中添加（序章）
+var is_prologue := false
+var prologue_completed := false
 
 func _ready() -> void:
 	if not run_startup:
@@ -53,25 +58,69 @@ func _ready() -> void:
 		RunStartup.Type.CONTINUED_RUN:
 			_load_run()
 			
-		# 连接翻转按钮信号
+	# 连接翻转按钮信号
 	flip_button.pressed.connect(_on_flip_button_pressed)
-	
 	# 连接世界翻转事件
 	Events.world_flipped.connect(_on_world_flipped)
+	# 连接序章boss被击败事件
+	Events.prologue_boss_defeated.connect(_on_prologue_boss_defeated)
 
 
 func _start_run() -> void:
 	stats = RunStats.new()
+
+	# 如果是新游戏，检查是否开始序章
+	if run_startup.type == RunStartup.Type.NEW_RUN:
+		# 新游戏开始序章
+		_start_prologue()
+	else:
+		# 继续游戏
+		_load_run()
+
+# 新增序章启动函数
+func _start_prologue() -> void:
+	is_prologue = true
+	prologue_completed = false
+	
+	character = run_startup.picked_character.create_instance()
+	stats.chapter = 0  # 0表示序章
+	
+	# 设置地图的 run_stats
+	map.run_stats = stats
 	
 	_setup_event_connections()
 	_setup_top_bar()
 	
-	map.generate_new_map()
+	# 确保资源池被正确初始化
+	if not $Map/MapGenerator.battle_stats_pool:
+		$Map/MapGenerator.battle_stats_pool = preload("res://battles/battle_stats_pool.tres")
+		$Map/MapGenerator.battle_stats_pool.setup()
+	
+	if not $Map/MapGenerator.event_room_pool:
+		$Map/MapGenerator.event_room_pool = preload("res://scenes/event_rooms/event_room_pool.tres")
+	
+	# 生成序章地图
+	map.generate_new_map(0)
 	map.unlock_floor(0)
 	
-	save_data = SaveGame.new()
-	_save_run(true)
+	_save_prologue()
 
+# 新增序章保存函数
+func _save_prologue() -> void:
+	save_data = SaveGame.new()
+	save_data.rng_seed = RNG.instance.seed
+	save_data.rng_state = RNG.instance.state
+	save_data.run_stats = stats
+	save_data.char_stats = character
+	save_data.current_deck = character.deck
+	save_data.current_health = character.health
+	save_data.relics = relic_handler.get_all_relics()
+	save_data.last_room = map.last_room
+	save_data.map_data = map.map_data.duplicate()
+	save_data.floors_climbed = map.floors_climbed
+	save_data.was_on_map = true
+	save_data.is_prologue = true
+	save_data.save_data()
 
 func _save_run(was_on_map: bool) -> void:
 	save_data.rng_seed = RNG.instance.seed
@@ -87,23 +136,6 @@ func _save_run(was_on_map: bool) -> void:
 	save_data.was_on_map = was_on_map
 	save_data.save_data()
 
-
-func _load_run() -> void:
-	save_data = SaveGame.load_data()
-	assert(save_data, "Couldn't load last save")
-	
-	RNG.set_from_save_data(save_data.rng_seed, save_data.rng_state)
-	stats = save_data.run_stats
-	character = save_data.char_stats
-	character.deck = save_data.current_deck
-	character.health = save_data.current_health
-	relic_handler.add_relics(save_data.relics)
-	_setup_top_bar()
-	_setup_event_connections()
-	
-	map.load_map(save_data.map_data, save_data.floors_climbed, save_data.last_room)
-	if save_data.last_room and not save_data.was_on_map:
-		_on_map_exited(save_data.last_room)
 
 # 新增翻转按钮处理函数
 func _on_flip_button_pressed() -> void:
@@ -212,6 +244,7 @@ func _on_battle_room_entered(room: Room) -> void:
 	battle_scene.char_stats = character
 	battle_scene.battle_stats = room.battle_stats
 	battle_scene.relics = relic_handler
+	battle_scene.run_stats = stats  # 确保传递 run_stats
 	battle_scene.start_battle()
 
 
@@ -251,15 +284,61 @@ func _on_event_room_entered(room: Room) -> void:
 	event_room.run_stats = stats
 	event_room.setup()
 
+# 添加新的信号处理函数
+func _on_prologue_boss_defeated() -> void:
+	# 隐藏TopBar
+	$TopBar.visible = false
+	
+	# 加载CG场景
+	var cg_scene := PROLOGUE_CG_SCENE.instantiate()
+	add_child(cg_scene)
+	cg_scene.cg_completed.connect(_on_cg_completed)
+
+# 新增CG完成回调
+func _on_cg_completed() -> void:
+	prologue_completed = true
+	is_prologue = false
+	stats.chapter = 1  # 进入第一章
+	
+	map.generate_new_map(1)
+	map.unlock_floor(0)
+	
+	$TopBar.visible = true
+	map.show_map()
+	_save_run(true)  # 保存第一章状态
+
 
 func _on_battle_won() -> void:
-	if map.floors_climbed == MapGenerator.FLOORS:
-		var win_screen := _change_view(WIN_SCREEN_SCENE) as WinScreen
-		win_screen.character = character
-		SaveGame.delete_data()
-	else:
-		_show_regular_battle_rewards()
+	_show_regular_battle_rewards()
 
+
+func _load_run() -> void:
+	save_data = SaveGame.load_data()
+	assert(save_data, "Couldn't load last save")
+	
+	RNG.set_from_save_data(save_data.rng_seed, save_data.rng_state)
+	stats = save_data.run_stats
+	character = save_data.char_stats
+	character.deck = save_data.current_deck
+	character.health = save_data.current_health
+	relic_handler.add_relics(save_data.relics)
+	# 设置地图的 run_stats
+	map.run_stats = stats
+	
+	_setup_top_bar()
+	_setup_event_connections()
+	
+	# 检查是否是序章
+	if save_data.is_prologue:
+		# 加载序章地图
+		map.load_map(save_data.map_data, save_data.floors_climbed, save_data.last_room)
+		if save_data.last_room and not save_data.was_on_map:
+			_on_map_exited(save_data.last_room)
+	else:
+		# 加载第一章地图
+		map.load_map(save_data.map_data, save_data.floors_climbed, save_data.last_room)
+		if save_data.last_room and not save_data.was_on_map:
+			_on_map_exited(save_data.last_room)
 
 func _on_map_exited(room: Room) -> void:
 	_save_run(false)

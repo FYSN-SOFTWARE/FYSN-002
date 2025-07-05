@@ -12,6 +12,7 @@ scale = Vector2(5, 5)
 script = ExtResource("1_il1gs")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.2, -19.6)
 texture = ExtResource("1_0r2oj")
 
 [node name="StatusHandler" parent="." node_paths=PackedStringArray("status_owner") instance=ExtResource("4_60v6k")]

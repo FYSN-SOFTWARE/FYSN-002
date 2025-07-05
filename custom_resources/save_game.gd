@@ -15,6 +15,8 @@ const SAVE_PATH := "user://savegame.tres"
 @export var floors_climbed: int
 @export var was_on_map: bool
 @export var is_flipped: bool = false
+# 添加序章相关
+@export var is_prologue: bool = false
 
 func save_data() -> void:
 	var err := ResourceSaver.save(self, SAVE_PATH)
