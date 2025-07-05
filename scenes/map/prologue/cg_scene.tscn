@@ -14,9 +14,10 @@ offset_bottom = 1080.0
 [node name="Image" type="TextureRect" parent="Control"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 5.0
-offset_right = 1188.0
-offset_bottom = 1074.0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 1185.0
+offset_bottom = 1075.0
 
 [node name="TextLabel" type="RichTextLabel" parent="Control"]
 unique_name_in_owner = true

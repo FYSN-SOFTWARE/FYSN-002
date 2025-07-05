@@ -12,9 +12,11 @@ config_version=5
 
 config/name="Deck Builder Tutorial"
 config/tags=PackedStringArray("gamelab")
-run/main_scene="res://scenes/run/run.tscn"
+run/main_scene="uid://4tj0qise1som"
 config/features=PackedStringArray("4.4", "Mobile")
+boot_splash/image="uid://j467cdww35lm"
 config/icon="res://icon.png"
+boot_splash/minimum_display_time=2000
 
 [autoload]
 
