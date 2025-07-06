@@ -36,7 +36,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(7.5, 7.5)
+scale = Vector2(5, 5)
 pivot_offset = Vector2(50, 50)
 theme_override_constants/separation = 5
 

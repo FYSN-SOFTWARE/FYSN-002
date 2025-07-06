@@ -17,3 +17,21 @@ enum Type {NOT_ASSIGNED, MONSTER, TREASURE, CAMPFIRE, SHOP, BOSS, EVENT}
 
 func _to_string() -> String:
 	return "%s (%s)" % [column, Type.keys()[type][0]]
+
+
+# 添加序列化支持
+func save_state() -> Dictionary:
+	return {
+		"row": row,
+		"column": column,
+		"type": type,
+		"selected": selected
+	}
+
+static func load_state(data: Dictionary) -> Room:
+	var room = Room.new()
+	room.row = data["row"]
+	room.column = data["column"]
+	room.type = data["type"]
+	room.selected = data["selected"]
+	return room

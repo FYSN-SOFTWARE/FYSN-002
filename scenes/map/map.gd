@@ -18,9 +18,12 @@ var last_room: Room
 var camera_edge_y: float
 var current_chapter: int = 1  # 1表示正式地图，0表示序章
 var run_stats: RunStats
+var fog_manager: FogManager
 
 func _ready() -> void:
 	camera_edge_y = MapGenerator.Y_DIST * (MapGenerator.FLOORS - 1)
+	# 初始化迷雾管理器
+	fog_manager = FogManager.new()
 	# 确保 run_stats 被正确设置
 	if run_stats == null:
 		push_warning("RunStats is null in Map!")
@@ -75,6 +78,15 @@ func create_map() -> void:
 	for child in lines.get_children():
 		child.queue_free()
 	
+	# 初始化迷雾管理器
+	fog_manager.initialize(map_data)
+	fog_manager.room_explored.connect(_on_room_explored)
+	
+	# 生成所有房间
+	for current_floor in map_data:
+		for room in current_floor:
+			_spawn_room(room)
+	
 	# 生成所有房间
 	for current_floor in map_data:
 		for room in current_floor:
@@ -104,12 +116,6 @@ func unlock_floor(which_floor: int = floors_climbed) -> void:
 			map_room.available = true
 
 
-func unlock_next_rooms() -> void:
-	for map_room: MapRoom in rooms.get_children():
-		if last_room.next_rooms.has(map_room.room):
-			map_room.available = true
-
-
 func show_map() -> void:
 	show()
 	camera_2d.enabled = true
@@ -130,6 +136,22 @@ func _spawn_room(room: Room) -> void:
 	
 	if room.selected and room.row < floors_climbed:
 		new_map_room.show_selected()
+	# 设置初始迷雾状态
+	new_map_room.set_explored(fog_manager.is_room_explored(room))
+
+
+# 房间探索状态变化时的处理
+func _on_room_explored(room: Room) -> void:
+	for map_room in rooms.get_children():
+		if map_room.room == room:
+			map_room.set_explored(true)
+
+# 解锁下一层房间
+func unlock_next_rooms() -> void:
+	for map_room: MapRoom in rooms.get_children():
+		if last_room and last_room.next_rooms.has(map_room.room):
+			fog_manager.set_room_explored(map_room.room, true)
+			map_room.available = true
 
 
 func _connect_lines(room: Room) -> void:
@@ -152,7 +174,22 @@ func _on_map_room_clicked(room: Room) -> void:
 func _on_map_room_selected(room: Room) -> void:
 	last_room = room
 	floors_climbed += 1
+	# 探索当前房间及其相邻房间
+	fog_manager.explore_room_and_neighbors(room)
 	# 更新当前房间索引（用于序章教学）
 	if run_stats:
 		run_stats.current_room_index = room.row
 	Events.map_exited.emit(room)
+
+# 保存地图时保存迷雾状态
+func save_map_state() -> Dictionary:
+	return {
+		"map_data": map_data,
+		"fog_states": fog_manager.save_fog_states()
+	}
+
+# 加载地图时加载迷雾状态
+func load_map_state(saved_data: Dictionary) -> void:
+	map_data = saved_data["map_data"]
+	fog_manager.initialize(map_data)
+	fog_manager.load_fog_states(saved_data["fog_states"])

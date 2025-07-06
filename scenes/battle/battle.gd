@@ -14,8 +14,8 @@ extends Node2D
 @onready var background: Sprite2D = $Background  # 确保场景中有背景节点
 @onready var flip_button: Button = $FlipButton   # 添加按钮引用
 # 背景资源
-var normal_background = preload("res://art/background.png")
-var flipped_background = preload("res://art/background_fanzhuan.png")
+var normal_background = preload("res://art/场景/BigBirdArrived.png")
+var flipped_background = preload("res://art/场景/BigBirdDead.png")
 # 当前翻转状态
 var is_flipped: bool = false
 # 添加教程系统

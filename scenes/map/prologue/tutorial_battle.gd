@@ -77,7 +77,7 @@ func get_basic_tutorial_steps() -> Array[Dictionary]:
 	return [
 		{
 			"texture": preload("res://scenes/map/prologue/卡牌.jpg"),
-			"text": "欢迎来到卡牌战斗！[b]你的卡牌位于屏幕下方。[/b]\n\n每个回合开始时，你会抽5张卡牌。"
+			"text": "欢迎来到卡牌战斗！你的卡牌位于屏幕下方。\n\n每个回合开始时，你会抽4张卡牌。"
 		},
 		{
 			"texture": preload("res://scenes/map/prologue/11111.jpg"),
