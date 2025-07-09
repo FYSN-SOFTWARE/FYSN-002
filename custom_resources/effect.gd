@@ -23,7 +23,7 @@ enum CostType{
 	Other
 }
 enum CardArea{NONE,DRAWDECK,HAND,GRAVEYARD,EXILEPILE}
-enum Target {SELFONE, SINGLE_ENEMY, ALL_ENEMIES, EVERYONE,SOMEONE}
+enum Target {SELF, SELFONE, SINGLE_ENEMY, ALL_ENEMIES, EVERYONE,SOMEONE}
 enum EffectType{HEALTHDEMAGE,SANDEMAGE,BLOCK,HEALTHHEAL,SANHEAL,TRANSCARD,BUFF,COUNTER,OTHER,UPGRADE}
 enum EffectTager{Once,Forever}
 
@@ -37,10 +37,16 @@ enum EffectTager{Once,Forever}
 @export var effectValue:int
 @export var effectTager:EffectTager
 @export var can_action_area:CardArea
-@export var cost_start_area:CardArea
-@export var cost_end_area:CardArea
+@export var get_target_start_area:CardArea
+@export var get_target_end_area:CardArea
 @export var effect_start_area:CardArea
 @export var effect_end_area:CardArea
+@export var follow_effect:Effect
+@export var effect_owner:EffectOwner
+#@export var 
+
+var use_cost: bool
+var targets: Array[Node] = []
 
 var _corrnentarea: CardArea
 var corrnentarea: CardArea:
@@ -57,19 +63,19 @@ func _connectsignal() -> void:
 		TriggerMethod.NONE:
 			pass
 		TriggerMethod.INTOBACKWORLD:
-			Events.world_flipped.connect(func(into:bool):if(into == true):cost())
+			Events.world_flipped.connect(func(into:bool):if(into == true):get_target())
 		TriggerMethod.OUTBACKWORLD:
-			Events.world_flipped.connect(func(into:bool):if(into == false):cost())
+			Events.world_flipped.connect(func(into:bool):if(into == false):get_target())
 		TriggerMethod.CARDACTION:
 			Events.cardaction.connect(card_action_signal)
 		TriggerMethod.TRANSCAREA:
 			Events.transcard.connect(transcard_signalc)
 		TriggerMethod.BATTLESTARTE:
-			Events.battle_starte.connect(cost)
+			Events.battle_starte.connect(get_target)
 		TriggerMethod.TURNSTARTE:
-			Events.player_turn_start.connect(cost)
+			Events.player_turn_start.connect(get_target)
 		TriggerMethod.TURNEND:
-			Events.player_turn_ended.connect(cost)
+			Events.player_turn_ended.connect(get_target)
 		TriggerMethod.OTHER:
 			other_signal()
 	pass
@@ -78,16 +84,22 @@ func _initialize() -> void:
 	if(can_action_area == _corrnentarea):
 		_connectsignal()
 
-func use_effect() -> void:
-	match effectTager:
-		EffectTager.Once:
-			pass
-		EffectTager.Forever:
-			pass
+
+func get_target() -> void:
+	
 	pass
 
 func cost() -> void:
-	pass
+	if not use_cost:
+		use_cost = true
+		action()
+		return
+	match costType:
+		CostType.None:
+			pass
+		CostType.UseEnergy:
+			pass
+	action()
 
 func card_action_signal(card: Card) -> void:
 	pass

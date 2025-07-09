@@ -3,7 +3,7 @@ extends EffectOwner
 
 enum Type {ATTACK, SKILL, POWER}
 enum Rarity {COMMON, UNCOMMON, RARE, LEGEND}
-enum Target {SELF, SINGLE_ENEMY, ALL_ENEMIES, EVERYONE}
+enum Target {SELF, SELFONE, SINGLE_ENEMY, ALL_ENEMIES, EVERYONE,SOMEONE}
 
 const RARITY_COLORS := {
 	Card.Rarity.COMMON: Color.GRAY,
@@ -12,32 +12,72 @@ const RARITY_COLORS := {
 	Card.Rarity.LEGEND: Color.RED
 }
 
-@export_group("Card Attributes")
-@export var id: String
-@export var type: Type
-@export var rarity: Rarity
-@export var target: Target
-@export var cost: int
-@export var exhausts: bool = false
+@export var id: String:
+	get:
+		if (isBackworld):
+			return otherbackcard.id
+		return outcard.id
+@export var type: Type:
+	get:
+		if (isBackworld):
+			return otherbackcard.type
+		return outcard.type
+@export var rarity: Rarity:
+	get:
+		if (isBackworld):
+			return otherbackcard.rarity
+		return outcard.rarity
+@export var target: Target:
+	get:
+		if (isBackworld):
+			return otherbackcard.target
+		return outcard.target
+@export var cost: int:
+	get:
+		if (isBackworld):
+			return otherbackcard.cost
+		return outcard.cost
 
 @export_group("Card Visuals")
-@export var icon: Texture
-@export_multiline var tooltip_text: String
+@export var icon: Texture:
+	get:
+		if (isBackworld):
+			return otherbackcard.icon
+		return outcard.icon
+@export var tooltip_text: String:
+	get:
+		if (isBackworld):
+			return otherbackcard.id
+		return outcard.id
+@export var tooltips: Array[CardTooltip]:
+	get:
+		if (isBackworld):
+			return otherbackcard.tooltips
+		return outcard.tooltips
 @export var outcard: CardSide
 @export var backcard: CardSide
 @export var sound: AudioStream
 
 # 添加升级属性
-@export var upgraded: bool = false
+var upgraded: bool = false
 @export var upgrade_damage: int = 2
 @export var upgrade_block: int = 2
 @export var upgrade_cost: int = 0
 @export_multiline var upgraded_tooltip_text: String
 
+var otherbackcard: CardSide = backcard
+
+var isBackworld :bool = false
 var cardarea: Effect.CardArea = 0
 
+#进入战斗时需要触发
 func initiative() -> void:
 	effects = outcard.effects.duplicate()
+	Events.world_flipped.connect(on_worldflip)
+
+#反转时触发
+func on_worldflip(flipword: bool) -> void:
+	isBackworld = flipword
 
 func is_single_targeted() -> bool:
 	return target == Target.SINGLE_ENEMY
@@ -69,56 +109,10 @@ func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierH
 	else:
 		apply_effects(_get_targets(targets), modifiers)
 
+
 # 升级卡牌
 func upgrade() -> void:
 	upgraded = true
-	
-	# 应用升级效果 - 允许同时升级多个属性
-	var upgrade_log = []
-	
-	# 1. 处理伤害升级
-	if upgrade_damage != 0:
-		var damage_upgraded = false
-		if outcard:
-			for effect in outcard.effects:
-				if effect is DamageEffect:
-					effect.amount += upgrade_damage
-					damage_upgraded = true
-		if damage_upgraded:
-			upgrade_log.append("伤害 +%d" % upgrade_damage)
-	
-	# 2. 处理格挡升级
-	if upgrade_block != 0:
-		var block_upgraded = false
-		if outcard:
-			for effect in outcard.effects:
-				if effect is BlockEffect:
-					effect.amount += upgrade_block
-					block_upgraded = true
-		if block_upgraded:
-			upgrade_log.append("格挡 +%d" % upgrade_block)
-	
-	# 3. 处理消耗升级
-	if upgrade_cost != 0:
-		var cost_change = upgrade_cost
-		cost = max(0, cost + cost_change)
-		var sign = "+" if cost_change > 0 else ""
-		upgrade_log.append("消耗 %s%d" % [sign, cost_change])
-	
-	# 更新工具提示文本
-	if upgrade_log.size() > 0:
-		var upgrade_text = "[升级: %s]" % ", ".join(upgrade_log)
-		if upgraded_tooltip_text.is_empty():
-			tooltip_text += "\n\n" + upgrade_text
-		else:
-			upgraded_tooltip_text += "\n\n" + upgrade_text
-	else:
-		# 如果没有特定效果升级，添加通用升级文本
-		var upgrade_text = "[已升级]"
-		if upgraded_tooltip_text.is_empty():
-			tooltip_text += "\n\n" + upgrade_text
-		else:
-			upgraded_tooltip_text += "\n\n" + upgrade_text
 	
 	# 调用子类特定的升级逻辑
 	post_upgrade()
