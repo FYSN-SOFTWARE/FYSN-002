@@ -9,8 +9,8 @@
 
 [resource]
 script = ExtResource("1_d8ou5")
-character_name = "Warrior"
-description = "Likes to slice things."
+character_name = "顾林"
+description = "常以精神自残需找灵感的精神病画家"
 portrait = ExtResource("1_8jkdb")
 starting_deck = ExtResource("3_d68oj")
 draftable_cards = ExtResource("2_jojs0")
