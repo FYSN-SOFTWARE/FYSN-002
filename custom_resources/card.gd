@@ -49,12 +49,12 @@ const RARITY_COLORS := {
 		if (isBackworld):
 			return otherbackcard.id
 		return outcard.id
-#@export var tooltips: Array[CardTooltip]:
-	#get:
-		#if (isBackworld):
-			#return otherbackcard.tooltips
-		#return outcard.tooltips
-		#
+@export var tooltips: Array[CardTooltip]:
+	get:
+		if (isBackworld):
+			return otherbackcard.tooltips
+		return outcard.tooltips
+		
 		
 @export var outcard: CardSide
 @export var backcard: CardSide
