@@ -1,17 +1,17 @@
 [gd_resource type="Resource" script_class="CharacterStats" load_steps=7 format=3 uid="uid://sbkc4o401k4l"]
 
 [ext_resource type="Texture2D" uid="uid://hdseo48xren7" path="res://art/角色/AerialAttackBow11 #162672.png" id="1_4dwfv"]
-[ext_resource type="Texture2D" uid="uid://cpydvk8mq66o5" path="res://art/tile_0087.png" id="1_8jkdb"]
 [ext_resource type="Script" uid="uid://8cgn5gn47idx" path="res://custom_resources/character_stats.gd" id="1_d8ou5"]
 [ext_resource type="Resource" uid="uid://cno2mmhf4bjci" path="res://characters/warrior/warrior_draftable_cards.tres" id="2_jojs0"]
+[ext_resource type="Texture2D" uid="uid://cx5pkdklxqq67" path="res://art/角色/顾林（面相、睁眼）.png" id="3_4dwfv"]
 [ext_resource type="Resource" uid="uid://dyyfi3rcfxyug" path="res://characters/warrior/warrior_starting_deck.tres" id="3_d68oj"]
 [ext_resource type="Resource" uid="uid://dgsppvwlatlhw" path="res://relics/healing_potion.tres" id="5_wfusn"]
 
 [resource]
 script = ExtResource("1_d8ou5")
 character_name = "顾林"
-description = "常以精神自残需找灵感的精神病画家"
-portrait = ExtResource("1_8jkdb")
+description = "常以精神自残找灵感的精神病画家"
+portrait = ExtResource("3_4dwfv")
 starting_deck = ExtResource("3_d68oj")
 draftable_cards = ExtResource("2_jojs0")
 cards_per_turn = 4
