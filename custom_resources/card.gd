@@ -3,7 +3,6 @@ extends EffectOwner
 
 enum Type {ATTACK, SKILL, POWER}
 enum Rarity {COMMON, UNCOMMON, RARE, LEGEND}
-enum Target {SELF, SELFONE, SINGLE_ENEMY, ALL_ENEMIES, EVERYONE,SOMEONE}
 
 const RARITY_COLORS := {
 	Card.Rarity.COMMON: Color.GRAY,
@@ -27,7 +26,7 @@ const RARITY_COLORS := {
 		if (isBackworld):
 			return otherbackcard.rarity
 		return outcard.rarity
-@export var target: Target:
+@export var target: Effect.Target:
 	get:
 		if (isBackworld):
 			return otherbackcard.target
@@ -82,7 +81,7 @@ func on_worldflip(flipword: bool) -> void:
 	isBackworld = flipword
 
 func is_single_targeted() -> bool:
-	return target == Target.SINGLE_ENEMY
+	return target == Effect.Target.SINGLE_ENEMY
 
 
 func _get_targets(targets: Array[Node]) -> Array[Node]:
@@ -92,11 +91,11 @@ func _get_targets(targets: Array[Node]) -> Array[Node]:
 	var tree := targets[0].get_tree()
 	
 	match target:
-		Target.SELF:
+		Effect.Target.SELF:
 			return tree.get_nodes_in_group("player")
-		Target.ALL_ENEMIES:
+		Effect.Target.ALL_ENEMIES:
 			return tree.get_nodes_in_group("enemies")
-		Target.EVERYONE:
+		Effect.Target.EVERYONE:
 			return tree.get_nodes_in_group("player") + tree.get_nodes_in_group("enemies")
 		_:
 			return []
