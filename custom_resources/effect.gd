@@ -99,6 +99,16 @@ func cost() -> void:
 			pass
 		CostType.UseEnergy:
 			pass
+		CostType.CantUse:
+			return
+		CostType.TransCard:
+			pass
+		CostType.PayHealth:
+			pass
+		CostType.PaySan:
+			pass
+		CostType.Other:
+			pass
 	action()
 
 func card_action_signal(card: Card) -> void:
