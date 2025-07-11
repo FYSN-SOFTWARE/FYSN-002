@@ -98,7 +98,9 @@ func cost() -> void:
 		CostType.None:
 			pass
 		CostType.UseEnergy:
-			pass
+			Battle.battle.mana.mana -= costint
+		CostType.UseSoals:
+			Battle.battle.mana.soals -= costint
 		CostType.CantUse:
 			return
 		CostType.TransCard:
@@ -108,8 +110,28 @@ func cost() -> void:
 		CostType.PaySan:
 			pass
 		CostType.Other:
+			other_costtype()
+	match se_costType:
+		CostType.None:
 			pass
+		CostType.UseEnergy:
+			Battle.battle.mana.mana -= costint
+		CostType.UseSoals:
+			Battle.battle.mana.soals -= costint
+		CostType.CantUse:
+			return
+		CostType.TransCard:
+			pass
+		CostType.PayHealth:
+			pass
+		CostType.PaySan:
+			pass
+		CostType.Other:
+			other_costtype()
 	action()
+
+func other_costtype() -> void:
+	pass
 
 func card_action_signal(card: Card) -> void:
 	pass

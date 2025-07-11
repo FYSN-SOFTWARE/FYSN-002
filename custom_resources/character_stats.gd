@@ -13,6 +13,7 @@ extends Stats
 @export var start_max_mana: int
 @export var start_max_san: int
 @export var start_soals: int = 0
+@export var start_max_soals: int
 @export var starting_relic: Relic
 
 
