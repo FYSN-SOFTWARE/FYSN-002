@@ -5,12 +5,11 @@ extends EffectOwner
 @export var id: String
 @export var type: Card.Type
 @export var cost: int
+@export var target: Effect.Target
 
 @export_group("Card Visuals")
 @export var icon: Texture
-@export_multiline var tooltip_text: String
-@export var tooltips: Array[CardTooltip]
-@export var target: Effect.Target
+@export var tooltip: Array[CardTooltip] = []
 
 # 添加升级属性
 @export var upgrade_damage: int = 2
