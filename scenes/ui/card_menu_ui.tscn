@@ -1,18 +1,63 @@
-[gd_scene load_steps=4 format=3 uid="uid://trmdo65td4t7"]
+[gd_scene load_steps=10 format=3 uid="uid://trmdo65td4t7"]
 
 [ext_resource type="Script" uid="uid://cdoyncqpeo0ic" path="res://scenes/ui/card_menu_ui.gd" id="1_0f0jo"]
-[ext_resource type="Resource" uid="uid://d4c8yfl4f4sat" path="res://characters/warrior/cards/warrior_block.tres" id="2_1ngm1"]
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="2_lcbw5"]
 [ext_resource type="PackedScene" uid="uid://b362c35jf6fmy" path="res://scenes/ui/card_visuals.tscn" id="3_vpo1j"]
+[ext_resource type="Texture2D" uid="uid://oe7v35ii8vrs" path="res://art/tile_0102.png" id="3_wcoov"]
+[ext_resource type="AudioStream" uid="uid://df64e7qat73gs" path="res://art/block.ogg" id="4_0nfo2"]
+[ext_resource type="Script" uid="uid://dxshpei5jcldc" path="res://custom_resources/card_tooltip.gd" id="5_jklsh"]
+
+[sub_resource type="GDScript" id="GDScript_5m1pf"]
+script/source = "extends Card
+
+var base_block := 5
+
+
+func get_default_tooltip() -> String:
+	return tooltip_text % base_block
+
+
+func get_updated_tooltip(_player_modifiers: ModifierHandler, _enemy_modifiers: ModifierHandler) -> String:
+	return tooltip_text % base_block
+
+
+func apply_effects(targets: Array[Node], _modifiers: ModifierHandler) -> void:
+	var block_effect := BlockEffect.new()
+	block_effect.amount = base_block
+	block_effect.sound = sound
+	block_effect.execute(targets)
+"
+
+[sub_resource type="Resource" id="Resource_bip66"]
+script = SubResource("GDScript_5m1pf")
+sound = ExtResource("4_0nfo2")
+upgrade_damage = 2
+upgrade_block = 2
+upgrade_cost = 0
+upgraded_tooltip_text = ""
+tooltips = Array[ExtResource("5_jklsh")]([])
+id = "warrior_block"
+type = 1
+rarity = 0
+target = 0
+cost = 1
+icon = ExtResource("3_wcoov")
+tooltip_text = "[center]Gain [color=\"0044ff\"]%s[/color] block.[/center]"
+effects = Array[ExtResource("2_lcbw5")]([])
+
+[sub_resource type="Resource" id="Resource_lcbw5"]
+metadata/__load_path__ = "res://characters/warrior/cards/warrior_slash.tres"
 
 [node name="CardMenuUI" type="CenterContainer"]
 offset_right = 25.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 script = ExtResource("1_0f0jo")
-card = ExtResource("2_1ngm1")
+card = SubResource("Resource_bip66")
 
 [node name="Visuals" parent="." instance=ExtResource("3_vpo1j")]
 layout_mode = 2
+card = SubResource("Resource_lcbw5")
 
 [connection signal="gui_input" from="Visuals" to="." method="_on_visuals_gui_input"]
 [connection signal="mouse_entered" from="Visuals" to="." method="_on_visuals_mouse_entered"]

@@ -31,7 +31,9 @@ func initialize_card_pile_ui() -> void:
 
 func _set_char_stats(value: CharacterStats) -> void:
 	char_stats = value
-	mana_ui.char_stats = char_stats
+	if not is_inside_tree():
+		await self.ready
+	#mana_ui.char_stats = char_stats
 	hand.char_stats = char_stats
 
 

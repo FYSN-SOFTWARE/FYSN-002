@@ -9,22 +9,26 @@ extends Panel
 var mana : int:
 	set(value):
 		mana = value
-		text_change
+		text_change()
 var max_mana : int:
 	set(value):
 		max_mana = value
-		text_change
+		text_change()
 var soals : int:
 	set(value):
 		soals = value
-		text_change
+		text_change()
 var max_soals : int:
 	set(value):
 		max_soals = value
-		text_change
+		text_change()
 var start_soals : int:
 	set(value):
-		max_soals = value
+		start_soals = value
+
+func _ready() -> void:
+	char_stats = Battle.battle.char_stats
+	pass
 
 func _set_char_stats(value: CharacterStats) -> void:
 	char_stats = value
