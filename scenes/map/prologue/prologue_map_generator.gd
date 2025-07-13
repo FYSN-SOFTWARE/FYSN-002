@@ -25,7 +25,7 @@ func generate_map() -> Array[Array]:
 	for i in range(5):
 		var room_row: Array[Room] = []
 		var room := Room.new()
-		room.position = Vector2(0, i * -Y_DIST)
+		room.position = Vector2(0, i * Y_DIST)
 		room.row = i
 		room.column = 0
 		room.next_rooms = []
@@ -48,7 +48,7 @@ func generate_map() -> Array[Array]:
 					room.event_scene = event_room_pool.get_random()
 				else:
 					# 使用默认事件场景
-					room.event_scene = preload("res://scenes/event_rooms/gamble_event.tscn")
+					room.event_scene = preload("res://scenes/event_rooms/bulletin_board_event.tscn")
 	
 			RoomSequence.SHOP:  # 第四个房间是商店房
 				room.type = Room.Type.SHOP

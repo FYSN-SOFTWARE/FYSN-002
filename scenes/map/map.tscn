@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://n2cunmascv08" path="res://scenes/map/map_generator.gd" id="2_0qmb6"]
 [ext_resource type="Resource" uid="uid://by8ka073e8sah" path="res://battles/battle_stats_pool.tres" id="3_cadnm"]
 [ext_resource type="Resource" uid="uid://bncylsfojpqyu" path="res://scenes/event_rooms/event_room_pool.tres" id="4_0q2ee"]
-[ext_resource type="Texture2D" uid="uid://58o0r7tim1s" path="res://art/场景/2 #100794.png" id="5_fcby6"]
+[ext_resource type="Texture2D" uid="uid://d33f327h3i2ml" path="res://art/场景/大背景1.jpg" id="5_fcby6"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_l06hy")
@@ -36,3 +36,4 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_fcby6")
+expand_mode = 1

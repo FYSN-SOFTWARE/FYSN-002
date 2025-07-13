@@ -177,6 +177,12 @@ func _change_view(scene: PackedScene) -> Node:
 	return new_view
 
 
+func _on_event_room_exited() -> void:
+	# 确保有返回地图的逻辑
+	_show_map()
+	print("Exiting event room")
+	
+
 func _show_map() -> void:
 	if current_view.get_child_count() > 0:
 		current_view.get_child(0).queue_free()
@@ -194,7 +200,7 @@ func _setup_event_connections() -> void:
 	Events.map_exited.connect(_on_map_exited)
 	Events.shop_exited.connect(_show_map)
 	Events.treasure_room_exited.connect(_on_treasure_room_exited)
-	Events.event_room_exited.connect(_show_map)
+	Events.event_room_exited.connect(_on_event_room_exited)
 	Events.world_flipped.connect(_on_world_flipped)
 	
 	battle_button.pressed.connect(_change_view.bind(BATTLE_SCENE))
@@ -283,6 +289,7 @@ func _on_event_room_entered(room: Room) -> void:
 	event_room.character_stats = character
 	event_room.run_stats = stats
 	event_room.setup()
+	print("Entering event room: ", room.event_scene.resource_path)
 
 # 添加新的信号处理函数
 func _on_prologue_boss_defeated() -> void:

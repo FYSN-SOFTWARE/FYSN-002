@@ -132,15 +132,9 @@ scale = Vector2(5, 5)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Control3" type="Control" parent="TopBar/BarItems/RelicHandlerContainer"]
-custom_minimum_size = Vector2(1300, 80)
-layout_mode = 2
-
-[node name="RelicHandler" parent="TopBar/BarItems/RelicHandlerContainer/Control3" instance=ExtResource("6_f8fbw")]
+[node name="RelicHandler" parent="TopBar/BarItems/RelicHandlerContainer" instance=ExtResource("6_f8fbw")]
 unique_name_in_owner = true
-layout_mode = 1
-offset_right = 1250.0
-offset_bottom = 80.0
+layout_mode = 2
 
 [node name="DeckButton" parent="TopBar/BarItems" node_paths=PackedStringArray("counter") instance=ExtResource("4_ayx7e")]
 unique_name_in_owner = true

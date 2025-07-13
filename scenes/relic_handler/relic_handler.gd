@@ -11,6 +11,9 @@ const RELIC_UI = preload("res://scenes/relic_handler/relic_ui.tscn")
 
 
 func _ready() -> void:
+	# 添加节点到组，便于全局访问
+	add_to_group("relic_handler")
+	
 	relics.child_exiting_tree.connect(_on_relics_child_exiting_tree)
 
 

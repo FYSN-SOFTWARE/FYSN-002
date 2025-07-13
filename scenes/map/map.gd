@@ -37,7 +37,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("scroll_down"):
 		camera_2d.position.y += SCROLL_SPEED
 
-	camera_2d.position.y = clamp(camera_2d.position.y, -camera_edge_y, 0)
+	camera_2d.position.y = clamp(camera_2d.position.y, 0, camera_edge_y)
 
 
 func generate_new_map(chapter: int = 1) -> void:
@@ -75,8 +75,6 @@ func create_map() -> void:
 	# 清空现有房间和线条
 	for child in rooms.get_children():
 		child.queue_free()
-	for child in lines.get_children():
-		child.queue_free()
 	
 	# 初始化迷雾管理器
 	fog_manager.initialize(map_data)
@@ -92,11 +90,6 @@ func create_map() -> void:
 		for room in current_floor:
 			_spawn_room(room)
 	
-	# 生成所有连接线
-	for current_floor in map_data:
-		for room in current_floor:
-			_connect_lines(room)
-	
 	# 调整地图位置
 	if current_chapter == 0:  # 序章地图
 		# 序章地图居中显示
@@ -105,9 +98,8 @@ func create_map() -> void:
 		visuals.position.y = (get_viewport_rect().size.y - map_height_pixels) / 2
 		visuals.position.x = get_viewport_rect().size.x / 2
 	else:  # 正式地图
-		var map_width_pixels := MapGenerator.X_DIST * (MapGenerator.MAP_WIDTH - 1)
-		visuals.position.x = (get_viewport_rect().size.x - map_width_pixels) / 2
-		visuals.position.y = get_viewport_rect().size.y / 2
+		visuals.position.x = (get_viewport_rect().size.x - MapGenerator.X_DIST * (MapGenerator.MAP_WIDTH - 1)) / 2
+		visuals.position.y = 0 
 
 
 func unlock_floor(which_floor: int = floors_climbed) -> void:
