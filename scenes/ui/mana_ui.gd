@@ -4,19 +4,45 @@ extends Panel
 @export var char_stats: CharacterStats : set = _set_char_stats
 
 @onready var mana_label: Label = $ManaLabel
+@onready var san_label: Label = $SanLabel
 
+var mana : int:
+	set(value):
+		mana = value
+		text_change
+var max_mana : int:
+	set(value):
+		max_mana = value
+		text_change
+var soals : int:
+	set(value):
+		soals = value
+		text_change
+var max_soals : int:
+	set(value):
+		max_soals = value
+		text_change
+var start_soals : int:
+	set(value):
+		max_soals = value
 
 func _set_char_stats(value: CharacterStats) -> void:
 	char_stats = value
-	
-	if not char_stats.stats_changed.is_connected(_on_stats_changed):
-		char_stats.stats_changed.connect(_on_stats_changed)
+	max_mana = char_stats.start_max_mana
+	start_soals = char_stats.start_soals
+	max_soals = char_stats.start_max_soals
+	text_change()
+	Events.battle_started.connect(battle_start_handler)
+	Events.player_turn_start.connect(turn_start_handler)
 
-	if not is_node_ready():
-		await ready
+func battle_start_handler() -> void:
+	soals = start_soals
+	pass
 
-	_on_stats_changed()
+func  turn_start_handler() -> void:
+	mana = max_mana
+	pass
 
-
-func _on_stats_changed() -> void:
-	mana_label.text = "%s/%s" % [char_stats.mana, char_stats.max_mana]
+func text_change() -> void:
+	mana_label.text = "%s/%s" % [mana, max_mana]
+	san_label.text = "%s/%s" % [soals, max_soals]

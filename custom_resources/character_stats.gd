@@ -10,12 +10,13 @@ extends Stats
 @export var starting_deck: CardPile
 @export var draftable_cards: CardPile
 @export var cards_per_turn: int
-@export var max_mana: int
+@export var start_max_mana: int
+@export var start_max_san: int
+@export var start_soals: int = 0
+@export var start_max_soals: int
 @export var starting_relic: Relic
-@export var startesoals: int = 0
 
-var mana: int : set = set_mana
-var soals: int
+
 var deck: CardPile
 var discard: CardPile
 var draw_pile: CardPile
@@ -27,14 +28,6 @@ func init() -> void:
 	ex_pile.init(4)
 	
 
-func set_mana(value: int) -> void:
-	mana = value
-	stats_changed.emit()
-
-
-func reset_mana() -> void:
-	mana = max_mana
-
 
 func take_damage(damage: int) -> void:
 	var initial_health := health
@@ -44,7 +37,7 @@ func take_damage(damage: int) -> void:
 
 
 func can_play_card(card: Card) -> bool:
-	return mana >= card.cost
+	return true
 
 
 func create_instance() -> Resource:

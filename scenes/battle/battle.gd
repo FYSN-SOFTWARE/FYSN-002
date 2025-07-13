@@ -13,6 +13,10 @@ extends Node2D
 @onready var player: Player = $Player
 @onready var background: Sprite2D = $Background  # 确保场景中有背景节点
 @onready var flip_button: Button = $FlipButton   # 添加按钮引用
+@onready var mana: ManaUI = %Mana
+
+static var battle: Battle
+
 # 背景资源
 var normal_background = preload("res://art/场景/BigBirdArrived.png")
 var flipped_background = preload("res://art/场景/BigBirdDead.png")
@@ -20,6 +24,14 @@ var flipped_background = preload("res://art/场景/BigBirdDead.png")
 var is_flipped: bool = false
 # 添加教程系统
 var tutorial_system: TutorialBattle
+
+func _init() -> void:
+	if (not battle):
+		battle = self
+	else: if(battle == self):
+		return
+	else:
+		queue_free()
 
 func _ready() -> void:
 	enemy_handler.child_order_changed.connect(_on_enemies_child_order_changed)

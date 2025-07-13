@@ -92,7 +92,8 @@ alignment = 1
 script = ExtResource("2_uaw60")
 player = NodePath("../../Player")
 
-[node name="ManaUI" parent="BattleUI" instance=ExtResource("11_2vu01")]
+[node name="Mana" parent="BattleUI" instance=ExtResource("11_2vu01")]
+unique_name_in_owner = true
 offset_left = 10.0
 offset_top = -294.0
 offset_right = 149.0

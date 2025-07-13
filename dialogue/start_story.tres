@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="DialogueGroup" load_steps=10 format=3 uid="uid://4r3vkq7u3i4o"]
+
+[ext_resource type="Script" uid="uid://c1shq6ixobv8p" path="res://dialogue/dialogue.gd" id="1_3qihw"]
+[ext_resource type="Texture2D" uid="uid://cvws55oe3y04k" path="res://art/角色/顾林（闭眼）.png" id="2_msvyr"]
+[ext_resource type="Script" uid="uid://dmb1p774rq0p1" path="res://dialogue/dialogue_group.gd" id="3_affol"]
+[ext_resource type="Texture2D" uid="uid://dc4t8oa6j5lxm" path="res://art/角色/黑面人（面相、邪恶笑）.png" id="3_b057q"]
+[ext_resource type="Texture2D" uid="uid://cx5pkdklxqq67" path="res://art/角色/顾林（面相、睁眼）.png" id="4_gltes"]
+
+[sub_resource type="Resource" id="Resource_b057q"]
+script = ExtResource("1_3qihw")
+character_name = "顾林"
+content = "（缓慢的睁开眼睛）"
+avatar = ExtResource("2_msvyr")
+show_on_left = true
+metadata/_custom_type_script = "uid://c1shq6ixobv8p"
+
+[sub_resource type="Resource" id="Resource_bsv7c"]
+script = ExtResource("1_3qihw")
+character_name = "未知的声音"
+content = "你醒了？很好，，，"
+avatar = ExtResource("3_b057q")
+show_on_left = false
+metadata/_custom_type_script = "uid://c1shq6ixobv8p"
+
+[sub_resource type="Resource" id="Resource_rwe43"]
+script = ExtResource("1_3qihw")
+character_name = "顾林"
+content = "这是哪？我的画呢？！"
+avatar = ExtResource("4_gltes")
+show_on_left = true
+metadata/_custom_type_script = "uid://c1shq6ixobv8p"
+
+[sub_resource type="Resource" id="Resource_fdcq4"]
+script = ExtResource("1_3qihw")
+character_name = "未知的声音"
+content = "你现在不需要知道这些
+跟我来，，，"
+avatar = ExtResource("3_b057q")
+show_on_left = false
+metadata/_custom_type_script = "uid://c1shq6ixobv8p"
+
+[resource]
+script = ExtResource("3_affol")
+dialogue_list = Array[ExtResource("1_3qihw")]([SubResource("Resource_b057q"), SubResource("Resource_bsv7c"), SubResource("Resource_rwe43"), SubResource("Resource_fdcq4")])
+metadata/_custom_type_script = "uid://dmb1p774rq0p1"
