@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Effect" load_steps=2 format=3 uid="uid://bvsiit5th4tv5"]
+
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="1_eg75m"]
+
+[resource]
+script = ExtResource("1_eg75m")
+triggerMethod = 0
+costType = 0
+costint = 0
+se_costType = 0
+se_costint = 0
+target = 0
+effectType = 0
+effectValue = 0
+effectTager = 0
+can_action_area = 0
+get_target_start_area = 0
+get_target_end_area = 0
+effect_start_area = 0
+effect_end_area = 0
+metadata/_custom_type_script = "uid://bsethvhhgj17r"

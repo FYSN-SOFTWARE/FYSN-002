@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CardTooltip" load_steps=2 format=3 uid="uid://b6s7gt3erm6hc"]
+
+[ext_resource type="Script" uid="uid://dxshpei5jcldc" path="res://custom_resources/card_tooltip.gd" id="1_cbtgf"]
+
+[resource]
+script = ExtResource("1_cbtgf")
+name = "null"
+tooltip_text = "null"
+metadata/_custom_type_script = "uid://dxshpei5jcldc"

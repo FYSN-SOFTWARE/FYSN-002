@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Card" load_steps=7 format=3 uid="uid://bp5qcrov7qgq8"]
+
+[ext_resource type="Resource" uid="uid://b5qknlo2aaij2" path="res://characters/warrior/cards/testin.tres" id="1_83o8r"]
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="1_u76in"]
+[ext_resource type="Script" uid="uid://ccsidvfkkramu" path="res://custom_resources/card.gd" id="2_b4ujt"]
+[ext_resource type="Texture2D" uid="uid://dytq0eumwvky6" path="res://art/tile_0074.png" id="3_3ia5g"]
+[ext_resource type="Resource" uid="uid://hkg7xw2bol5h" path="res://characters/warrior/cards/testout.tres" id="3_17hly"]
+[ext_resource type="Script" uid="uid://dxshpei5jcldc" path="res://custom_resources/card_tooltip.gd" id="3_83o8r"]
+
+[resource]
+script = ExtResource("2_b4ujt")
+outcard = ExtResource("3_17hly")
+backcard = ExtResource("1_83o8r")
+upgrade_damage = 2
+upgrade_block = 2
+upgrade_cost = 0
+upgraded_tooltip_text = ""
+tooltips = Array[ExtResource("3_83o8r")]([])
+id = "card"
+type = 0
+rarity = 0
+target = 0
+cost = 0
+icon = ExtResource("3_3ia5g")
+tooltip_text = ""
+effects = Array[ExtResource("1_u76in")]([])
+metadata/_custom_type_script = "uid://ccsidvfkkramu"
