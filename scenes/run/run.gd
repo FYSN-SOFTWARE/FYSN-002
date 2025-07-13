@@ -14,7 +14,6 @@ const PROLOGUE_MAP_GENERATOR = preload("res://scenes/map/prologue/prologue_map_g
 
 @export var run_startup: RunStartup
 
-
 @onready var map: Map = $Map
 @onready var current_view: Node = $CurrentView
 @onready var health_ui: HealthUI = %HealthUI

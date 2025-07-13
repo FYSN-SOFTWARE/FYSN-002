@@ -9,8 +9,6 @@ extends EffectOwner
 @export_group("Card Visuals")
 @export var icon: Texture
 @export_multiline var tooltip_text: String
-@export var tooltips: Array[CardTooltip]
-@export var target: Effect.Target
 
 # 添加升级属性
 @export var upgrade_damage: int = 2

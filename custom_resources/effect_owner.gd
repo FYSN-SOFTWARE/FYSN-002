@@ -2,7 +2,6 @@ extends Resource
 class_name EffectOwner
 
 @export var effects: Array[Effect]
-var targets: Array[Node] = []
 
 var can_use: bool
 
