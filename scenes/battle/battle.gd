@@ -5,6 +5,7 @@ extends Node2D
 @export var char_stats: CharacterStats
 @export var music: AudioStream
 @export var relics: RelicHandler
+@export var run_stats: RunStats
 
 @onready var battle_ui: BattleUI = $BattleUI
 @onready var player_handler: PlayerHandler = $PlayerHandler
@@ -13,11 +14,12 @@ extends Node2D
 @onready var background: Sprite2D = $Background  # 确保场景中有背景节点
 @onready var flip_button: Button = $FlipButton   # 添加按钮引用
 # 背景资源
-var normal_background = preload("res://art/background.png")
-var flipped_background = preload("res://art/background_fanzhuan.png")
-
+var normal_background = preload("res://art/场景/BigBirdArrived.png")
+var flipped_background = preload("res://art/场景/BigBirdDead.png")
 # 当前翻转状态
 var is_flipped: bool = false
+# 添加教程系统
+var tutorial_system: TutorialBattle
 
 func _ready() -> void:
 	enemy_handler.child_order_changed.connect(_on_enemies_child_order_changed)
@@ -26,14 +28,37 @@ func _ready() -> void:
 	Events.player_turn_ended.connect(player_handler.end_turn)
 	Events.player_hand_discarded.connect(enemy_handler.start_turn)
 	Events.player_died.connect(_on_player_died)
+	
 	# 连接翻转按钮信号
 	if flip_button:  # 确保按钮存在
 		flip_button.pressed.connect(_on_flip_button_pressed)
-	
 	# 初始化背景
 	update_background()
 	# 确保按钮文本正确
 	update_flip_button_text()
+	# 连接战斗开始信号
+	Events.battle_started.connect(_on_battle_started)
+	# 初始化世界翻转状态
+	Global.set_world_flipped(is_flipped)
+	# 初始化卡牌翻转状态
+	initialize_cards_flipped_state(is_flipped)
+
+
+# 初始化卡牌翻转状态
+func initialize_cards_flipped_state(flipped: bool) -> void:
+	# 更新玩家手牌中的卡牌
+	for card_ui in player_handler.hand.get_children():
+		if card_ui is CardUI:
+			card_ui.card.set_flipped(flipped)
+			card_ui.card_visuals.set_card(card_ui.card)
+
+
+# 更新卡牌集合的翻转状态
+func update_cards_flipped_state(cards: Array[Card], flipped: bool) -> Array[Card]:
+	for card in cards:
+		card.set_flipped(flipped)
+	return cards
+
 
 func start_battle() -> void:
 	get_tree().paused = false
@@ -46,10 +71,24 @@ func start_battle() -> void:
 	enemy_handler.reset_enemy_actions()
 	
 	relics.relics_activated.connect(_on_relics_activated)
-	relics.activate_relics_by_type(Relic.Type.START_OF_COMBAT)
+	
 	# 确保背景和按钮更新
 	update_background()
 	update_flip_button_text()
+	
+	# 激活遗物并开始战斗
+	relics.activate_relics_by_type(Relic.Type.START_OF_COMBAT)
+	
+	# 初始化教程系统
+	if run_stats != null:
+		tutorial_system = TutorialBattle.new(self, run_stats)
+		# 检查并显示教程
+		tutorial_system.check_and_show_tutorial()
+	else:
+		# 如果没有教程，直接开始战斗
+		player_handler.start_battle(char_stats)
+		battle_ui.initialize_card_pile_ui()
+
 
 # 添加方法初始化敌人状态
 func initialize_enemies_flipped_state(flipped: bool) -> void:
@@ -63,8 +102,18 @@ func initialize_enemies_flipped_state(flipped: bool) -> void:
 func _on_flip_button_pressed() -> void:
 	# 切换翻转状态
 	is_flipped = !is_flipped
+	Global.set_world_flipped(is_flipped)
+	
+	# 更新所有卡牌
+	initialize_cards_flipped_state(is_flipped)
+	
+	# 更新敌人
+	initialize_enemies_flipped_state(is_flipped)
+	
+	# 更新UI
 	update_background()
 	update_flip_button_text()
+	
 	# 通知全局翻转状态改变
 	Events.world_flipped.emit(is_flipped)
 
@@ -101,3 +150,15 @@ func _on_relics_activated(type: Relic.Type) -> void:
 			battle_ui.initialize_card_pile_ui()
 		Relic.Type.END_OF_COMBAT:
 			Events.battle_over_screen_requested.emit("Victorious!", BattleOverPanel.Type.WIN)
+
+# 战斗开始回调
+func _on_battle_started() -> void:
+	# 检查并显示教程
+	if tutorial_system:
+		tutorial_system.check_and_show_tutorial()
+
+# 教程完成回调
+func _on_tutorial_completed() -> void:
+	# 恢复游戏树
+	get_tree().paused = false
+	

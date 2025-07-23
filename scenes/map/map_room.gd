@@ -17,9 +17,23 @@ const ICONS := {
 @onready var sprite_2d: Sprite2D = $Visuals/Sprite2D
 @onready var line_2d: Line2D = $Visuals/Line2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var fog_sprite: Sprite2D = $Visuals/Fog
+@onready var icon_sprite: Sprite2D = $Visuals/IconSprite
 
 var available := false : set = set_available
 var room: Room : set = set_room
+var explored := false : set = set_explored
+
+func set_explored(new_value: bool) -> void:
+	explored = new_value
+	update_fog_visibility()
+
+
+func update_fog_visibility() -> void:
+	if fog_sprite:
+		fog_sprite.visible = !explored
+	if icon_sprite:
+		icon_sprite.visible = explored
 
 
 func set_available(new_value: bool) -> void:
@@ -35,9 +49,12 @@ func set_room(new_data: Room) -> void:
 	room = new_data
 	position = room.position
 	line_2d.rotation_degrees = randi_range(0, 360)
-	sprite_2d.texture = ICONS[room.type][0]
-	sprite_2d.scale = ICONS[room.type][1]
-
+	# 更新图标显示
+	if icon_sprite:
+		icon_sprite.texture = ICONS[room.type][0]
+		icon_sprite.scale = ICONS[room.type][1]
+	# 更新迷雾状态
+	update_fog_visibility()
 
 func show_selected() -> void:
 	line_2d.modulate = Color.WHITE

@@ -52,14 +52,14 @@ func _generate_initial_grid() -> Array[Array]:
 		for j in MAP_WIDTH:
 			var current_room := Room.new()
 			var offset := Vector2(randf(), randf()) * PLACEMENT_RANDOMNESS
-			current_room.position = Vector2(j * X_DIST, i * -Y_DIST) + offset
+			current_room.position = Vector2(j * X_DIST, i * Y_DIST) + offset
 			current_room.row = i
 			current_room.column = j
 			current_room.next_rooms = []
 			
 			# Boss room has a non-random Y
 			if i == FLOORS - 1:
-				current_room.position.y = (i + 1) * -Y_DIST
+				current_room.position.y = (i + 1) * Y_DIST
 			
 			adjacent_rooms.append(current_room)
 			

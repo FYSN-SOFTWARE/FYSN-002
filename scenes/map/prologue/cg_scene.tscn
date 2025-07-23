@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhj0tajbsa515"]
+
+[ext_resource type="Script" uid="uid://b2h60g4sp5y1r" path="res://scenes/map/prologue/cg_scene.gd" id="1_2weua"]
+
+[node name="CGScene" type="CanvasLayer"]
+script = ExtResource("1_2weua")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Image" type="TextureRect" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 1185.0
+offset_bottom = 1075.0
+
+[node name="TextLabel" type="RichTextLabel" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1196.0
+offset_top = 6.0
+offset_right = 1912.0
+offset_bottom = 968.0
+theme_override_font_sizes/normal_font_size = 60
+text = "大萨达撒开局的把烧开后把"
+
+[node name="SkipButton" type="Button" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1755.0
+offset_top = 993.0
+offset_right = 1892.0
+offset_bottom = 1061.0
+theme_override_font_sizes/font_size = 50
+text = "跳过"
+
+[node name="SlideTimer" type="Timer" parent="."]
+unique_name_in_owner = true

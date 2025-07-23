@@ -4,6 +4,7 @@ extends Node2D
 const SCROLL_SPEED := 50
 const MAP_ROOM = preload("res://scenes/map/map_room.tscn")
 const MAP_LINE = preload("res://scenes/map/map_line.tscn")
+const PROLOGUE_MAP_GENERATOR = preload("res://scenes/map/prologue/prologue_map_generator.gd")
 
 @onready var map_generator: MapGenerator = $MapGenerator
 @onready var lines: Node2D = %Lines
@@ -15,11 +16,17 @@ var map_data: Array[Array]
 var floors_climbed: int
 var last_room: Room
 var camera_edge_y: float
-
+var current_chapter: int = 1  # 1表示正式地图，0表示序章
+var run_stats: RunStats
+var fog_manager: FogManager
 
 func _ready() -> void:
 	camera_edge_y = MapGenerator.Y_DIST * (MapGenerator.FLOORS - 1)
-
+	# 初始化迷雾管理器
+	fog_manager = FogManager.new()
+	# 确保 run_stats 被正确设置
+	if run_stats == null:
+		push_warning("RunStats is null in Map!")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not visible:
@@ -30,13 +37,26 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("scroll_down"):
 		camera_2d.position.y += SCROLL_SPEED
 
-	camera_2d.position.y = clamp(camera_2d.position.y, -camera_edge_y, 0)
+	camera_2d.position.y = clamp(camera_2d.position.y, 0, camera_edge_y)
 
 
-func generate_new_map() -> void:
+func generate_new_map(chapter: int = 1) -> void:
 	floors_climbed = 0
-	map_data = map_generator.generate_map()
+	current_chapter = chapter  # 保存当前章节信息
+
+	if chapter == 0:  # 0表示序章
+		map_data = PROLOGUE_MAP_GENERATOR.new().generate_map()
+	else:
+		map_data = map_generator.generate_map()
+	
 	create_map()
+
+	const Y_DIST := 200
+	# 调整地图位置（序章只有一行，需要居中显示）
+	if map_data.size() > 0 and map_data[0].size() == 1:
+		# 序章地图只有单列，居中显示
+		var map_height_pixels = Y_DIST * (map_data.size() - 1)
+		visuals.position.y = (get_viewport_rect().size.y - map_height_pixels) / 2
 
 
 func load_map(map: Array[Array], floors_completed: int, last_room_climbed: Room) -> void:
@@ -52,29 +72,39 @@ func load_map(map: Array[Array], floors_completed: int, last_room_climbed: Room)
 
 
 func create_map() -> void:
-	for current_floor: Array in map_data:
-		for room: Room in current_floor:
-			if room.next_rooms.size() > 0:
-				_spawn_room(room)
+	# 清空现有房间和线条
+	for child in rooms.get_children():
+		child.queue_free()
 	
-	# Boss room has no next room but we need to spawn it
-	var middle := floori(MapGenerator.MAP_WIDTH * 0.5)
-	_spawn_room(map_data[MapGenerator.FLOORS-1][middle])
-
-	var map_width_pixels := MapGenerator.X_DIST * (MapGenerator.MAP_WIDTH - 1)
-	visuals.position.x = (get_viewport_rect().size.x - map_width_pixels) / 2
-	visuals.position.y = get_viewport_rect().size.y / 2
+	# 初始化迷雾管理器
+	fog_manager.initialize(map_data)
+	fog_manager.room_explored.connect(_on_room_explored)
+	
+	# 生成所有房间
+	for current_floor in map_data:
+		for room in current_floor:
+			_spawn_room(room)
+	
+	# 生成所有房间
+	for current_floor in map_data:
+		for room in current_floor:
+			_spawn_room(room)
+	
+	# 调整地图位置
+	if current_chapter == 0:  # 序章地图
+		# 序章地图居中显示
+		const Y_DIST := 200
+		var map_height_pixels = Y_DIST * (map_data.size() - 1)
+		visuals.position.y = (get_viewport_rect().size.y - map_height_pixels) / 2
+		visuals.position.x = get_viewport_rect().size.x / 2
+	else:  # 正式地图
+		visuals.position.x = (get_viewport_rect().size.x - MapGenerator.X_DIST * (MapGenerator.MAP_WIDTH - 1)) / 2
+		visuals.position.y = 0 
 
 
 func unlock_floor(which_floor: int = floors_climbed) -> void:
 	for map_room: MapRoom in rooms.get_children():
 		if map_room.room.row == which_floor:
-			map_room.available = true
-
-
-func unlock_next_rooms() -> void:
-	for map_room: MapRoom in rooms.get_children():
-		if last_room.next_rooms.has(map_room.room):
 			map_room.available = true
 
 
@@ -98,6 +128,22 @@ func _spawn_room(room: Room) -> void:
 	
 	if room.selected and room.row < floors_climbed:
 		new_map_room.show_selected()
+	# 设置初始迷雾状态
+	new_map_room.set_explored(fog_manager.is_room_explored(room))
+
+
+# 房间探索状态变化时的处理
+func _on_room_explored(room: Room) -> void:
+	for map_room in rooms.get_children():
+		if map_room.room == room:
+			map_room.set_explored(true)
+
+# 解锁下一层房间
+func unlock_next_rooms() -> void:
+	for map_room: MapRoom in rooms.get_children():
+		if last_room and last_room.next_rooms.has(map_room.room):
+			fog_manager.set_room_explored(map_room.room, true)
+			map_room.available = true
 
 
 func _connect_lines(room: Room) -> void:
@@ -120,4 +166,22 @@ func _on_map_room_clicked(room: Room) -> void:
 func _on_map_room_selected(room: Room) -> void:
 	last_room = room
 	floors_climbed += 1
+	# 探索当前房间及其相邻房间
+	fog_manager.explore_room_and_neighbors(room)
+	# 更新当前房间索引（用于序章教学）
+	if run_stats:
+		run_stats.current_room_index = room.row
 	Events.map_exited.emit(room)
+
+# 保存地图时保存迷雾状态
+func save_map_state() -> Dictionary:
+	return {
+		"map_data": map_data,
+		"fog_states": fog_manager.save_fog_states()
+	}
+
+# 加载地图时加载迷雾状态
+func load_map_state(saved_data: Dictionary) -> void:
+	map_data = saved_data["map_data"]
+	fog_manager.initialize(map_data)
+	fog_manager.load_fog_states(saved_data["fog_states"])

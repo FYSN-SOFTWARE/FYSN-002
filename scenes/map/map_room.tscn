@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqvt1s82wu8pu"]
+[gd_scene load_steps=9 format=3 uid="uid://dqvt1s82wu8pu"]
 
 [ext_resource type="Script" uid="uid://bidvi14jn1et3" path="res://scenes/map/map_room.gd" id="1_1rfj3"]
 [ext_resource type="Texture2D" uid="uid://bfvi02kojsa00" path="res://art/tile_0103.png" id="1_hme85"]
+[ext_resource type="Texture2D" uid="uid://b3nbcwg7le1da" path="res://art/UI/云.png" id="3_wln44"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_auf4t"]
 radius = 33.2415
@@ -101,8 +102,12 @@ closed = true
 width = 2.0
 default_color = Color(0.529412, 0.529412, 0.529412, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+[node name="IconSprite" type="Sprite2D" parent="Visuals"]
 texture = ExtResource("1_hme85")
+
+[node name="Fog" type="Sprite2D" parent="Visuals"]
+scale = Vector2(0.0370678, 0.0370678)
+texture = ExtResource("3_wln44")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_auf4t")

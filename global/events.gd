@@ -16,6 +16,7 @@ signal keyword_tooltip_requested(text: String)  # 用于显示关键词解释
 # Player-related events
 signal player_hand_drawn
 signal player_hand_discarded
+signal player_turn_start
 signal player_turn_ended
 signal player_hit
 signal player_died
@@ -30,6 +31,9 @@ signal battle_over_screen_requested(text: String, type: BattleOverPanel.Type)
 signal battle_won
 signal status_tooltip_requested(statuses: Array[Status])
 
+# 添加战斗开始信号
+signal battle_started()
+
 # Map-related events
 signal map_exited(room: Room)
 
@@ -39,11 +43,22 @@ signal shop_relic_bought(relic: Relic, gold_cost: int)
 signal shop_card_bought(card: Card, gold_cost: int)
 signal shop_exited
 
+# 商店强化和删牌
+signal shop_remove_requested(cost: int)
+signal shop_upgrade_requested(cost: int)
+signal card_removal_selection_requested(cost: int)
+signal card_upgrade_selection_requested(cost: int)
+signal card_removed(cost: int)
+signal card_upgraded(cost: int)
+
+
 # Campfire-related events
 signal campfire_exited
 
 # Battle Reward-related events
 signal battle_reward_exited
+
+signal prologue_boss_defeated  # 序章Boss被击败信号
 
 # Treasure Room-related events
 signal treasure_room_exited(found_relic: Relic)
@@ -54,4 +69,15 @@ signal relic_tooltip_requested(relic: Relic)
 # Random Event room-related events
 signal event_room_exited
 
+# 世界转换
 signal world_flipped(flipped: bool)
+
+# 世界转换
+signal intobackword
+signal outbackword
+
+signal cardaction(card:CardUI)
+signal transcard(areafrom: Effect.CardArea, areato: Effect.CardArea)
+
+signal battle_starte()
+signal turnend(isplayer: bool)
