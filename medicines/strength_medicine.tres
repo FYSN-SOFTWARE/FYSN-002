@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="StrengthMedicine" load_steps=3 format=3 uid="uid://b1uyob5ntgno8"]
+
+[ext_resource type="Texture2D" uid="uid://xsy28lssbpt3" path="res://art/Strength_Potion.webp" id="1_lswoh"]
+[ext_resource type="Script" uid="uid://bdc2dggeja0en" path="res://medicines/strength_medicine.gd" id="2_lswoh"]
+
+[resource]
+script = ExtResource("2_lswoh")
+medicine_name = "力量药水"
+id = "strength_medicine"
+icon = ExtResource("1_lswoh")
+rarity = null
+battle_only = null
+value = 2
+target = "SELF"
+tooltip = "获得 2 点 力量 。"
+metadata/_custom_type_script = "uid://duen43g6kq8j6"

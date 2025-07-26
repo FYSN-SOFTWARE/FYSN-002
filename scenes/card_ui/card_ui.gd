@@ -60,6 +60,19 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 		# 添加右键点击检测
 	gui_input.connect(_handle_right_click)
+	# 添加世界翻转事件监听
+	Events.world_flipped.connect(_on_world_flipped)
+	# 初始化时设置卡牌翻转状态
+	_on_world_flipped(Global.is_world_flipped)
+
+
+# 添加处理世界翻转事件的方法
+func _on_world_flipped(flipped: bool) -> void:
+	if card:
+		# 设置卡牌翻转状态
+		card.set_flipped(flipped)
+		# 更新卡牌显示
+		card_visuals.card = card
 
 
 func _input(event: InputEvent) -> void:

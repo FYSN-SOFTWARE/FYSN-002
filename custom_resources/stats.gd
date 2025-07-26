@@ -58,6 +58,13 @@ func take_damage(damage : int) -> void:
 	health -= damage
 
 
+# 添加处理精神伤害的方法
+func take_li_damage(damage: int) -> void:
+	if damage <= 0:
+		return
+	san = clampi(san - damage, 0, max_san)
+
+
 func heal(amount : int) -> void:
 	health += amount
 
@@ -66,4 +73,5 @@ func create_instance() -> Resource:
 	var instance: Stats = self.duplicate()
 	instance.health = max_health
 	instance.block = 0
+	instance.san = max_san
 	return instance

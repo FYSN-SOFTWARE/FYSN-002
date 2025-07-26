@@ -1,0 +1,113 @@
+[gd_scene load_steps=14 format=3 uid="uid://boq75fh8quhc1"]
+
+[ext_resource type="Theme" uid="uid://c8cqncsqlplyu" path="res://main_theme.tres" id="1_1f3tp"]
+[ext_resource type="Script" uid="uid://bjojgw4wsie7q" path="res://scenes/medicine_handler/medicine_use_select_ui.gd" id="1_mrcx8"]
+[ext_resource type="StyleBox" uid="uid://b4b3e0d14kvmi" path="res://scenes/card_ui/card_base_stylebox.tres" id="2_t3s1h"]
+[ext_resource type="FontFile" uid="uid://5rmhgkgum3xj" path="res://art/霞鹜文楷.ttf" id="3_mrcx8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r8u4k"]
+bg_color = Color(0.631373, 0.34902, 0.321569, 0.501961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.701961, 0.701961, 0.701961, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dmy1r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xmegw"]
+bg_color = Color(0.451537, 0.268567, 0.936157, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.756863, 0.713726, 0.388235, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3l873"]
+bg_color = Color(0.262932, 0.262932, 0.262932, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ipyv"]
+bg_color = Color(0.631373, 0.34902, 0.321569, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.615686, 0.576471, 0.282353, 1)
+
+[sub_resource type="Theme" id="Theme_rb2va"]
+default_font = ExtResource("3_mrcx8")
+default_font_size = 12
+Button/styles/disabled = SubResource("StyleBoxFlat_r8u4k")
+Button/styles/focus = SubResource("StyleBoxEmpty_dmy1r")
+Button/styles/hover = SubResource("StyleBoxFlat_xmegw")
+Button/styles/normal = SubResource("StyleBoxFlat_3l873")
+Button/styles/pressed = SubResource("StyleBoxFlat_6ipyv")
+Panel/styles/panel = ExtResource("2_t3s1h")
+PanelContainer/styles/panel = ExtResource("2_t3s1h")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64tbm"]
+bg_color = Color(0.741176, 0.0666667, 0.352941, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.756863, 0.713726, 0.388235, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bofh3"]
+bg_color = Color(0.262745, 0.262745, 0.262745, 1)
+
+[sub_resource type="Theme" id="Theme_rgc4u"]
+default_font = ExtResource("3_mrcx8")
+default_font_size = 12
+Button/styles/disabled = SubResource("StyleBoxFlat_r8u4k")
+Button/styles/focus = SubResource("StyleBoxEmpty_dmy1r")
+Button/styles/hover = SubResource("StyleBoxFlat_64tbm")
+Button/styles/normal = SubResource("StyleBoxFlat_bofh3")
+Button/styles/pressed = SubResource("StyleBoxFlat_6ipyv")
+Panel/styles/panel = ExtResource("2_t3s1h")
+PanelContainer/styles/panel = ExtResource("2_t3s1h")
+
+[node name="MedicineUseSelectUI" type="VBoxContainer"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 67.0
+offset_bottom = 41.0
+theme_override_constants/separation = 0
+script = ExtResource("1_mrcx8")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme = ExtResource("1_1f3tp")
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="UseButton" type="Button" parent="MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 80)
+layout_mode = 2
+theme = SubResource("Theme_rb2va")
+theme_override_colors/font_disabled_color = Color(0.176419, 0.176419, 0.176419, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "饮用"
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="DropButton" type="Button" parent="MarginContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 80)
+layout_mode = 2
+theme = SubResource("Theme_rgc4u")
+theme_override_colors/font_color = Color(0.866667, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "丢弃"
+
+[connection signal="pressed" from="MarginContainer/UseButton" to="." method="_on_use_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/DropButton" to="." method="_on_drop_button_pressed"]

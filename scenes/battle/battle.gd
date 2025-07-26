@@ -38,27 +38,8 @@ func _ready() -> void:
 	update_flip_button_text()
 	# 连接战斗开始信号
 	Events.battle_started.connect(_on_battle_started)
-	# 初始化世界翻转状态
-	Global.set_world_flipped(is_flipped)
-	# 初始化卡牌翻转状态
-	initialize_cards_flipped_state(is_flipped)
-
-
-# 初始化卡牌翻转状态
-func initialize_cards_flipped_state(flipped: bool) -> void:
-	# 更新玩家手牌中的卡牌
-	for card_ui in player_handler.hand.get_children():
-		if card_ui is CardUI:
-			card_ui.card.set_flipped(flipped)
-			card_ui.card_visuals.set_card(card_ui.card)
-
-
-# 更新卡牌集合的翻转状态
-func update_cards_flipped_state(cards: Array[Card], flipped: bool) -> Array[Card]:
-	for card in cards:
-		card.set_flipped(flipped)
-	return cards
-
+	# 添加世界翻转事件监听
+	Events.world_flipped.connect(_on_world_flipped)
 
 func start_battle() -> void:
 	get_tree().paused = false
@@ -69,6 +50,7 @@ func start_battle() -> void:
 	player_handler.relics = relics
 	enemy_handler.setup_enemies(battle_stats)
 	enemy_handler.reset_enemy_actions()
+	char_stats.stats_changed.connect(_on_char_stats_changed)
 	
 	relics.relics_activated.connect(_on_relics_activated)
 	
@@ -78,6 +60,11 @@ func start_battle() -> void:
 	
 	# 激活遗物并开始战斗
 	relics.activate_relics_by_type(Relic.Type.START_OF_COMBAT)
+	
+	# 初始化玩家状态UI的世界状态
+	if player and player.stats_ui:
+		player.stats_ui.set_world_state(is_flipped)
+		player.update_stats()  # 刷新UI显示
 	
 	# 初始化教程系统
 	if run_stats != null:
@@ -101,21 +88,37 @@ func initialize_enemies_flipped_state(flipped: bool) -> void:
 
 func _on_flip_button_pressed() -> void:
 	# 切换翻转状态
+	if not is_flipped and not can_enter_flipped_world():
+		return
 	is_flipped = !is_flipped
-	Global.set_world_flipped(is_flipped)
-	
-	# 更新所有卡牌
-	initialize_cards_flipped_state(is_flipped)
-	
-	# 更新敌人
-	initialize_enemies_flipped_state(is_flipped)
-	
-	# 更新UI
 	update_background()
 	update_flip_button_text()
 	
+	# 更新玩家状态UI的世界状态
+	if player and player.stats_ui:
+		player.stats_ui.set_world_state(is_flipped)
+		player.update_stats()  # 刷新UI显示
+	
 	# 通知全局翻转状态改变
 	Events.world_flipped.emit(is_flipped)
+
+# 添加新的方法处理世界翻转事件
+func _on_world_flipped(flipped: bool) -> void:
+	# 更新玩家手牌中的所有卡牌
+	update_cards_flipped_state(flipped)
+	# 更新敌人状态（如果需要）
+	initialize_enemies_flipped_state(flipped)
+
+# 添加更新卡牌翻转状态的方法
+func update_cards_flipped_state(flipped: bool) -> void:
+	if battle_ui and battle_ui.hand:
+		for card_ui in battle_ui.hand.get_children():
+			if card_ui is CardUI:
+				# 设置卡牌翻转状态
+				card_ui.card.set_flipped(flipped)
+				# 更新卡牌显示
+				card_ui.card_visuals.card = card_ui.card
+
 
 func update_background() -> void:
 	if is_flipped && flipped_background:
@@ -123,15 +126,33 @@ func update_background() -> void:
 	else:
 		background.texture = normal_background
 
+func can_enter_flipped_world() -> bool:
+	if not char_stats:
+		return false
+	return char_stats.soals >= char_stats.max_soals
 
 func update_flip_button_text() -> void:
-	if flip_button:
-		flip_button.text = "返回表世界" if is_flipped else "进入里世界"
+	#if flip_button:
+		#flip_button.text = "返回表世界" if is_flipped else "进入里世界"
+	if not flip_button:
+		return
+		
+	if is_flipped:
+		flip_button.text = "返回表世界"
+		flip_button.disabled = false 
+	else:
+		flip_button.text = "进入里世界"
+		if can_enter_flipped_world():
+			flip_button.disabled = false
+		else:
+			flip_button.disabled = true
 
 func _on_enemies_child_order_changed() -> void:
 	if enemy_handler.get_child_count() == 0 and is_instance_valid(relics):
 		relics.activate_relics_by_type(Relic.Type.END_OF_COMBAT)
 
+func _on_char_stats_changed() -> void:
+	update_flip_button_text()
 
 func _on_enemy_turn_ended() -> void:
 	player_handler.start_turn()
@@ -139,6 +160,8 @@ func _on_enemy_turn_ended() -> void:
 
 
 func _on_player_died() -> void:
+	# 战斗结束，重置灵魂能量
+	_on_battle_ended()
 	Events.battle_over_screen_requested.emit("Game Over!", BattleOverPanel.Type.LOSE)
 	SaveGame.delete_data()
 
@@ -149,7 +172,16 @@ func _on_relics_activated(type: Relic.Type) -> void:
 			player_handler.start_battle(char_stats)
 			battle_ui.initialize_card_pile_ui()
 		Relic.Type.END_OF_COMBAT:
+			# 战斗结束，重置灵魂能量
+			_on_battle_ended()
 			Events.battle_over_screen_requested.emit("Victorious!", BattleOverPanel.Type.WIN)
+
+
+func _on_battle_ended() -> void:
+	# 如果战斗发生在里世界，重置灵魂能量
+	if is_flipped:
+		char_stats.reset_soals()
+
 
 # 战斗开始回调
 func _on_battle_started() -> void:
