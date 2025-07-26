@@ -21,6 +21,7 @@ var is_flipped: bool = false
 # 添加教程系统
 var tutorial_system: TutorialBattle
 
+
 func _ready() -> void:
 	enemy_handler.child_order_changed.connect(_on_enemies_child_order_changed)
 	Events.enemy_turn_ended.connect(_on_enemy_turn_ended)
@@ -75,6 +76,8 @@ func start_battle() -> void:
 		# 如果没有教程，直接开始战斗
 		player_handler.start_battle(char_stats)
 		battle_ui.initialize_card_pile_ui()
+		
+	# TODO 药水受遗物的影响
 
 
 # 添加方法初始化敌人状态
@@ -146,6 +149,8 @@ func update_flip_button_text() -> void:
 			flip_button.disabled = false
 		else:
 			flip_button.disabled = true
+	if flip_button:
+		flip_button.text = "返回表世界" if is_flipped else "进入里世界"
 
 func _on_enemies_child_order_changed() -> void:
 	if enemy_handler.get_child_count() == 0 and is_instance_valid(relics):

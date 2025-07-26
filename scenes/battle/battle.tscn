@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cahno8aso5net"]
+[gd_scene load_steps=23 format=3 uid="uid://cahno8aso5net"]
 
 [ext_resource type="Script" uid="uid://chf7wcejruxv5" path="res://scenes/battle/battle.gd" id="1_4s751"]
 [ext_resource type="PackedScene" uid="uid://d0efyathkfg74" path="res://scenes/enemy/enemy.tscn" id="2_02s5s"]
@@ -253,9 +253,9 @@ visible = false
 [node name="FlipButton" type="Button" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
-offset_top = 100.0
+offset_top = 466.0
 offset_right = 168.0
-offset_bottom = 188.0
+offset_bottom = 554.0
 theme_override_font_sizes/font_size = 35
 
 [node name="FlipWorld" type="TextureRect" parent="FlipButton"]

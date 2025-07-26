@@ -89,11 +89,14 @@ func _handle_right_click(event: InputEvent) -> void:
 func _on_right_clicked() -> void:
 	# 这里可以添加自定义切换逻辑
 	# 示例：在预设列表中切换
-	pass
+	if alternative_cards.size() > 0:
+		current_alternative_index = (current_alternative_index + 1) % alternative_cards.size()
+		switch_card(alternative_cards[current_alternative_index])
 	
 	# 或者调用外部管理器
 	# CardManager.switch_card(self
-
+@export var alternative_cards: Array[Card] = []
+var current_alternative_index := 0
 
 
 func animate_to_position(new_position: Vector2, duration: float) -> void:
@@ -105,7 +108,11 @@ func play() -> void:
 	if not card:
 		return
 	
-	card.play(targets, char_stats, player_modifiers)
+	if parent.play_twice_next:
+		parent.play_twice_next = false
+		card.play(targets, char_stats, player_modifiers,true)
+	else:
+		card.play(targets, char_stats, player_modifiers,false)
 	queue_free()
 
 

@@ -54,6 +54,7 @@ func draw_card() -> void:
 		card.set_flipped(Global.is_world_flipped)
 	
 	hand.add_card(card)
+	hand.add_card(character.draw_pile.draw_card())
 	reshuffle_deck_from_discard()
 
 

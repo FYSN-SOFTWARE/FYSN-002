@@ -27,3 +27,5 @@ func update_stats(stats: Stats) -> void:
 # 添加方法更新世界状态
 func set_world_state(flipped: bool) -> void:
 	is_world_flipped = flipped
+	block.visible = stats.block > 0
+	health.visible = stats.health > 0

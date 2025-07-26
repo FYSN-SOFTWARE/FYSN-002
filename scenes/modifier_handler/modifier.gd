@@ -1,7 +1,6 @@
 class_name Modifier
 extends Node
 
-enum Type {DMG_DEALT, DMG_TAKEN, CARD_COST, SHOP_COST, NO_MODIFIER, BIAO_DMG, LI_DMG}
 
 @export var type: Type
 

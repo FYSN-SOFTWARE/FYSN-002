@@ -28,6 +28,12 @@ func _ready() -> void:
 	for node: Node in rewards.get_children():
 		node.queue_free()
 
+func add_medicine_reward(medicine: Medicine) -> void:
+	var medicine_reward := REWARD_BUTTON.instantiate() as RewardButton
+	medicine_reward.reward_icon = medicine.icon
+	medicine_reward.reward_text = medicine.medicine_name
+	medicine_reward.pressed.connect(_on_medicine_reward_taken.bind(medicine))
+	rewards.add_child.call_deferred(medicine_reward)
 
 func add_gold_reward(amount: int) -> void:
 	var gold_reward := REWARD_BUTTON.instantiate() as RewardButton
@@ -134,3 +140,7 @@ func _on_back_button_pressed() -> void:
 		Events.battle_reward_exited.emit()
 	
 	queue_free()
+
+
+func _on_medicine_reward_taken(medicine: Medicine) -> void:
+	Events.medicine_get_requested.emit(medicine)
