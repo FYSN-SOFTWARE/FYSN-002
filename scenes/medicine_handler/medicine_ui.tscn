@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5x60ougcm4yn"]
+
+[ext_resource type="Script" uid="uid://bj4tvtk34fbrc" path="res://scenes/medicine_handler/medicine_ui.gd" id="1_okys4"]
+[ext_resource type="PackedScene" uid="uid://j4jh655jrj7f" path="res://scenes/medicine_handler/medicine_tooltip.tscn" id="2_i1m2x"]
+[ext_resource type="Resource" uid="uid://ca4ocx8y6ixds" path="res://medicines/default_medicine.tres" id="2_srrvg"]
+[ext_resource type="Texture2D" uid="uid://dp5oyskkwnhgo" path="res://art/empty_medicine.png" id="3_srrvg"]
+[ext_resource type="PackedScene" uid="uid://boq75fh8quhc1" path="res://scenes/medicine_handler/medicine_use_select_ui.tscn" id="5_olkpg"]
+
+[node name="MedicineUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1920.0
+offset_bottom = -1080.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_okys4")
+medicine = ExtResource("2_srrvg")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 80.0
+pivot_offset = Vector2(40, 40)
+texture = ExtResource("3_srrvg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MedicineTooltip" parent="." instance=ExtResource("2_i1m2x")]
+visible = false
+layout_mode = 1
+offset_left = 367.0
+offset_top = 104.0
+offset_right = 535.0
+offset_bottom = 181.0
+mouse_filter = 2
+
+[node name="MedicineUseSelectUI" parent="." instance=ExtResource("5_olkpg")]
+visible = false
+layout_mode = 0
+offset_left = -60.0
+offset_top = 80.0
+offset_right = 142.0
+offset_bottom = 243.0
+
+[connection signal="gui_input" from="Icon" to="." method="_on_icon_gui_input"]

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://borqgf64pbf4v"]
+
+[ext_resource type="Texture2D" uid="uid://c0h26l55iyi2o" path="res://art/Block_Potion.webp" id="1_etfdv"]
+[ext_resource type="Script" uid="uid://dviewltv3kcd6" path="res://medicines/block_medicine.gd" id="2_1xn6d"]
+
+[resource]
+script = ExtResource("2_1xn6d")
+medicine_name = "格挡药水"
+id = "block_medicine"
+icon = ExtResource("1_etfdv")
+rarity = 0
+battle_only = true
+value = 12
+target = "SELF"
+tooltip = "获得 12 点 格挡 。"
+metadata/_custom_type_script = "uid://duen43g6kq8j6"

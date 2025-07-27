@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dqq1l7334iw41"]
+
+[ext_resource type="Texture2D" uid="uid://daqkgufyhhujc" path="res://art/Fruit_Juice.webp" id="1_qdo1w"]
+[ext_resource type="Script" uid="uid://bqbsnv07xa40r" path="res://medicines/fruit_juice.gd" id="2_gup4t"]
+
+[resource]
+script = ExtResource("2_gup4t")
+medicine_name = "果汁药水"
+id = "fruit_juice"
+icon = ExtResource("1_qdo1w")
+rarity = 2
+battle_only = true
+value = 5
+target = "SELF"
+tooltip = "	获得 5 点最大生命。"
+metadata/_custom_type_script = "uid://duen43g6kq8j6"

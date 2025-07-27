@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://uql2deinry0"]
+
+[ext_resource type="Texture2D" uid="uid://17c2q4x72tra" path="res://art/Blood_Potion.webp" id="1_3hggc"]
+[ext_resource type="Script" uid="uid://djy6ag4wdvhvn" path="res://medicines/blood_medicine.gd" id="1_qc26x"]
+
+[resource]
+script = ExtResource("1_qc26x")
+medicine_name = "鲜血药水"
+id = "blood_medicine"
+icon = ExtResource("1_3hggc")
+rarity = 0
+battle_only = true
+value = 0
+target = "SELF"
+tooltip = "回复最大生命值的 20% 。"
+metadata/_custom_type_script = "uid://duen43g6kq8j6"

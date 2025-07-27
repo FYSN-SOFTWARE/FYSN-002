@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://det3pubxwm4jc"]
+
+[ext_resource type="Texture2D" uid="uid://ccpwhv4iseog8" path="res://art/Duplication_Potion.webp" id="1_puddk"]
+[ext_resource type="Script" uid="uid://cg0jds2ox88ia" path="res://medicines/duplication_medicine.gd" id="2_11whp"]
+
+[resource]
+script = ExtResource("2_11whp")
+medicine_name = "复制药水"
+id = "duplication_medicine"
+icon = ExtResource("1_puddk")
+rarity = 1
+battle_only = true
+value = 0
+target = "SELF"
+tooltip = "本回合你的下一张牌将被打出两次。"
+metadata/_custom_type_script = "uid://duen43g6kq8j6"

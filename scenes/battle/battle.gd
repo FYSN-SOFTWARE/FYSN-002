@@ -21,6 +21,7 @@ var is_flipped: bool = false
 # 添加教程系统
 var tutorial_system: TutorialBattle
 
+
 func _ready() -> void:
 	enemy_handler.child_order_changed.connect(_on_enemies_child_order_changed)
 	Events.enemy_turn_ended.connect(_on_enemy_turn_ended)
@@ -38,27 +39,6 @@ func _ready() -> void:
 	update_flip_button_text()
 	# 连接战斗开始信号
 	Events.battle_started.connect(_on_battle_started)
-	# 初始化世界翻转状态
-	Global.set_world_flipped(is_flipped)
-	# 初始化卡牌翻转状态
-	initialize_cards_flipped_state(is_flipped)
-
-
-# 初始化卡牌翻转状态
-func initialize_cards_flipped_state(flipped: bool) -> void:
-	# 更新玩家手牌中的卡牌
-	for card_ui in player_handler.hand.get_children():
-		if card_ui is CardUI:
-			card_ui.card.set_flipped(flipped)
-			card_ui.card_visuals.set_card(card_ui.card)
-
-
-# 更新卡牌集合的翻转状态
-func update_cards_flipped_state(cards: Array[Card], flipped: bool) -> Array[Card]:
-	for card in cards:
-		card.set_flipped(flipped)
-	return cards
-
 
 func start_battle() -> void:
 	get_tree().paused = false
@@ -88,6 +68,8 @@ func start_battle() -> void:
 		# 如果没有教程，直接开始战斗
 		player_handler.start_battle(char_stats)
 		battle_ui.initialize_card_pile_ui()
+		
+	# TODO 药水受遗物的影响
 
 
 # 添加方法初始化敌人状态
@@ -102,18 +84,8 @@ func initialize_enemies_flipped_state(flipped: bool) -> void:
 func _on_flip_button_pressed() -> void:
 	# 切换翻转状态
 	is_flipped = !is_flipped
-	Global.set_world_flipped(is_flipped)
-	
-	# 更新所有卡牌
-	initialize_cards_flipped_state(is_flipped)
-	
-	# 更新敌人
-	initialize_enemies_flipped_state(is_flipped)
-	
-	# 更新UI
 	update_background()
 	update_flip_button_text()
-	
 	# 通知全局翻转状态改变
 	Events.world_flipped.emit(is_flipped)
 
@@ -139,6 +111,7 @@ func _on_enemy_turn_ended() -> void:
 
 
 func _on_player_died() -> void:
+	
 	Events.battle_over_screen_requested.emit("Game Over!", BattleOverPanel.Type.LOSE)
 	SaveGame.delete_data()
 

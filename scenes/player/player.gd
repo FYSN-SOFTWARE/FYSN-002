@@ -9,11 +9,12 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 @onready var stats_ui: StatsUI = $StatsUI
 @onready var status_handler: StatusHandler = $StatusHandler
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
+@onready var medicine_handler: MedicineHandler = $MedicineHandler
 
 
 func _ready() -> void:
 	status_handler.status_owner = self
-
+	medicine_handler.player = self
 
 func set_character_stats(value: CharacterStats) -> void:
 	stats = value
@@ -22,7 +23,7 @@ func set_character_stats(value: CharacterStats) -> void:
 		stats.stats_changed.connect(update_stats)
 
 	update_player()
-
+	
 
 func update_player() -> void:
 	if not stats is CharacterStats: 
@@ -58,3 +59,7 @@ func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
 				Events.player_died.emit()
 				queue_free()
 	)
+
+# 添加药水
+func add_medicine(medicine: Medicine) -> bool:
+	return medicine_handler.add_medicine(medicine)

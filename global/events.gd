@@ -81,3 +81,12 @@ signal transcard(areafrom: Effect.CardArea, areato: Effect.CardArea)
 
 signal battle_starte()
 signal turnend(isplayer: bool)
+
+
+# 药水系统
+signal medicine_use_requested(slot_index: int)
+signal medicine_discard_requested(slot_index: int)
+signal medicines_updated
+signal change_state(isinbattle: bool)
+signal medicine_get_requested(medicine: Medicine)
+signal use_duplication_medicine
