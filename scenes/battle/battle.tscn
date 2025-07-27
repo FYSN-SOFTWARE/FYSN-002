@@ -101,9 +101,9 @@ offset_bottom = -219.0
 
 [node name="SoulUI" parent="BattleUI" instance=ExtResource("15_5moxy")]
 offset_left = 10.0
-offset_top = -880.0
+offset_top = -792.0
 offset_right = 147.0
-offset_bottom = -816.0
+offset_bottom = -728.0
 
 [node name="Tooltip" parent="BattleUI" instance=ExtResource("12_qx741")]
 offset_left = -69.5
@@ -253,9 +253,10 @@ visible = false
 [node name="FlipButton" type="Button" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
-offset_top = 100.0
-offset_right = 168.0
-offset_bottom = 188.0
+offset_left = 2.0
+offset_top = 195.0
+offset_right = 170.0
+offset_bottom = 283.0
 theme_override_font_sizes/font_size = 35
 
 [node name="FlipWorld" type="TextureRect" parent="FlipButton"]

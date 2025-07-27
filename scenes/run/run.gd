@@ -41,6 +41,9 @@ var is_flipped: bool = false
 # 在类变量中添加（序章）
 var is_prologue := false
 var prologue_completed := false
+# 药水
+var medicine_manager: MedicineManager
+
 
 func _ready() -> void:
 	if not run_startup:
@@ -66,6 +69,9 @@ func _ready() -> void:
 	Events.prologue_boss_defeated.connect(_on_prologue_boss_defeated)
 	# 初始化世界翻转状态
 	Global.set_world_flipped(save_data.is_flipped if save_data else false)
+	# 创建药水管理器实例 - 移到最前面确保所有路径都初始化
+	medicine_manager = MedicineManager.new()
+	add_child(medicine_manager)
 
 
 func _start_run() -> void:
@@ -235,6 +241,10 @@ func _show_regular_battle_rewards() -> void:
 
 	reward_scene.add_gold_reward(map.last_room.battle_stats.roll_gold_reward())
 	reward_scene.add_card_reward()
+	# 药水奖励
+	if medicine_manager.can_drop_medicine():
+		var medicine = medicine_manager.get_random_medicine()
+		reward_scene.add_medicine_reward(medicine)
 
 
 func _on_battle_room_entered(room: Room) -> void:
@@ -320,12 +330,17 @@ func _on_cg_completed() -> void:
 
 
 func _on_battle_won() -> void:
+	Events.change_state.emit(false)
 	_show_regular_battle_rewards()
 
 
 func _load_run() -> void:
 	save_data = SaveGame.load_data()
 	assert(save_data, "Couldn't load last save")
+	
+	# 确保药水管理器初始化 - 新增
+	medicine_manager = MedicineManager.new()
+	add_child(medicine_manager)
 	
 	RNG.set_from_save_data(save_data.rng_seed, save_data.rng_state)
 	stats = save_data.run_stats
