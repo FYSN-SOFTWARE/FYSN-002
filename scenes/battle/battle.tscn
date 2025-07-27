@@ -15,7 +15,6 @@
 [ext_resource type="Resource" uid="uid://bbo24od4aavfj" path="res://enemies/bat/bat_enemy.tres" id="8_d4c2d"]
 [ext_resource type="PackedScene" uid="uid://bnbwu7pkbrwox" path="res://scenes/ui/mana_ui.tscn" id="11_2vu01"]
 [ext_resource type="PackedScene" uid="uid://chry0sgk7t0yf" path="res://scenes/ui/tooltip.tscn" id="12_qx741"]
-[ext_resource type="PackedScene" uid="uid://cpwswceawk1b0" path="res://scenes/ui/Soul_ui.tscn" id="15_5moxy"]
 [ext_resource type="Script" uid="uid://cuykj2y3ipbie" path="res://scenes/ui/red_flash.gd" id="15_qvh8t"]
 [ext_resource type="PackedScene" uid="uid://dx377oa3pkut" path="res://scenes/ui/card_pile_opener.tscn" id="17_djv03"]
 [ext_resource type="PackedScene" uid="uid://dfig8d63ggof1" path="res://scenes/ui/battle_over_panel.tscn" id="17_xrby7"]
@@ -98,12 +97,6 @@ offset_left = 10.0
 offset_top = -294.0
 offset_right = 149.0
 offset_bottom = -219.0
-
-[node name="SoulUI" parent="BattleUI" instance=ExtResource("15_5moxy")]
-offset_left = 10.0
-offset_top = -880.0
-offset_right = 147.0
-offset_bottom = -816.0
 
 [node name="Tooltip" parent="BattleUI" instance=ExtResource("12_qx741")]
 offset_left = -69.5

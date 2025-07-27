@@ -21,14 +21,3 @@ func apply_effects(targets: Array[Node], modifiers: ModifierHandler) -> void:
 	damage_effect.amount = modifiers.get_modified_value(base_damage, Modifier.Type.DMG_DEALT)
 	damage_effect.sound = sound
 	damage_effect.execute(targets)
-
-
-# 新增反面效果
-func _init():
-	# 创建反面效果
-	back_side = CardSide.new()
-	back_side.id = "slash_back"
-	back_side.type = Type.ATTACK
-	back_side.cost = 1
-	back_side.tooltip_text = "造成 [color=red]2[/color] 点伤害。如果目标有暴露状态，额外造成 [color=red]3[/color] 点伤害。"
-	

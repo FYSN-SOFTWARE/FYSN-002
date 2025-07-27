@@ -82,8 +82,6 @@ signal transcard(areafrom: Effect.CardArea, areato: Effect.CardArea)
 signal battle_starte()
 signal turnend(isplayer: bool)
 
-# 添加精神伤害事件
-signal player_li_damage_taken(amount)
 
 # 药水系统
 signal medicine_use_requested(slot_index: int)

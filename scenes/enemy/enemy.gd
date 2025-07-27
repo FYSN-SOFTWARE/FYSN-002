@@ -174,14 +174,6 @@ func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
 				Events.enemy_died.emit(self)
 				queue_free()
 	)
-	
-	# 根据世界状态选择伤害类型
-	var damage_type := which_modifier
-	if Global.is_world_flipped && which_modifier == Modifier.Type.BIAO_DMG:
-		damage_type = Modifier.Type.LI_DMG
-	elif !Global.is_world_flipped && which_modifier == Modifier.Type.LI_DMG:
-		damage_type = Modifier.Type.BIAO_DMG
-	
 
 
 func _on_area_entered(_area: Area2D) -> void:

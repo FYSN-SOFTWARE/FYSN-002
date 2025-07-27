@@ -27,10 +27,6 @@ const RARITY_COLORS := {
 @export var backcard: CardSide
 @export var sound: AudioStream
 
-@export_group("Card Sides")
-@export var front_side: CardSide
-@export var back_side: CardSide
-
 # 添加升级属性
 @export var upgraded: bool = false
 @export var upgrade_damage: int = 2
@@ -39,31 +35,8 @@ const RARITY_COLORS := {
 @export_multiline var upgraded_tooltip_text: String
 
 var cardarea: Effect.CardArea = 0
-var is_flipped: bool = false
-
-func set_flipped(flipped: bool) -> void:
-	is_flipped = flipped
-	# 更新当前使用的卡面
-	initiative()
-	# 更新卡牌属性
-	if is_flipped && back_side:
-		cost = back_side.cost
-		icon = back_side.icon
-		tooltip_text = back_side.tooltip_text
-	elif front_side:
-		cost = front_side.cost
-		icon = front_side.icon
-		tooltip_text = front_side.tooltip_text
-
 
 func initiative() -> void:
-	if is_flipped && back_side:
-		effects = back_side.effects.duplicate()
-	elif front_side:
-		effects = front_side.effects.duplicate()
-	else:
-		push_error("Card %s has no valid side defined" % id)
-
 	effects = outcard.effects.duplicate()
 
 func is_single_targeted() -> bool:
@@ -96,7 +69,6 @@ func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierH
 		if play_twice:
 			apply_effects(targets, modifiers)
 	else:
-		apply_effects(_get_targets(targets), modifiers)
 		var targets_Array = _get_targets(targets)
 		apply_effects(targets_Array, modifiers)
 		if play_twice:
@@ -166,21 +138,6 @@ func post_upgrade() -> void:
 
 func apply_effects(_targets: Array[Node], _modifiers: ModifierHandler) -> void:
 	pass
-
-
-# 获取当前面的工具提示
-func get_current_tooltip() -> String:
-	if is_flipped && back_side && !back_side.tooltip_text.is_empty():
-		return back_side.tooltip_text
-	return front_side.tooltip_text
-
-# 获取对面的工具提示（用于预览）
-func get_opposite_tooltip() -> String:
-	if is_flipped && front_side && !front_side.tooltip_text.is_empty():
-		return front_side.tooltip_text
-	elif back_side:
-		return back_side.tooltip_text
-	return "无反面效果"
 
 
 func get_default_tooltip() -> String:

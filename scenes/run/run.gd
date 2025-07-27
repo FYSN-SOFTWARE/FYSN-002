@@ -65,8 +65,6 @@ func _ready() -> void:
 	Events.world_flipped.connect(_on_world_flipped)
 	# 连接序章boss被击败事件
 	Events.prologue_boss_defeated.connect(_on_prologue_boss_defeated)
-	# 初始化世界翻转状态
-	Global.set_world_flipped(save_data.is_flipped if save_data else false)
 
 
 func _start_run() -> void:
@@ -142,9 +140,7 @@ func _save_run(was_on_map: bool) -> void:
 
 # 新增翻转按钮处理函数
 func _on_flip_button_pressed() -> void:
-	# 切换翻转状态
 	is_flipped = !is_flipped
-	Global.set_world_flipped(is_flipped)
 	flip_button.text = "里侧" if is_flipped else "表侧"
 	
 	# 保存翻转状态

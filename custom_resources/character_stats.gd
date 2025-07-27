@@ -13,7 +13,6 @@ extends Stats
 @export var max_mana: int
 @export var starting_relic: Relic
 @export var startesoals: int = 0
-@export var max_soals: int 
 
 var mana: int : set = set_mana
 var soals: int
@@ -32,14 +31,6 @@ func set_mana(value: int) -> void:
 	mana = value
 	stats_changed.emit()
 
-func set_soals(value: int) -> void:
-	soals = clampi(value, 0, max_soals)
-	stats_changed.emit()
-
-func add_soals(amount: int) -> void:
-	soals = clampi(soals + amount, 0, max_soals)
-	stats_changed.emit()
-
 
 func reset_mana() -> void:
 	mana = max_mana
@@ -52,16 +43,6 @@ func take_damage(damage: int) -> void:
 		Events.player_hit.emit()
 
 
-# 添加处理精神伤害的方法
-func take_li_damage(damage: int) -> void:
-	var initial_san := san
-	san = clampi(san - damage, 0, max_san)
-	
-	# 触发事件
-	if initial_san > san:
-		Events.player_li_damage_taken.emit(damage)
-
-
 func can_play_card(card: Card) -> bool:
 	return mana >= card.cost
 
@@ -70,17 +51,9 @@ func create_instance() -> Resource:
 	var instance: CharacterStats = self.duplicate()
 	instance.health = max_health
 	instance.block = 0
-	instance.san = max_san
 	instance.reset_mana()
-	instance.soals = startesoals
 	instance.deck = instance.starting_deck.duplicate()
 	instance.draw_pile = CardPile.new()
 	instance.discard = CardPile.new()
 	instance.ex_pile = CardPile.new()
 	return instance
-
-
-# 添加重置灵魂能量的方法
-func reset_soals() -> void:
-	soals = 0
-	stats_changed.emit()

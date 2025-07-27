@@ -12,7 +12,6 @@ extends CanvasLayer
 @onready var draw_pile_view: CardPileView = %DrawPileView
 @onready var discard_pile_view: CardPileView = %DiscardPileView
 @onready var excard_pile_view: CardPileView = %ExcardPileView
-@onready var soul_ui: SoulUI = $SoulUI
 
 
 func _ready() -> void:
@@ -34,7 +33,6 @@ func _set_char_stats(value: CharacterStats) -> void:
 	char_stats = value
 	mana_ui.char_stats = char_stats
 	hand.char_stats = char_stats
-	soul_ui.char_stats = char_stats
 
 
 func _on_player_hand_drawn() -> void:

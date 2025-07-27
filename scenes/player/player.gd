@@ -9,21 +9,11 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 @onready var stats_ui: StatsUI = $StatsUI
 @onready var status_handler: StatusHandler = $StatusHandler
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
-
-# 添加世界翻转状态
-var is_world_flipped: bool = false
 @onready var medicine_handler: MedicineHandler = $MedicineHandler
 
 
 func _ready() -> void:
 	status_handler.status_owner = self
-	# 监听世界翻转事件
-	Events.world_flipped.connect(_on_world_flipped)
-
-
-func _on_world_flipped(flipped: bool) -> void:
-	is_world_flipped = flipped
-
 	medicine_handler.player = self
 
 func set_character_stats(value: CharacterStats) -> void:
@@ -46,31 +36,10 @@ func update_player() -> void:
 
 
 func update_stats() -> void:
-	# 确保stats_ui已初始化
-	if stats_ui:
-		stats_ui.update_stats(stats)
 	stats_ui.update_stats(stats)
 
-# 修改为公共方法，可以被外部调用
-func lose_san(amount: int) -> void:
-	if stats.san <= 0:
-		return
-	
-	stats.san -= amount
-	
-	# 检查san值是否清零
-	if stats.san <= 0:
-		Events.player_died.emit() 
-		queue_free()
 
-# 修改伤害处理方法，根据世界状态决定扣除血量还是san值
 func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
-	if is_world_flipped:
-		# 里世界：扣除san值
-		lose_san(damage)
-		return
-		
-	# 表世界：原逻辑扣除血量
 	if stats.health <= 0:
 		return
 	
