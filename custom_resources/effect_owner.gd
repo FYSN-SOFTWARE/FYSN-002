@@ -5,7 +5,6 @@ class_name EffectOwner
 
 var can_use: bool
 
-
 func check_action() -> bool:
 	if(can_use):
 		action()

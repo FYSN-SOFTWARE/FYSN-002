@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cfnlpvfc1d862"]
+[gd_scene load_steps=13 format=3 uid="uid://cfnlpvfc1d862"]
 
 [ext_resource type="PackedScene" uid="uid://cuwuwco4sf0y6" path="res://scenes/map/map.tscn" id="1_7xwwf"]
 [ext_resource type="Script" uid="uid://cne8v6cbdrxt2" path="res://scenes/run/run.gd" id="1_bedv1"]
@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://bltkcscivnh8p" path="res://scenes/relic_handler/relic_handler.tscn" id="6_f8fbw"]
 [ext_resource type="PackedScene" uid="uid://bwtke8nmynqt2" path="res://scenes/relic_handler/relic_tooltip.tscn" id="10_xh4qt"]
 [ext_resource type="Script" uid="uid://c2hbcbqwyysg6" path="res://scenes/run/pause_menu.gd" id="11_a4w7h"]
-[ext_resource type="PackedScene" uid="uid://bvf27x350klb5" path="res://scenes/medicine_handler/medicine_handler.tscn" id="13_7yo0l"]
 
 [node name="Run" type="Node" groups=["run"]]
 script = ExtResource("1_bedv1")
@@ -214,26 +213,5 @@ custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "主菜单"
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 3
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-custom_minimum_size = Vector2(0, 80)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 80.0
-offset_right = -1460.0
-offset_bottom = -920.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.501961)
-
-[node name="MedicineHandler" parent="CanvasLayer" instance=ExtResource("13_7yo0l")]
-offset_left = 90.0
-offset_top = 80.0
-offset_right = -1830.0
-offset_bottom = -1000.0
 
 [connection signal="pressed" from="TopBar/BarItems/FlipButton" to="." method="_on_flip_button_pressed"]

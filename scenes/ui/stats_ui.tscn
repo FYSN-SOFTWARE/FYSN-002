@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ph0oi5od64u5"]
+[gd_scene load_steps=6 format=3 uid="uid://ph0oi5od64u5"]
 
 [ext_resource type="Theme" uid="uid://c8cqncsqlplyu" path="res://main_theme.tres" id="1_6mdvy"]
 [ext_resource type="Texture2D" uid="uid://oe7v35ii8vrs" path="res://art/tile_0102.png" id="2_3xkif"]
 [ext_resource type="Script" uid="uid://cb6ufw3w5t6vm" path="res://scenes/ui/stats_ui.gd" id="2_t62e8"]
 [ext_resource type="PackedScene" uid="uid://b3dkx1dqlo0eo" path="res://scenes/ui/health_ui.tscn" id="4_mspg2"]
+[ext_resource type="PackedScene" uid="uid://ctyfbpurfu22q" path="res://scenes/ui/san_ui.tscn" id="5_7klq2"]
 
 [node name="StatsUI" type="HBoxContainer"]
 anchors_preset = 5
@@ -36,4 +37,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Health" parent="." instance=ExtResource("4_mspg2")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SanUI" parent="." instance=ExtResource("5_7klq2")]
+unique_name_in_owner = true
 layout_mode = 2

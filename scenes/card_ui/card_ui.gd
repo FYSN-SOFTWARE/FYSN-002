@@ -21,6 +21,27 @@ var parent: Control
 var tween: Tween
 var playable := true : set = _set_playable
 var disabled := true
+var preview_opposite: bool = false
+var preview_timer: float = 0.0
+const PREVIEW_DELAY: float = 0.5  # 长按0.5秒后显示预览
+
+
+func _process(delta: float) -> void:
+	# 右键长按检测
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) && is_hovered():
+		preview_timer += delta
+		if preview_timer >= PREVIEW_DELAY && !preview_opposite:
+			preview_opposite = true
+			# 显示对面效果
+			var opposite_tooltip = card.get_opposite_tooltip()
+			Events.card_tooltip_requested.emit(card.icon, opposite_tooltip)
+	else:
+		if preview_opposite:
+			preview_opposite = false
+			# 恢复显示当前面效果
+			request_tooltip()
+		preview_timer = 0.0
+
 
 # 添加切换卡牌资源的方法
 func switch_card(new_card_resource: Card) -> void:
@@ -39,9 +60,24 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 		# 添加右键点击检测
 	gui_input.connect(_handle_right_click)
-	
+	# 添加世界翻转事件监听
+	Events.world_flipped.connect(_on_world_flipped)
+	# 初始化时设置卡牌翻转状态
+	_on_world_flipped(Global.is_world_flipped)
+
+
+# 添加处理世界翻转事件的方法
+func _on_world_flipped(flipped: bool) -> void:
+	if card:
+		# 设置卡牌翻转状态
+		card.set_flipped(flipped)
+		# 更新卡牌显示
+		card_visuals.card = card
+
+
 func _input(event: InputEvent) -> void:
 	card_state_machine.on_input(event)
+
 
 func _handle_right_click(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -53,14 +89,11 @@ func _handle_right_click(event: InputEvent) -> void:
 func _on_right_clicked() -> void:
 	# 这里可以添加自定义切换逻辑
 	# 示例：在预设列表中切换
-	if alternative_cards.size() > 0:
-		current_alternative_index = (current_alternative_index + 1) % alternative_cards.size()
-		switch_card(alternative_cards[current_alternative_index])
+	pass
 	
 	# 或者调用外部管理器
 	# CardManager.switch_card(self
-@export var alternative_cards: Array[Card] = []
-var current_alternative_index := 0
+
 
 
 func animate_to_position(new_position: Vector2, duration: float) -> void:
@@ -72,11 +105,7 @@ func play() -> void:
 	if not card:
 		return
 	
-	if parent.play_twice_next:
-		parent.play_twice_next = false
-		card.play(targets, char_stats, player_modifiers,true)
-	else:
-		card.play(targets, char_stats, player_modifiers,false)
+	card.play(targets, char_stats, player_modifiers)
 	queue_free()
 
 
@@ -118,6 +147,11 @@ func _set_card(value: Card) -> void:
 		await ready
 
 	card = value
+	
+	# 设置卡牌翻转状态
+	if card:
+		card.set_flipped(Global.is_world_flipped)
+	
 	card_visuals.card = card
 
 
