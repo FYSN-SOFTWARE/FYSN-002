@@ -1,5 +1,6 @@
 # 药水管理器
 # 全局管理药水资源和掉落概率
+class_name MedicineManager
 extends Node
 
 var medicines: Array[Medicine] = []  # 所有药水资源

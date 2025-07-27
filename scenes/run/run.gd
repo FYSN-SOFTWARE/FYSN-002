@@ -42,6 +42,7 @@ var is_flipped: bool = false
 var is_prologue := false
 var prologue_completed := false
 
+var medicine_manager: MedicineManager
 
 func _ready() -> void:
 	if not run_startup:
@@ -234,8 +235,8 @@ func _show_regular_battle_rewards() -> void:
 	reward_scene.add_card_reward()
 	
 	# 药水奖励
-	if MedicineManager.can_drop_medicine():
-		var medicine = MedicineManager.get_random_medicine()
+	if medicine_manager.can_drop_medicine():
+		var medicine = medicine_manager.get_random_medicine()
 		reward_scene.add_medicine_reward(medicine)
 
 
