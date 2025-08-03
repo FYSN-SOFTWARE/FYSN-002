@@ -30,6 +30,7 @@ func on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mouse_event: InputEventMouseButton = event
 		if mouse_event.button_index == MOUSE_BUTTON_RIGHT and mouse_event.pressed:
+			card_ui._handle_right_click(event)
 			return
 	
 	if current_state:

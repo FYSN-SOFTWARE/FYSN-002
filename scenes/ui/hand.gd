@@ -7,6 +7,15 @@ const CARD_UI_SCENE := preload("res://scenes/card_ui/card_ui.tscn")
 @export var char_stats: CharacterStats
 
 
+var play_twice_next: bool = false
+
+func _ready() -> void:
+	Events.use_duplication_medicine.connect(_use_duplication_medicine)
+
+func _use_duplication_medicine() -> void:
+	play_twice_next = true
+
+
 func add_card(card: Card) -> void:
 	var new_card_ui := CARD_UI_SCENE.instantiate() as CardUI
 	add_child(new_card_ui)

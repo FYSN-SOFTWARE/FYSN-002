@@ -42,6 +42,7 @@ signal shop_entered(shop: Shop)
 signal shop_relic_bought(relic: Relic, gold_cost: int)
 signal shop_card_bought(card: Card, gold_cost: int)
 signal shop_exited
+signal shop_medicine_bought(medicine: Medicine, cost: int)
 
 # 商店强化和删牌
 signal shop_remove_requested(cost: int)

@@ -1,14 +1,30 @@
 # 药水管理器
 # 全局管理药水资源和掉落概率
-class_name MedicineManager
 extends Node
 
+static var instance: MedicineManager
 var medicines: Array[Medicine] = []  # 所有药水资源
 var medicine_drop_chance: float = 1.0   # 初始掉落概率
 
+static func get_all_medicines() -> Array[Medicine]:
+	return instance.medicines
+
 func _ready() -> void:
 	load_all_medicines()
+
+func _enter_tree() -> void:
+	instance = self
+
+# 静态方法用于全局访问
+static func get_random_medicine() -> Medicine:
+	return instance._get_random_medicine()
 	
+static func can_drop_medicine() -> bool:
+	return instance._can_drop_medicine()
+
+static func update_drop_chance(dropped: bool) -> void:
+	instance._update_drop_chance(dropped)
+
 # 加载所有药水资源
 func load_all_medicines():
 	var dir = DirAccess.open("res://medicines/")
@@ -33,7 +49,7 @@ func load_all_medicines():
 	
 
 # 获取随机药水
-func get_random_medicine() -> Medicine:
+func _get_random_medicine() -> Medicine:
 	var rand_value = randf()
 	var rarity_pool: Array[Medicine] = []
 	
@@ -50,14 +66,14 @@ func get_random_medicine() -> Medicine:
 
 
 # 更新掉落概率
-func update_drop_chance(dropped: bool) -> void:
+func _update_drop_chance(dropped: bool) -> void:
 	if dropped:
 		medicine_drop_chance = max(0.1,medicine_drop_chance - 0.1)
 	else:
 		medicine_drop_chance = min(1.0,medicine_drop_chance + 0.1)
 
 # 本轮是否能掉落药水
-func can_drop_medicine() -> bool:
+func _can_drop_medicine() -> bool:
 	var rand_value = randf()
 	if rand_value <= medicine_drop_chance:
 		update_drop_chance(true)

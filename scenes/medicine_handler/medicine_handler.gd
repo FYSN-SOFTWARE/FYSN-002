@@ -105,3 +105,5 @@ func _medicine_use(slot_index: int):
 
 func _medicine_get(medicine: Medicine):
 	add_medicine(medicine)
+	# 更新药水掉落概率
+	MedicineManager.update_drop_chance(true)  # 表示药水已掉落

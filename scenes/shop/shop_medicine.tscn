@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwcimcacx0bk7"]
+
+[ext_resource type="Script" uid="uid://fj86sqxwiuhm" path="res://scenes/shop/shop_medicine.gd" id="1_eou6d"]
+[ext_resource type="PackedScene" uid="uid://dsyrlfyuoktsn" path="res://scenes/shop/shop_medicine_ui.tscn" id="2_4luyk"]
+[ext_resource type="Texture2D" uid="uid://dhmtctwb5ymhc" path="res://art/gold.png" id="2_eou6d"]
+[ext_resource type="Resource" uid="uid://borqgf64pbf4v" path="res://medicines/blook_medicine.tres" id="3_4luyk"]
+
+[node name="ShopMedicine" type="VBoxContainer"]
+offset_right = 149.0
+offset_bottom = 161.0
+theme_override_constants/separation = 10
+script = ExtResource("1_eou6d")
+
+[node name="MedicineContainer" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="ShopMedicineUI" parent="MedicineContainer" instance=ExtResource("2_4luyk")]
+layout_mode = 2
+medicine = ExtResource("3_4luyk")
+
+[node name="Price" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="PriceLabel" type="Label" parent="Price"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "999"
+
+[node name="GoldIcon" type="TextureRect" parent="Price"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+texture = ExtResource("2_eou6d")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BuyButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "购买"
+
+[connection signal="pressed" from="BuyButton" to="." method="_on_button_pressed"]

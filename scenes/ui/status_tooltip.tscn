@@ -7,19 +7,21 @@
 custom_minimum_size = Vector2(150, 0)
 offset_right = 150.0
 offset_bottom = 15.0
+theme_override_constants/separation = 25
 script = ExtResource("1_1m4i6")
 
 [node name="Icon" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(10, 10)
+custom_minimum_size = Vector2(80, 10)
 layout_mode = 2
 texture = ExtResource("1_fgsdg")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="."]
-custom_minimum_size = Vector2(110, 0)
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 50
 text = "Takes 50% more damage from attacks, for %s turns."
 vertical_alignment = 1
 autowrap_mode = 2

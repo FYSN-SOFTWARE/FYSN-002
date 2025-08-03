@@ -22,11 +22,13 @@ var card_rarity_weights := {
 }
 var run_data: Run
 
+
 func _ready() -> void:
 	run_data = get_tree().root.get_node("Run")
 	
 	for node: Node in rewards.get_children():
 		node.queue_free()
+
 
 func add_medicine_reward(medicine: Medicine) -> void:
 	var medicine_reward := REWARD_BUTTON.instantiate() as RewardButton
@@ -34,6 +36,7 @@ func add_medicine_reward(medicine: Medicine) -> void:
 	medicine_reward.reward_text = medicine.medicine_name
 	medicine_reward.pressed.connect(_on_medicine_reward_taken.bind(medicine))
 	rewards.add_child.call_deferred(medicine_reward)
+
 
 func add_gold_reward(amount: int) -> void:
 	var gold_reward := REWARD_BUTTON.instantiate() as RewardButton

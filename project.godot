@@ -25,6 +25,7 @@ Shaker="*res://global/shaker.gd"
 MusicPlayer="*res://global/music_player.tscn"
 SFXPlayer="*res://global/sfx_player.tscn"
 RNG="*res://global/rng.gd"
+MedicineManager="*res://global/medicine_manager.gd"
 
 [debug]
 

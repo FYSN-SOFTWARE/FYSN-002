@@ -6,6 +6,7 @@ const SHOP_RELIC = preload("res://scenes/shop/shop_relic.tscn")
 # 在常量区域添加预加载
 const SHOP_REMOVE = preload("res://scenes/shop/shop_remove_card.tscn")
 const SHOP_UPGRADE = preload("res://scenes/shop/shop_upgrade_card.tscn")
+const SHOP_MEDICINE = preload("res://scenes/shop/shop_medicine_card.tscn")
 
 # 添加删牌和强化功能的信号
 signal shop_remove_requested(cost: int)
@@ -23,6 +24,25 @@ signal shop_upgrade_requested(cost: int)
 @onready var card_tooltip_popup: CardTooltipPopup = %CardTooltipPopup
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
 @onready var upgrades: HBoxContainer = %Services
+# 商人对话配置
+@onready var shopkeeper_dialogue: Label = %ShopkeeperDialogue
+@onready var medicines_container: HBoxContainer = %MedicinesContainer
+
+var welcome_phrases: Array[String] = [
+	"旅人...你的灵魂在低语...这些碎片或许能平息它的饥渴...",
+	"黑暗在聚集...而这里...是光的残影...",
+	"每一次交易...都是命运的岔路...选择...然后承担..."
+]
+var purchase_phrases: Array[String] = [
+	"力量...总是需要代价...",
+	"这碎片...将成为你的枷锁...或羽翼...",
+	"你的选择...正在编织新的命运之线..."
+]
+var service_phrases: Array[String] = [
+	"改变形态...改变本质...但不变的...是终局...",
+	"抹去过去...并不能逃避未来...",
+	"强化的外表...脆弱的灵魂..."
+]
 
 # 新增升级服务使用标记
 var remove_service_used: bool = false
@@ -43,9 +63,36 @@ func _ready() -> void:
 	# 添加新信号的连接
 	Events.shop_remove_requested.connect(_on_shop_remove_requested)
 	Events.shop_upgrade_requested.connect(_on_shop_upgrade_requested)
-
+	Events.shop_medicine_bought.connect(_on_shop_medicine_bought)
+	
 	_blink_timer_setup()
 	blink_timer.timeout.connect(_on_blink_timer_timeout)
+	
+	# 添加眨眼动画完成后的连接
+	shop_keeper_animation.animation_finished.connect(_on_shopkeeper_animation_finished)
+
+
+# 新增方法：显示随机对话
+func _show_random_dialogue(phrase_list: Array[String]) -> void:
+	if shopkeeper_dialogue:
+		shopkeeper_dialogue.text = phrase_list[RNG.instance.randi_range(0, phrase_list.size() - 1)]
+		shopkeeper_dialogue.visible = true
+		
+		# 设置定时器隐藏对话
+		var timer := get_tree().create_timer(3.0)
+		timer.timeout.connect(_on_dialogue_timer_timeout)
+
+# 新增方法：处理对话定时器
+func _on_dialogue_timer_timeout() -> void:
+	if shopkeeper_dialogue:
+		shopkeeper_dialogue.visible = false
+
+# 新增方法：处理商人动画完成
+func _on_shopkeeper_animation_finished(anim_name: String) -> void:
+	if anim_name == "blink":
+		# 小概率在眨眼后说一句话
+		if RNG.instance.randf() < 0.4:  # 40%概率
+			_show_random_dialogue(welcome_phrases)
 
 
 func _input(event: InputEvent) -> void:
@@ -57,6 +104,8 @@ func populate_shop() -> void:
 	_generate_shop_cards()
 	_generate_shop_relics()
 	_generate_shop_services()  # 新增服务选项
+	_generate_shop_medicines()  # 新增药水生成
+	
 
 func _blink_timer_setup() -> void:
 	blink_timer.wait_time = randf_range(1.0, 5.0)
@@ -129,6 +178,37 @@ func _generate_shop_services() -> void:
 	if upgrade_service_used:
 		shop_upgrade.disable_button()
 		shop_upgrade.set_used_text("已使用")
+
+
+func _generate_shop_medicines() -> void:
+	if not is_instance_valid(medicines_container):
+		push_error("Medicines container not found!")
+		return
+	
+	# 清除现有药水卡片
+	for child in medicines_container.get_children():
+		child.queue_free()
+	
+	# 获取所有可用药水
+	var available_medicines = MedicineManager.get_all_medicines()
+	RNG.array_shuffle(available_medicines)
+	
+	# 随机选择2-3个药水
+	var num_medicines = RNG.instance.randi_range(2, 3)
+	for i in range(min(num_medicines, available_medicines.size())):
+		var medicine_card = SHOP_MEDICINE.instantiate() as ShopMedicineCard
+		medicines_container.add_child(medicine_card)
+		medicine_card.medicine = available_medicines[i]
+		medicine_card.update(run_stats)
+
+
+func _on_shop_medicine_bought(medicine: Medicine, cost: int) -> void:
+	if run_stats.gold >= cost:
+		run_stats.gold -= cost
+		Events.medicine_get_requested.emit(medicine)
+		_update_items()
+		_show_random_dialogue(purchase_phrases)
+
 
 # 新增服务事件处理
 func _on_shop_remove_requested(cost: int) -> void:
@@ -207,6 +287,9 @@ func _on_card_removed(cost: int) -> void:
 		if child is ShopRemoveCard:
 			child.disable_button()
 			child.set_used_text("已使用")
+	
+	_show_random_dialogue(service_phrases)
+
 
 func _on_card_upgraded(cost: int) -> void:
 	# 标记强化服务已使用
@@ -220,6 +303,9 @@ func _on_card_upgraded(cost: int) -> void:
 		if child is ShopUpgradeCard:
 			child.disable_button()
 			child.set_used_text("已使用")
+	
+	_show_random_dialogue(service_phrases)
+
 
 func _update_items() -> void:
 	for shop_card: ShopCard in cards.get_children():
@@ -259,17 +345,21 @@ func _on_shop_card_bought(card: Card, gold_cost: int) -> void:
 	run_stats.gold -= gold_cost
 	_update_items()
 
+	_show_random_dialogue(purchase_phrases)
+
 
 func _on_shop_relic_bought(relic: Relic, gold_cost: int) -> void:
 	relic_handler.add_relic(relic)
 	run_stats.gold -= gold_cost
-
+	
 	if relic is CouponsRelic:
 		var coupons_relic := relic as CouponsRelic
 		coupons_relic.add_shop_modifier(self)
 		_update_item_costs()
 	else:
 		_update_items()
+	
+	_show_random_dialogue(purchase_phrases)
 
 
 func _on_blink_timer_timeout() -> void:

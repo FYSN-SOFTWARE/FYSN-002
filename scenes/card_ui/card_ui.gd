@@ -105,7 +105,11 @@ func play() -> void:
 	if not card:
 		return
 	
-	card.play(targets, char_stats, player_modifiers)
+	if parent.play_twice_next:
+		parent.play_twice_next = false
+		card.play(targets, char_stats, player_modifiers,true)
+	else:
+		card.play(targets, char_stats, player_modifiers,false)
 	queue_free()
 
 

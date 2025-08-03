@@ -9,6 +9,7 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 @onready var stats_ui: StatsUI = $StatsUI
 @onready var status_handler: StatusHandler = $StatusHandler
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
+@onready var medicine_handler: MedicineHandler = $MedicineHandler
 
 # 添加世界翻转状态
 var is_world_flipped: bool = false
@@ -16,6 +17,7 @@ var is_world_flipped: bool = false
 
 func _ready() -> void:
 	status_handler.status_owner = self
+	medicine_handler.player = self
 	# 监听世界翻转事件
 	Events.world_flipped.connect(_on_world_flipped)
 
@@ -87,3 +89,8 @@ func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
 				Events.player_died.emit()
 				queue_free()
 	)
+
+
+# 添加药水
+func add_medicine(medicine: Medicine) -> bool:
+	return medicine_handler.add_medicine(medicine)
