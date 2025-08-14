@@ -1,0 +1,5 @@
+[gd_resource type="Resource" script_class="Intent"]
+
+[resource]
+base_text = "造成 %d 伤害"
+icon = preload("res://art/ui/intents/monk_flipped_intent.png")

@@ -16,7 +16,7 @@ var current_character: CharacterStats : set = set_current_character
 
 func _ready() -> void:
 	set_current_character(WARRIOR_STATS)
-
+	$AudioStreamPlayer.play()
 
 func set_current_character(new_character: CharacterStats) -> void:
 	current_character = new_character

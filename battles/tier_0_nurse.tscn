@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://driuov4tluhie"]
+
+[ext_resource type="PackedScene" uid="uid://d0efyathkfg74" path="res://scenes/enemy/enemy.tscn" id="1_tkkev"]
+[ext_resource type="Resource" uid="uid://co5ebxlxmvj4c" path="res://enemies/nurse/nurse_enemy.tres" id="2_lm3wl"]
+
+[node name="Tier0Nurse" type="Node2D"]
+
+[node name="Enemy" parent="." instance=ExtResource("1_tkkev")]
+position = Vector2(1384, 496)
+scale = Vector2(7, 7)
+stats = ExtResource("2_lm3wl")

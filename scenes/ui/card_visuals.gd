@@ -109,6 +109,7 @@ func _init_keyword_list() -> void:
 			_add_keyword("暴露", "敌人受到攻击时多承受50%伤害")
 		if card.id == "warrior_true_strength":
 			_add_keyword("肌肉", "每层肌肉使攻击多造成1伤害")
+		
 		# 可以在这里添加其他卡牌的关键词解释
 		# 例如:
 		# if card.id == "other_card_id":

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://dpjjtoffi5b6r"]
+
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="1_ai0ce"]
+[ext_resource type="Resource" uid="uid://cjay4o25raejw" path="res://characters/warrior/cards/warrior_shangse_back.tres" id="1_uhg24"]
+[ext_resource type="Resource" uid="uid://fk1vkjj5y1xb" path="res://characters/warrior/cards/warrior_shangse_front.tres" id="3_3jp0f"]
+[ext_resource type="Texture2D" uid="uid://bi6pfjs32f820" path="res://art/tile_0101.png" id="4_uhg24"]
+[ext_resource type="Script" uid="uid://dmcoeuhgvn0p1" path="res://characters/warrior/cards/warrior_shangse.gd" id="5_r6dd3"]
+
+[resource]
+script = ExtResource("5_r6dd3")
+id = "warrior_shangse"
+type = 1
+rarity = 0
+target = 0
+cost = 1
+exhausts = false
+icon = ExtResource("4_uhg24")
+tooltip_text = "[center]获得 [color=\\\\\\\"0044ff\\\\\\\"]5[/color] 点防御。[/center]"
+front_side = ExtResource("3_3jp0f")
+back_side = ExtResource("1_uhg24")
+upgraded = false
+upgrade_damage = 2
+upgrade_block = 2
+upgrade_cost = 0
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("1_ai0ce")]([])
+metadata/_custom_type_script = "uid://ccsidvfkkramu"

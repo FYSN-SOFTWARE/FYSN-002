@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardSide" load_steps=4 format=3 uid="uid://c3t17hxu35ebc"]
+
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="1_2g45j"]
+[ext_resource type="Script" uid="uid://c35ga8snnwn4v" path="res://custom_resources/card_side.gd" id="2_rptcr"]
+[ext_resource type="Texture2D" uid="uid://bfvi02kojsa00" path="res://art/tile_0103.png" id="2_srajo"]
+
+[resource]
+script = ExtResource("2_rptcr")
+id = "PomoBack"
+type = 0
+cost = 1
+icon = ExtResource("2_srajo")
+tooltip_text = "[center]造成 [color=\\\"purple\\\"]2[/color] 点san伤害 3 次。[/center]"
+upgrade_damage = 1
+upgrade_block = 0
+upgrade_cost = 0
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("1_2g45j")]([])
+metadata/_custom_type_script = "uid://c35ga8snnwn4v"

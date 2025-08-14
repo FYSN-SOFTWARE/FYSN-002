@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://5rofh12ag2qo"]
+
+[ext_resource type="Script" uid="uid://p61c6trjnwyr" path="res://scenes/shop/shop_medicine_card.gd" id="1_a5igu"]
+[ext_resource type="Texture2D" uid="uid://4wmbdcap0r2u" path="res://art/UI/商店/灵感货币2.png" id="2_dtfyc"]
+
+[node name="ShopMedicineCard" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1832.0
+offset_bottom = -871.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a5igu")
+
+[node name="MedicineContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MedicineContainer"]
+layout_mode = 2
+
+[node name="PriceContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+
+[node name="PriceLabel" type="Label" parent="PriceContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "999"
+
+[node name="GoldIcon" type="TextureRect" parent="PriceContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("2_dtfyc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BuyButton" type="Button" parent="PriceContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "购买"
+
+[connection signal="pressed" from="PriceContainer/BuyButton" to="." method="_on_buy_button_pressed"]

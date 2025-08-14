@@ -79,6 +79,8 @@ func update_behavior() -> void:
 
 # 更新血量显示
 func update_stats_display() -> void:
+	# 设置StatsUI的世界翻转状态
+	stats_ui.set_world_state(is_flipped)
 	stats_ui.update_stats(stats)
 
 # 在攻击计算时应用翻转倍率
@@ -155,17 +157,25 @@ func do_turn() -> void:
 
 
 func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
-	if stats.health <= 0:
+	if stats.health <= 0 && which_modifier != Modifier.Type.SAN_DMG_TAKEN:
 		return
 	
 	sprite_2d.material = WHITE_SPRITE_MATERIAL
-	var modified_damage := modifier_handler.get_modified_value(int(damage), which_modifier)
 	
-	var tween := create_tween()
-	tween.tween_callback(Shaker.shake.bind(self, 16, 0.15))
-	tween.tween_callback(stats.take_damage.bind(modified_damage))
-	tween.tween_interval(0.17)
+	# 根据伤害类型处理
+	if which_modifier == Modifier.Type.SAN_DMG_TAKEN:
+		# SAN 伤害处理
+		var modified_damage := modifier_handler.get_modified_value(
+			int(damage), 
+			Modifier.Type.SAN_DMG_TAKEN
+		)
+		
+		var tween := create_tween()
+		tween.tween_callback(Shaker.shake.bind(self, 16, 0.15))
+		tween.tween_callback(stats.take_san_damage.bind(modified_damage))  # 确保 EnemyStats 有这个方法
+		tween.tween_interval(0.17)
 
+<<<<<<< Updated upstream
 	tween.finished.connect(
 		func():
 			sprite_2d.material = null
@@ -174,6 +184,35 @@ func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
 				Events.enemy_died.emit(self)
 				queue_free()
 	)
+=======
+		tween.finished.connect(
+			func():
+				sprite_2d.material = null
+				if stats.san <= 0:  # SAN 归零时死亡
+					Events.enemy_died.emit(self)
+					queue_free()
+		)
+	else:
+		# 普通伤害处理
+		var modified_damage := modifier_handler.get_modified_value(
+			int(damage), 
+			which_modifier
+		)
+		
+		var tween := create_tween()
+		tween.tween_callback(Shaker.shake.bind(self, 16, 0.15))
+		tween.tween_callback(stats.take_damage.bind(modified_damage))
+		tween.tween_interval(0.17)
+
+		tween.finished.connect(
+			func():
+				sprite_2d.material = null
+				
+				if stats.health <= 0:
+					Events.enemy_died.emit(self)
+					queue_free()
+		)
+>>>>>>> Stashed changes
 
 
 func _on_area_entered(_area: Area2D) -> void:

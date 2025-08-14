@@ -1,0 +1,29 @@
+[gd_resource type="Resource" load_steps=7 format=3 uid="uid://c5ewcrcsedyta"]
+
+[ext_resource type="Resource" uid="uid://dcfgm6chgyjp0" path="res://characters/warrior/cards/Composition/warrior_composition_back.tres" id="1_lq1aq"]
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="2_odsue"]
+[ext_resource type="Resource" uid="uid://dk2fw4vnaxrjt" path="res://characters/warrior/cards/Composition/warrior_composition_front.tres" id="3_yv0av"]
+[ext_resource type="Texture2D" uid="uid://du7r7v1iaahuo" path="res://art/rarity.png" id="4_mkvvm"]
+[ext_resource type="Script" uid="uid://dwsa3wfxs54kc" path="res://characters/warrior/cards/Composition/warrior_composition.gd" id="5_u6k6i"]
+[ext_resource type="AudioStream" uid="uid://d25h6rfvbqg6" path="res://art/music/音效1.0/fangyu_2.wav" id="6_odsue"]
+
+[resource]
+script = ExtResource("5_u6k6i")
+id = "warrior_goutu"
+type = 1
+rarity = 0
+target = 0
+cost = 1
+exhausts = false
+icon = ExtResource("4_mkvvm")
+tooltip_text = "[center]获得 [color=\\\"0044ff\\\"]8[/color] 点护盾。[/center]"
+sound = ExtResource("6_odsue")
+front_side = ExtResource("3_yv0av")
+back_side = ExtResource("1_lq1aq")
+upgraded = false
+upgrade_damage = 2
+upgrade_block = 2
+upgrade_cost = 0
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("2_odsue")]([])
+metadata/_custom_type_script = "uid://ccsidvfkkramu"

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://bqohikmxpfyd2"]
+
+[ext_resource type="Resource" uid="uid://c6xi8b4yr8rof" path="res://characters/warrior/cards/Wrap_up/warrior_wrap_up_back.tres" id="1_0wr6g"]
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="2_k0p30"]
+[ext_resource type="Resource" uid="uid://dep53amkvik82" path="res://characters/warrior/cards/Wrap_up/warrior_wrap_up_front.tres" id="3_et7d2"]
+[ext_resource type="Texture2D" uid="uid://du7r7v1iaahuo" path="res://art/rarity.png" id="4_c32o0"]
+[ext_resource type="Script" uid="uid://bn8elo5j7ig0c" path="res://characters/warrior/cards/Wrap_up/warrior_wrap_up.gd" id="5_c8al1"]
+
+[resource]
+script = ExtResource("5_c8al1")
+id = "warrior_shoubi"
+type = 1
+rarity = 2
+target = 0
+cost = 2
+exhausts = false
+icon = ExtResource("4_c32o0")
+tooltip_text = "[center]获得 [color=\\\"0044ff\\\"]12[/color] 点护盾。[/center]"
+front_side = ExtResource("3_et7d2")
+back_side = ExtResource("1_0wr6g")
+upgraded = false
+upgrade_damage = 2
+upgrade_block = 2
+upgrade_cost = 0
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("2_k0p30")]([])
+metadata/_custom_type_script = "uid://ccsidvfkkramu"

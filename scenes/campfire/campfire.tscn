@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dfrdaou640irp"]
+[gd_scene load_steps=14 format=3 uid="uid://dfrdaou640irp"]
 
 [ext_resource type="Script" uid="uid://bfriiv2s7jala" path="res://scenes/campfire/campfire.gd" id="1_i8fph"]
 [ext_resource type="Resource" uid="uid://sbkc4o401k4l" path="res://characters/warrior/warrior.tres" id="2_0gfpy"]
@@ -46,9 +46,6 @@ damping_min = 20.0
 damping_max = 50.0
 scale_curve = SubResource("CurveTexture_lmxxw")
 color_ramp = SubResource("GradientTexture1D_7i0a1")
-
-[sub_resource type="LabelSettings" id="LabelSettings_k52g7"]
-font_size = 12
 
 [sub_resource type="Animation" id="Animation_em2db"]
 length = 0.001
@@ -151,7 +148,7 @@ scale = Vector2(7.5, 7.5)
 transform = Transform2D(7.5, 0, 0, 7.5, 0, 0)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="ParticlesLayer"]
-position = Vector2(90, 100)
+position = Vector2(62.2667, 100)
 amount = 128
 texture = ExtResource("2_ykw02")
 lifetime = 1.5
@@ -159,39 +156,78 @@ process_material = SubResource("ParticleProcessMaterial_1jtqt")
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
+[node name="Title" type="Label" parent="UILayer"]
+custom_minimum_size = Vector2(100, 100)
+offset_left = 716.0
+offset_top = 62.0
+offset_right = 1144.0
+offset_bottom = 182.833
+theme_override_font_sizes/font_size = 100
+text = "篝 火"
+horizontal_alignment = 1
+
 [node name="UI" type="VBoxContainer" parent="UILayer"]
+custom_minimum_size = Vector2(400, 200)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 8.0
-offset_top = -166.0
-offset_right = 72.0
-offset_bottom = -122.0
+offset_left = -179.0
+offset_top = -103.0
+offset_right = 221.0
+offset_bottom = 97.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(7.5, 7.5)
-
-[node name="Title" type="Label" parent="UILayer/UI"]
-layout_mode = 2
-text = "Campfire"
-label_settings = SubResource("LabelSettings_k52g7")
-horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="UILayer/UI"]
 layout_mode = 2
 
 [node name="RestButton" type="Button" parent="UILayer/UI"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 14)
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Rest"
+theme_override_font_sizes/font_size = 80
+text = "休息"
 
 [node name="Description" type="Label" parent="UILayer/UI"]
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
+theme_override_font_sizes/font_size = 60
 text = "+30% HP"
+horizontal_alignment = 1
+
+[node name="UI2" type="VBoxContainer" parent="UILayer"]
+custom_minimum_size = Vector2(400, 200)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 197.0
+offset_top = -102.0
+offset_right = 597.0
+offset_bottom = 98.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Spacer" type="Control" parent="UILayer/UI2"]
+layout_mode = 2
+
+[node name="MeditateButton" type="Button" parent="UILayer/UI2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 80
+text = "冥想"
+
+[node name="Description" type="Label" parent="UILayer/UI2"]
+custom_minimum_size = Vector2(200, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "+30% SAN"
 horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -200,3 +236,4 @@ libraries = {
 }
 
 [connection signal="pressed" from="UILayer/UI/RestButton" to="." method="_on_rest_button_pressed"]
+[connection signal="pressed" from="UILayer/UI2/MeditateButton" to="." method="_on_meditate_button_pressed"]

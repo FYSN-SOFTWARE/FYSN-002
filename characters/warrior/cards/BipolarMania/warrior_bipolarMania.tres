@@ -1,0 +1,29 @@
+[gd_resource type="Resource" load_steps=7 format=3 uid="uid://cbnsqhg3gffh4"]
+
+[ext_resource type="Resource" uid="uid://dybdvf52kolsr" path="res://characters/warrior/cards/BipolarMania/warrior_bipolarMania_back.tres" id="1_pmr5y"]
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="2_eml65"]
+[ext_resource type="Resource" uid="uid://7bx16qucq4oc" path="res://characters/warrior/cards/BipolarMania/warrior_bipolarMania_front.tres" id="3_lg6e4"]
+[ext_resource type="Texture2D" uid="uid://djbldcvfo4swr" path="res://art/line.png" id="4_u6wah"]
+[ext_resource type="Script" uid="uid://be7tmysds65vo" path="res://characters/warrior/cards/BipolarMania/warrior_bipolarMania.gd" id="5_0km81"]
+[ext_resource type="AudioStream" uid="uid://41xlqr4xvlu2" path="res://art/music/音效1.0/shouji_biao.wav" id="6_s1tlw"]
+
+[resource]
+script = ExtResource("5_0km81")
+id = "warrior_shuangxiangzaokuang"
+type = 1
+rarity = 1
+target = 3
+cost = 2
+exhausts = false
+icon = ExtResource("4_u6wah")
+tooltip_text = "\"[center]为所有对象施加3层易伤。[/center]"
+sound = ExtResource("6_s1tlw")
+front_side = ExtResource("3_lg6e4")
+back_side = ExtResource("1_pmr5y")
+upgraded = false
+upgrade_damage = 0
+upgrade_block = 0
+upgrade_cost = -1
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("2_eml65")]([])
+metadata/_custom_type_script = "uid://ccsidvfkkramu"

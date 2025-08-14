@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://doo7bvevb48x0"]
+[gd_scene load_steps=24 format=3 uid="uid://doo7bvevb48x0"]
 
 [ext_resource type="Script" uid="uid://hpfqf2wdftut" path="res://scenes/battle/flipped_battle.gd" id="1_6mdr8"]
 [ext_resource type="Resource" uid="uid://sbkc4o401k4l" path="res://characters/warrior/warrior.tres" id="2_m0fmq"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://cuykj2y3ipbie" path="res://scenes/ui/red_flash.gd" id="19_h6ass"]
 [ext_resource type="PackedScene" uid="uid://dfig8d63ggof1" path="res://scenes/ui/battle_over_panel.tscn" id="20_k4xql"]
 [ext_resource type="PackedScene" uid="uid://d2jq2r5hb1ajk" path="res://scenes/ui/card_pile_view.tscn" id="21_w2nl6"]
+[ext_resource type="AudioStream" uid="uid://bnkx6chkk21lb" path="res://art/music/里世界战斗.mp3" id="22_1qwsv"]
 [ext_resource type="PackedScene" uid="uid://c3fu2yk5vm3qb" path="res://scenes/ui/status_view.tscn" id="22_tgcx7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xyg5u"]
@@ -197,3 +198,7 @@ layer = 4
 
 [node name="StatusView" parent="StatusViewLayer" instance=ExtResource("22_tgcx7")]
 visible = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_1qwsv")
+volume_db = 5.474

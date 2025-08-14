@@ -16,7 +16,7 @@ var normal_color: Color
 func _ready() -> void:
 	get_tree().paused = false
 	continue_button.disabled = SaveGame.load_data() == null
-
+	$AudioStreamPlayer.play()
 
 func _on_continue_pressed() -> void:
 	run_startup.type = RunStartup.Type.CONTINUED_RUN

@@ -86,14 +86,23 @@ func _get_targets(targets: Array[Node]) -> Array[Node]:
 			return []
 
 
-func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierHandler) -> void:
+func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierHandler,play_twice: bool) -> void:
 	Events.card_played.emit(self)
-	char_stats.mana -= cost
+	if is_flipped:
+		char_stats.soals -= cost  
+	else:
+		char_stats.mana -= cost
+
 	
 	if is_single_targeted():
 		apply_effects(targets, modifiers)
+		if play_twice:
+			apply_effects(targets, modifiers)
 	else:
-		apply_effects(_get_targets(targets), modifiers)
+		var targets_Array = _get_targets(targets)
+		apply_effects(targets_Array, modifiers)
+		if play_twice:
+			apply_effects(targets_Array, modifiers)
 
 # 升级卡牌
 func upgrade() -> void:

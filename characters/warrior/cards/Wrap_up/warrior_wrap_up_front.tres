@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardSide" load_steps=4 format=3 uid="uid://dep53amkvik82"]
+
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="1_ettjl"]
+[ext_resource type="Script" uid="uid://c35ga8snnwn4v" path="res://custom_resources/card_side.gd" id="2_7bls5"]
+[ext_resource type="Texture2D" uid="uid://du7r7v1iaahuo" path="res://art/rarity.png" id="2_kcpa8"]
+
+[resource]
+script = ExtResource("2_7bls5")
+id = "ShoubiFront"
+type = 1
+cost = 2
+icon = ExtResource("2_kcpa8")
+tooltip_text = "[center]获得 [color=\\\"0044ff\\\"]12[/color] 点护盾。[/center]"
+upgrade_damage = 0
+upgrade_block = 3
+upgrade_cost = -1
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("1_ettjl")]([])
+metadata/_custom_type_script = "uid://c35ga8snnwn4v"

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dh6d1t3b0006b"]
 
 [ext_resource type="Script" uid="uid://5ef2jq200w7p" path="res://scenes/ui/reward_button.gd" id="1_0k6p2"]
-[ext_resource type="Texture2D" uid="uid://dhmtctwb5ymhc" path="res://art/gold.png" id="1_q1h24"]
+[ext_resource type="Texture2D" uid="uid://4wmbdcap0r2u" path="res://art/UI/商店/灵感货币2.png" id="2_y2wrr"]
 
 [node name="RewardButton" type="Button"]
 custom_minimum_size = Vector2(0, 14)
@@ -27,9 +27,9 @@ theme_override_constants/separation = 2
 
 [node name="CustomIcon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(10, 10)
+custom_minimum_size = Vector2(20, 18)
 layout_mode = 2
-texture = ExtResource("1_q1h24")
+texture = ExtResource("2_y2wrr")
 expand_mode = 1
 stretch_mode = 5
 
