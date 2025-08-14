@@ -43,6 +43,7 @@ var is_flipped: bool = false
 var is_prologue := false
 var prologue_completed := false
 
+
 func _ready() -> void:
 	if not run_startup:
 		return
@@ -65,6 +66,13 @@ func _ready() -> void:
 	Events.world_flipped.connect(_on_world_flipped)
 	# 连接序章boss被击败事件
 	Events.prologue_boss_defeated.connect(_on_prologue_boss_defeated)
+<<<<<<< Updated upstream
+=======
+	# souls耗尽退出里世界
+	Events.souls_depleted.connect(_on_souls_depleted)
+	# 初始化世界翻转状态
+	Global.set_world_flipped(save_data.is_flipped if save_data else false)
+>>>>>>> Stashed changes
 
 
 func _start_run() -> void:
@@ -232,9 +240,14 @@ func _show_regular_battle_rewards() -> void:
 
 	reward_scene.add_gold_reward(map.last_room.battle_stats.roll_gold_reward())
 	reward_scene.add_card_reward()
+	# 药水奖励
+	if MedicineManager.can_drop_medicine():
+		var medicine = MedicineManager.get_random_medicine()
+		reward_scene.add_medicine_reward(medicine)
 
 
 func _on_battle_room_entered(room: Room) -> void:
+	Events.change_state.emit(true)
 	# 重置为表世界
 	is_flipped = false
 	if flip_button:
@@ -317,6 +330,7 @@ func _on_cg_completed() -> void:
 
 
 func _on_battle_won() -> void:
+	Events.change_state.emit(false)
 	_show_regular_battle_rewards()
 
 
@@ -364,3 +378,7 @@ func _on_map_exited(room: Room) -> void:
 			_on_battle_room_entered(room)
 		Room.Type.EVENT:
 			_on_event_room_entered(room)
+
+func _on_souls_depleted():
+	if is_flipped:
+		_on_flip_button_pressed()

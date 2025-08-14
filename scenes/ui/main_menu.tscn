@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://4tj0qise1som"]
+[gd_scene load_steps=8 format=3 uid="uid://4tj0qise1som"]
 
 [ext_resource type="Script" uid="uid://bbpraosrh82tp" path="res://scenes/ui/main_menu.gd" id="1_bck1p"]
 [ext_resource type="Resource" uid="uid://bd874b0h1q8n1" path="res://scenes/run/run_startup.tres" id="2_4poyw"]
-[ext_resource type="Texture2D" uid="uid://bhhk3w6pjsu6w" path="res://art/场景/主界面.png" id="3_q85j6"]
+[ext_resource type="Texture2D" uid="uid://b6taxkcy50qb" path="res://art/场景/开始页面/背景.png" id="3_uhagc"]
+[ext_resource type="Texture2D" uid="uid://d0deuw6ct7qix" path="res://art/场景/开始页面/SHUANGJIEYIXIANG.png" id="4_btxxm"]
+[ext_resource type="Texture2D" uid="uid://bxy7smykhtko" path="res://art/场景/开始页面/KAISHIYOUXI.png" id="5_wb0q5"]
+[ext_resource type="Texture2D" uid="uid://b14urco288pys" path="res://art/场景/开始页面/光标.png" id="6_q85j6"]
+[ext_resource type="AudioStream" uid="uid://dwbwxgsm4hdrv" path="res://art/music/宣传曲Demo.mp3" id="7_btxxm"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -20,11 +24,39 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 11.0
+offset_left = -168.0
+offset_right = 13.0
+offset_bottom = 102.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.99421, 1)
-texture = ExtResource("3_q85j6")
+texture = ExtResource("3_uhagc")
+expand_mode = 1
+
+[node name="Logo" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_left = 253.468
+offset_top = 115.0
+offset_right = 1013.47
+offset_bottom = 347.0
+texture = ExtResource("4_btxxm")
+expand_mode = 1
+
+[node name="Button" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_left = 1685.76
+offset_top = 595.0
+offset_right = 1994.76
+offset_bottom = 1025.0
+texture = ExtResource("5_wb0q5")
+
+[node name="Lightmouse" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_left = 1575.12
+offset_top = 605.0
+offset_right = 1652.12
+offset_bottom = 658.0
+texture = ExtResource("6_q85j6")
 
 [node name="Title" type="Label" parent="."]
 visible = false
@@ -88,23 +120,23 @@ theme_override_constants/separation = 50
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 14)
 layout_mode = 2
-offset_left = 288.0
-offset_top = 285.0
-offset_right = 546.0
-offset_bottom = 353.0
-rotation = -0.543922
-scale = Vector2(2.2212, 3.21745)
+offset_left = 1515.0
+offset_top = 590.0
+offset_right = 1768.0
+offset_bottom = 644.0
+rotation = -0.0091095
+scale = Vector2(1.26124, 1.82693)
 mouse_filter = 1
 theme_override_font_sizes/font_size = 50
 
-[node name="Button" type="Button" parent="."]
+[node name="Setting" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-offset_left = 571.0
-offset_top = 543.0
-offset_right = 829.0
-offset_bottom = 611.0
-rotation = -0.303245
+offset_left = 1543.0
+offset_top = 839.0
+offset_right = 1800.0
+offset_bottom = 904.0
+rotation = 0.00422055
 scale = Vector2(1.11218, 1.11218)
 theme_override_font_sizes/font_size = 50
 text = "设置"
@@ -113,11 +145,11 @@ text = "设置"
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 14)
 layout_mode = 2
-offset_left = 703.0
-offset_top = 606.0
-offset_right = 956.0
-offset_bottom = 675.0
-rotation = -0.208797
+offset_left = 1525.0
+offset_top = 820.0
+offset_right = 1654.0
+offset_bottom = 885.0
+rotation = 0.000891015
 scale = Vector2(2.35645, 2.35645)
 theme_override_font_sizes/font_size = 50
 text = "退出"
@@ -127,14 +159,17 @@ unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 14)
 layout_mode = 2
-offset_left = 605.0
-offset_top = 388.0
-offset_right = 863.0
-offset_bottom = 456.0
-rotation = -0.401788
-scale = Vector2(1.53957, 1.87274)
+offset_left = 1535.0
+offset_top = 705.0
+offset_right = 1774.0
+offset_bottom = 770.0
+rotation = 0.00545678
+scale = Vector2(1.17958, 1.87274)
 theme_override_font_sizes/font_size = 50
 text = "继续"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_btxxm")
 
 [connection signal="pressed" from="NewRun" to="." method="_on_new_run_pressed"]
 [connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

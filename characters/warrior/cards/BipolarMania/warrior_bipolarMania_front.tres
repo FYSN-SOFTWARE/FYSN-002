@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardSide" load_steps=4 format=3 uid="uid://7bx16qucq4oc"]
+
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="1_rqni5"]
+[ext_resource type="Texture2D" uid="uid://djbldcvfo4swr" path="res://art/line.png" id="2_bjnn7"]
+[ext_resource type="Script" uid="uid://c35ga8snnwn4v" path="res://custom_resources/card_side.gd" id="3_edcie"]
+
+[resource]
+script = ExtResource("3_edcie")
+id = "ShuangxiangzaokuangFront"
+type = 1
+cost = 2
+icon = ExtResource("2_bjnn7")
+tooltip_text = "[center]为所有对象施加3层易伤。[/center]"
+upgrade_damage = 0
+upgrade_block = 0
+upgrade_cost = -1
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("1_rqni5")]([])
+metadata/_custom_type_script = "uid://c35ga8snnwn4v"

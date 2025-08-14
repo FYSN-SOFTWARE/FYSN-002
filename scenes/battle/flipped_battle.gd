@@ -3,6 +3,7 @@ extends Battle
 func _ready() -> void:
 	# 调用父类初始化
 	super._ready()
+	$AudioStreamPlayer.play()
 	
 	# 设置翻转背景
 	is_flipped = true

@@ -34,12 +34,14 @@ func _init() -> void:
 		queue_free()
 
 func _ready() -> void:
+	$biao.play()
 	enemy_handler.child_order_changed.connect(_on_enemies_child_order_changed)
 	Events.enemy_turn_ended.connect(_on_enemy_turn_ended)
 	
 	Events.player_turn_ended.connect(player_handler.end_turn)
 	Events.player_hand_discarded.connect(enemy_handler.start_turn)
 	Events.player_died.connect(_on_player_died)
+	Events.player_san_damage_taken.connect(_on_player_san_damage_taken)
 	
 	# 连接翻转按钮信号
 	if flip_button:  # 确保按钮存在
@@ -53,8 +55,7 @@ func _ready() -> void:
 
 func start_battle() -> void:
 	get_tree().paused = false
-	MusicPlayer.play(music, true)
-	
+	Global.set_world_flipped(is_flipped)
 	battle_ui.char_stats = char_stats
 	player.stats = char_stats
 	player_handler.relics = relics
@@ -92,12 +93,74 @@ func initialize_enemies_flipped_state(flipped: bool) -> void:
 
 func _on_flip_button_pressed() -> void:
 	# 切换翻转状态
+<<<<<<< Updated upstream
+=======
+	$biao.stop()
+	$li.play()
+	if is_flipped:
+		return
+	if not can_enter_flipped_world():
+		return
+	#if not is_flipped and not can_enter_flipped_world():
+		#return
+>>>>>>> Stashed changes
 	is_flipped = !is_flipped
+	
+	Global.set_world_flipped(is_flipped) 
 	update_background()
 	update_flip_button_text()
+<<<<<<< Updated upstream
 	# 通知全局翻转状态改变
 	Events.world_flipped.emit(is_flipped)
 
+=======
+	
+	# 更新玩家状态UI的世界状态
+	if player and player.stats_ui:
+		player.stats_ui.set_world_state(is_flipped)
+		player.update_stats()  # 刷新UI显示
+	
+	
+	# 获取当前手牌中的卡牌
+	var hand_cards: Array[Card] = []
+	if battle_ui and battle_ui.hand:
+		for card_ui in battle_ui.hand.get_children():
+			if card_ui is CardUI:
+				hand_cards.append(card_ui.card)
+	
+	# 发送带手牌信息的信号
+	Events.world_flipped_with_hand.emit(is_flipped, hand_cards)
+	Events.world_flipped.emit(is_flipped)
+
+
+func _on_world_flipped(flipped: bool) -> void:
+	is_flipped = flipped
+	
+	# 更新UI组件
+	update_background()
+	update_flip_button_text()
+	
+	# 更新玩家状态UI
+	if player and player.stats_ui:
+		player.stats_ui.set_world_state(is_flipped)
+		player.update_stats()
+	
+	# 更新卡牌和敌人状态
+	update_cards_flipped_state(flipped)
+	initialize_enemies_flipped_state(flipped)
+
+# 添加更新卡牌翻转状态的方法
+func update_cards_flipped_state(flipped: bool) -> void:
+	if battle_ui and battle_ui.hand:
+		for card_ui in battle_ui.hand.get_children():
+			if card_ui is CardUI:
+				# 设置卡牌翻转状态
+				card_ui.card.set_flipped(flipped)
+				# 强制重新设置卡牌，触发完整的显示更新
+				card_ui._set_card(card_ui.card)
+
+
+>>>>>>> Stashed changes
 func update_background() -> void:
 	if is_flipped && flipped_background:
 		background.texture = flipped_background
@@ -120,6 +183,8 @@ func _on_enemy_turn_ended() -> void:
 
 
 func _on_player_died() -> void:
+	# 战斗结束，重置灵魂能量
+	_on_battle_ended()
 	Events.battle_over_screen_requested.emit("Game Over!", BattleOverPanel.Type.LOSE)
 	SaveGame.delete_data()
 
@@ -130,7 +195,16 @@ func _on_relics_activated(type: Relic.Type) -> void:
 			player_handler.start_battle(char_stats)
 			battle_ui.initialize_card_pile_ui()
 		Relic.Type.END_OF_COMBAT:
+			# 战斗结束，重置灵魂能量
+			_on_battle_ended()
 			Events.battle_over_screen_requested.emit("Victorious!", BattleOverPanel.Type.WIN)
+
+
+func _on_battle_ended() -> void:
+	# 如果战斗发生在里世界，重置灵魂能量
+	if is_flipped:
+		char_stats.reset_soals()
+
 
 # 战斗开始回调
 func _on_battle_started() -> void:
@@ -143,3 +217,7 @@ func _on_tutorial_completed() -> void:
 	# 恢复游戏树
 	get_tree().paused = false
 	
+
+func _on_player_san_damage_taken(damage: int) -> void:
+	# 处理玩家受到精神伤害的逻辑
+	pass

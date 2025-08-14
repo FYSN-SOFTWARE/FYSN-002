@@ -1,11 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://d2f6dhxp12xvl"]
+[gd_scene load_steps=13 format=3 uid="uid://d2f6dhxp12xvl"]
 
 [ext_resource type="Script" uid="uid://v6q3m3vmkbkm" path="res://scenes/ui/character_selector.gd" id="1_lqh53"]
 [ext_resource type="Resource" uid="uid://bd874b0h1q8n1" path="res://scenes/run/run_startup.tres" id="2_rlyfg"]
-[ext_resource type="Texture2D" uid="uid://cqcal03735mv8" path="res://art/tile_0118.png" id="3_pty20"]
-[ext_resource type="Texture2D" uid="uid://pgj8vfpj6tc5" path="res://art/tile_0130.png" id="4_20uvy"]
-[ext_resource type="Texture2D" uid="uid://cpydvk8mq66o5" path="res://art/tile_0087.png" id="4_bt743"]
-[ext_resource type="Texture2D" uid="uid://bfvi02kojsa00" path="res://art/tile_0103.png" id="5_56ldk"]
+[ext_resource type="Texture2D" uid="uid://brtc8vib5weyf" path="res://art/角色池/顾林/完整版（睁眼）.png" id="3_gl58c"]
+[ext_resource type="Texture2D" uid="uid://gtmjsbpn5u0s" path="res://art/Team-meta/sky.jpg" id="4_txrk6"]
+[ext_resource type="Texture2D" uid="uid://bfcn1earx0xs5" path="res://art/Team-meta/管家.jpg" id="5_uy6wb"]
+[ext_resource type="Texture2D" uid="uid://2x6uey132ear" path="res://art/Team-meta/君衍.jpg" id="6_45qu8"]
+[ext_resource type="AudioStream" uid="uid://dbhus41de72ha" path="res://art/恋爱循环.mp3" id="7_txrk6"]
 
 [sub_resource type="Gradient" id="Gradient_7af3e"]
 colors = PackedColorArray(0.2, 0.117647, 0.0509804, 1, 0.054902, 0, 0.0588235, 1)
@@ -83,12 +84,12 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = -380.0
-offset_right = 375.0
-offset_bottom = -15.0
+offset_left = -224.0
+offset_top = -1020.0
+offset_right = 846.0
+offset_bottom = 50.0
 grow_vertical = 0
-texture = ExtResource("4_bt743")
+texture = ExtResource("3_gl58c")
 expand_mode = 1
 stretch_mode = 5
 
@@ -144,7 +145,7 @@ offset_right = 75.0
 offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_pty20")
+texture = ExtResource("4_txrk6")
 expand_mode = 1
 stretch_mode = 5
 
@@ -167,7 +168,7 @@ offset_right = 75.0
 offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_20uvy")
+texture = ExtResource("5_uy6wb")
 expand_mode = 1
 stretch_mode = 5
 
@@ -190,9 +191,12 @@ offset_right = 75.0
 offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_56ldk")
+texture = ExtResource("6_45qu8")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_txrk6")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="CharacterButtons/WarriorButton" to="." method="_on_warrior_button_pressed"]

@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="CouponsRelic" load_steps=3 format=3 uid="uid://cy5rtyb7a4hpp"]
+[gd_resource type="Resource" script_class="CouponsRelic" load_steps=4 format=3 uid="uid://cy5rtyb7a4hpp"]
 
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="1_o4oxm"]
 [ext_resource type="Texture2D" uid="uid://cjclq485fhfjv" path="res://art/coupons.png" id="1_xmg3w"]
 [ext_resource type="Script" uid="uid://dqhfcosgict7e" path="res://relics/coupons.gd" id="2_0p0pg"]
 
@@ -12,5 +13,6 @@ type = 4
 character_type = 0
 starter_relic = false
 icon = ExtResource("1_xmg3w")
-tooltip = "[color=\"ffdf00\"]Coupons[/color]
-All items in the shop are discounted by 50%."
+tooltip = "[color=\"ffdf00\"]优惠券[/color]
+店内所有商品均可享受 50% 的折扣。"
+effects = Array[ExtResource("1_o4oxm")]([])

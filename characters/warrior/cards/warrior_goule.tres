@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://cl112lvjnwxpg"]
+
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="1_414u3"]
+[ext_resource type="Resource" uid="uid://cq1lg62srb6ie" path="res://characters/warrior/cards/warrior_goule_front.tres" id="1_xicyg"]
+[ext_resource type="Resource" uid="uid://dxkmiy7j71s8a" path="res://characters/warrior/cards/warrior_goule_back.tres" id="3_i80tm"]
+[ext_resource type="Texture2D" uid="uid://bq4im540nk025" path="res://art/tile_0106.png" id="4_i80tm"]
+[ext_resource type="Script" uid="uid://c3pfhcmge6g17" path="res://characters/warrior/cards/warrior_goule.gd" id="5_b81o0"]
+
+[resource]
+script = ExtResource("5_b81o0")
+id = "warrior_goule"
+type = 0
+rarity = 0
+target = 1
+cost = 1
+exhausts = false
+icon = ExtResource("4_i80tm")
+tooltip_text = "[center]造成 [color=\\\\\\\"ff0000\\\\\\\"]6[/color] 点血量伤害。[/center]"
+outcard = ExtResource("1_xicyg")
+backcard = ExtResource("3_i80tm")
+upgraded = false
+upgrade_damage = 2
+upgrade_block = 2
+upgrade_cost = 0
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("1_414u3")]([])
+metadata/_custom_type_script = "uid://ccsidvfkkramu"

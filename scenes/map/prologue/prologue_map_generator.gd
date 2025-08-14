@@ -39,7 +39,7 @@ func generate_map() -> Array[Array]:
 					room.battle_stats = battle_stats_pool.get_random_battle_for_tier(0)
 				else:
 					# 使用默认战斗配置
-					room.battle_stats = preload("res://battles/tier_0_bats_2.tres")
+					room.battle_stats = preload("res://battles/tier_0_nurse.tres")
 			
 			RoomSequence.EVENT:  # 第三个房间是事件房
 				room.type = Room.Type.EVENT

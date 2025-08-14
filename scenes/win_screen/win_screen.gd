@@ -9,6 +9,8 @@ const MESSAGE := "The %s\nis victorious!"
 @onready var message: Label = %Message
 @onready var character_portrait: TextureRect = %CharacterPortrait
 
+func _ready() -> void:
+	$AudioStreamPlayer.play()
 
 func set_character(new_character: CharacterStats) -> void:
 	character = new_character

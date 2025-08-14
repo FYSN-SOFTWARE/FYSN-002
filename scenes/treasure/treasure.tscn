@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cmrd81keb5a2w" path="res://scenes/treasure/treasure.gd" id="1_0dgmn"]
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="2_g7pdp"]
 [ext_resource type="Resource" uid="uid://b11jhsqqh7kfe" path="res://relics/explosive_barrel.tres" id="2_g8620"]
-[ext_resource type="Script" uid="uid://s1x5p2rvd1ls" path="res://custom_resources/relic.gd" id="2_ko1oj"]
+[ext_resource type="Script" uid="uid://dl5efjxl0dcr3" path="res://custom_resources/relic.gd" id="2_ko1oj"]
 [ext_resource type="Texture2D" uid="uid://hva3iy5hon7a" path="res://art/tile_0089.png" id="3_4v1q1"]
 [ext_resource type="Resource" uid="uid://dn6frpxqh1o7" path="res://relics/mana_potion.tres" id="3_b2sgi"]
 [ext_resource type="Texture2D" uid="uid://dhmtctwb5ymhc" path="res://art/gold.png" id="4_3wkp5"]

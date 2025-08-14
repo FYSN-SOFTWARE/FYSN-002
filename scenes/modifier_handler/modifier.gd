@@ -1,7 +1,11 @@
 class_name Modifier
 extends Node
 
+<<<<<<< Updated upstream
 enum Type {DMG_DEALT, DMG_TAKEN, CARD_COST, SHOP_COST, NO_MODIFIER}
+=======
+enum Type {DMG_DEALT, DMG_TAKEN, CARD_COST, SHOP_COST, NO_MODIFIER, SAN_DMG_DEALT, SAN_DMG_TAKEN, BLOCK_GAINED}
+>>>>>>> Stashed changes
 
 @export var type: Type
 

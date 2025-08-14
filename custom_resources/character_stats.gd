@@ -16,7 +16,12 @@ extends Stats
 @export var start_max_soals: int
 @export var starting_relic: Relic
 
+<<<<<<< Updated upstream
 
+=======
+var mana: int : set = set_mana
+var soals: int : set = set_soals
+>>>>>>> Stashed changes
 var deck: CardPile
 var discard: CardPile
 var draw_pile: CardPile
@@ -28,6 +33,29 @@ func init() -> void:
 	ex_pile.init(4)
 	
 
+<<<<<<< Updated upstream
+=======
+func set_mana(value: int) -> void:
+	mana = value
+	stats_changed.emit()
+
+func set_soals(value: int) -> void:
+	var old_soals = soals
+	soals = clampi(value, 0, max_soals)
+	stats_changed.emit()
+	
+	if soals == 0 and old_soals > 0:
+		Events.souls_depleted.emit()
+
+func add_soals(amount: int) -> void:
+	soals = clampi(soals + amount, 0, max_soals)
+	stats_changed.emit()
+
+
+func reset_mana() -> void:
+	mana = max_mana
+
+>>>>>>> Stashed changes
 
 func take_damage(damage: int) -> void:
 	var initial_health := health
@@ -36,6 +64,18 @@ func take_damage(damage: int) -> void:
 		Events.player_hit.emit()
 
 
+<<<<<<< Updated upstream
+=======
+func set_san(value: int) -> void:
+	san = clampi(value, 0, max_san)
+	stats_changed.emit()
+
+func take_san_damage(damage: int) -> void:
+	set_san(san - damage)
+	Events.player_san_damage_taken.emit(damage)
+
+
+>>>>>>> Stashed changes
 func can_play_card(card: Card) -> bool:
 	return true
 
@@ -50,3 +90,9 @@ func create_instance() -> Resource:
 	instance.discard = CardPile.new()
 	instance.ex_pile = CardPile.new()
 	return instance
+
+
+# 添加重置灵魂能量的方法
+func reset_soals() -> void:
+	soals = 0
+	stats_changed.emit()

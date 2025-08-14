@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Medicine" load_steps=3 format=3 uid="uid://ca4ocx8y6ixds"]
+
+[ext_resource type="Script" uid="uid://duen43g6kq8j6" path="res://custom_resources/medicine.gd" id="1_6au2n"]
+[ext_resource type="Texture2D" uid="uid://dp5oyskkwnhgo" path="res://art/empty_medicine.png" id="1_m0ya8"]
+
+[resource]
+script = ExtResource("1_6au2n")
+medicine_name = "药水栏"
+id = "default_medicine"
+icon = ExtResource("1_m0ya8")
+rarity = 0
+battle_only = true
+value = 0
+target = "SELF"
+tooltip = "在战斗中使用药水来获得增益或阻挠敌人。"
+metadata/_custom_type_script = "uid://duen43g6kq8j6"

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://dnupvrybk2p8v"]
+
+[ext_resource type="Resource" uid="uid://c3t17hxu35ebc" path="res://characters/warrior/cards/SplashInk/warrior_splashInk_back.tres" id="1_f4luh"]
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="2_tsqxy"]
+[ext_resource type="Resource" uid="uid://ccj4lcr3ehr85" path="res://characters/warrior/cards/SplashInk/warrior_splashInk_front.tres" id="3_vhpi0"]
+[ext_resource type="Texture2D" uid="uid://c1gvqgvgs3xc8" path="res://art/tile_0131.png" id="4_5f3gs"]
+[ext_resource type="Script" uid="uid://cme01tutb03hv" path="res://characters/warrior/cards/SplashInk/warrior_splashInk.gd" id="5_yovgs"]
+
+[resource]
+script = ExtResource("5_yovgs")
+id = "warrior_pomo"
+type = 0
+rarity = 0
+target = 0
+cost = 1
+exhausts = false
+icon = ExtResource("4_5f3gs")
+tooltip_text = "[center]造成 [color=\\\"ff0000\\\"]8[/color] 点血量伤害。[/center]"
+front_side = ExtResource("3_vhpi0")
+back_side = ExtResource("1_f4luh")
+upgraded = false
+upgrade_damage = 2
+upgrade_block = 2
+upgrade_cost = 0
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("2_tsqxy")]([])
+metadata/_custom_type_script = "uid://ccsidvfkkramu"

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=4 format=3 uid="uid://co5ebxlxmvj4c"]
+
+[ext_resource type="Script" uid="uid://bw0f6mh0sbcwi" path="res://custom_resources/enemy_stats.gd" id="1_1akn0"]
+[ext_resource type="PackedScene" uid="uid://o8ml6hn6003d" path="res://enemies/nurse/nurse_enemy_ai.tscn" id="1_3dmkp"]
+[ext_resource type="Texture2D" uid="uid://d2vujk8wvu6ia" path="res://art/tile_0123.png" id="2_fvp2o"]
+
+[resource]
+script = ExtResource("1_1akn0")
+ai = ExtResource("1_3dmkp")
+damage_multiplier = 1.5
+max_health = 28
+max_san = 50
+art = ExtResource("2_fvp2o")

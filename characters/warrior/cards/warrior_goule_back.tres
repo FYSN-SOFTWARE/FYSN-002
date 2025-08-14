@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardSide" load_steps=4 format=3 uid="uid://dxkmiy7j71s8a"]
+
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="1_xb5gv"]
+[ext_resource type="Script" uid="uid://c35ga8snnwn4v" path="res://custom_resources/card_side.gd" id="2_q8ewq"]
+[ext_resource type="Texture2D" uid="uid://ck1t4hdip6xrl" path="res://art/tile_0119.png" id="2_uyqyi"]
+
+[resource]
+script = ExtResource("2_q8ewq")
+id = "GouleBack"
+type = 0
+cost = 1
+icon = ExtResource("2_uyqyi")
+tooltip_text = "[center]消耗1souls，造成 [color=\\\"purple\\\"]10[/color] 点san伤害。"
+upgrade_damage = 2
+upgrade_block = 2
+upgrade_cost = 0
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("1_xb5gv")]([])
+metadata/_custom_type_script = "uid://c35ga8snnwn4v"

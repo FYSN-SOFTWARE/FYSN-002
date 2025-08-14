@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://qbhniov0meyf"]
+
+[ext_resource type="Resource" uid="uid://cs7nibta8beke" path="res://characters/warrior/cards/Sedative/warrior_sedative_back.tres" id="1_n5nbo"]
+[ext_resource type="Script" uid="uid://bsethvhhgj17r" path="res://custom_resources/effect.gd" id="2_uwda4"]
+[ext_resource type="Resource" uid="uid://b3soo2vwcwknp" path="res://characters/warrior/cards/Sedative/warrior_sedative_front.tres" id="3_0qv1d"]
+[ext_resource type="Texture2D" uid="uid://cgopx2ponr1qi" path="res://art/tile_0121.png" id="4_3n0ag"]
+[ext_resource type="Script" uid="uid://c0og55o6l77bk" path="res://characters/warrior/cards/Sedative/warrior_sedative.gd" id="5_yhp6b"]
+
+[resource]
+script = ExtResource("5_yhp6b")
+id = "warrior_qiangxiaozhengdingji"
+type = 1
+rarity = 3
+target = 0
+cost = 1
+exhausts = false
+icon = ExtResource("4_3n0ag")
+tooltip_text = "[center]恢复 [color=\\\"purple\\\"]24[/color] 点san值。\\n[color=\\\"red\\\"]进入里世界时若在手牌中会扣除4点san值。[/color][/center]"
+front_side = ExtResource("3_0qv1d")
+back_side = ExtResource("1_n5nbo")
+upgraded = false
+upgrade_damage = 2
+upgrade_block = 2
+upgrade_cost = 0
+upgraded_tooltip_text = ""
+effects = Array[ExtResource("2_uwda4")]([])
+metadata/_custom_type_script = "uid://ccsidvfkkramu"

@@ -42,6 +42,7 @@ signal shop_entered(shop: Shop)
 signal shop_relic_bought(relic: Relic, gold_cost: int)
 signal shop_card_bought(card: Card, gold_cost: int)
 signal shop_exited
+signal shop_medicine_bought(medicine: Medicine, cost: int)
 
 # 商店强化和删牌
 signal shop_remove_requested(cost: int)
@@ -71,6 +72,7 @@ signal event_room_exited
 
 # 世界转换
 signal world_flipped(flipped: bool)
+signal world_flipped_with_hand(flipped: bool, hand_cards: Array[Card])
 
 # 世界转换
 signal intobackword
@@ -81,3 +83,22 @@ signal transcard(areafrom: Effect.CardArea, areato: Effect.CardArea)
 
 signal battle_starte()
 signal turnend(isplayer: bool)
+<<<<<<< Updated upstream
+=======
+
+# 添加精神伤害事件
+signal player_san_damage_taken(amount)
+
+# souls耗尽信号
+signal souls_depleted  
+
+
+
+# 药水系统
+signal medicine_use_requested(slot_index: int)
+signal medicine_discard_requested(slot_index: int)
+signal medicines_updated
+signal change_state(isinbattle: bool)
+signal medicine_get_requested(medicine: Medicine)
+signal use_duplication_medicine
+>>>>>>> Stashed changes

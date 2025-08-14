@@ -3,7 +3,7 @@ extends Control
 
 const CARD_REWARDS = preload("res://scenes/ui/card_rewards.tscn")
 const REWARD_BUTTON = preload("res://scenes/ui/reward_button.tscn")
-const GOLD_ICON := preload("res://art/gold.png")
+const GOLD_ICON := preload("res://art/UI/商店/灵感货币2.png")
 const GOLD_TEXT := "%s gold"
 const CARD_ICON := preload("res://art/rarity.png")
 const CARD_TEXT := "Add New Card"
@@ -22,11 +22,20 @@ var card_rarity_weights := {
 }
 var run_data: Run
 
+
 func _ready() -> void:
 	run_data = get_tree().root.get_node("Run")
 	
 	for node: Node in rewards.get_children():
 		node.queue_free()
+
+
+func add_medicine_reward(medicine: Medicine) -> void:
+	var medicine_reward := REWARD_BUTTON.instantiate() as RewardButton
+	medicine_reward.reward_icon = medicine.icon
+	medicine_reward.reward_text = medicine.medicine_name
+	medicine_reward.pressed.connect(_on_medicine_reward_taken.bind(medicine))
+	rewards.add_child.call_deferred(medicine_reward)
 
 
 func add_gold_reward(amount: int) -> void:
@@ -134,3 +143,7 @@ func _on_back_button_pressed() -> void:
 		Events.battle_reward_exited.emit()
 	
 	queue_free()
+
+
+func _on_medicine_reward_taken(medicine: Medicine) -> void:
+	Events.medicine_get_requested.emit(medicine)

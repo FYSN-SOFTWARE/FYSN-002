@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BattleStats" load_steps=3 format=3 uid="uid://rpnfdj7uy7b8"]
+
+[ext_resource type="PackedScene" uid="uid://driuov4tluhie" path="res://battles/tier_0_nurse.tscn" id="1_fbeop"]
+[ext_resource type="Script" uid="uid://bht11qtfs6eeu" path="res://custom_resources/battle_stats.gd" id="1_ma0eh"]
+
+[resource]
+script = ExtResource("1_ma0eh")
+battle_tier = 0
+weight = 3.0
+gold_reward_min = 49
+gold_reward_max = 68
+enemies = ExtResource("1_fbeop")

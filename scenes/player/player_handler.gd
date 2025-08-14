@@ -36,6 +36,13 @@ func start_battle(char_stats: CharacterStats) -> void:
 func start_turn() -> void:
 	character.block = 0
 	character.reset_mana()
+<<<<<<< Updated upstream
+=======
+	# 只在表世界回复灵魂能量
+	if not Global.is_world_flipped: 
+		character.add_soals(2)
+	
+>>>>>>> Stashed changes
 	relics.activate_relics_by_type(Relic.Type.START_OF_TURN)
 
 
@@ -112,3 +119,18 @@ func _on_relics_activated(type: Relic.Type) -> void:
 			player.status_handler.apply_statuses_by_type(Status.Type.START_OF_TURN)
 		Relic.Type.END_OF_TURN:
 			player.status_handler.apply_statuses_by_type(Status.Type.END_OF_TURN)
+<<<<<<< Updated upstream
+=======
+
+
+# 修改伤害处理方法，根据世界状态传递正确的伤害类型
+func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
+	# 根据世界状态选择伤害类型
+	var damage_type := which_modifier
+	if Global.is_world_flipped && which_modifier == Modifier.Type.DMG_DEALT:
+		damage_type = Modifier.Type.SAN_DMG_DEALT
+	elif !Global.is_world_flipped && which_modifier == Modifier.Type.SAN_DMG_DEALT:
+		damage_type = Modifier.Type.DMG_DEALT
+		
+	player.take_damage(damage, damage_type)
+>>>>>>> Stashed changes
